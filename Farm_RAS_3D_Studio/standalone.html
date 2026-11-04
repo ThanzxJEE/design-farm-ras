@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Farm RAS 3D Studio V7.6</title>
+<style>
+:root{--bg:#f3f6f0;--panel:#fff;--line:#e0e8dd;--ink:#30463b;--muted:#829288;--green:#43866b;--teal:#299c9b;--gold:#d49b47;--purple:#a58bc0;--red:#bd6266;--shadow:0 4px 18px rgba(40,65,45,.07)}
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:Inter,"Segoe UI",Arial,sans-serif;color:var(--ink);background:var(--bg)}body{overflow-x:auto}button,input,select{font:inherit}button{cursor:pointer;border:1px solid var(--line);background:#fff;color:#587064;border-radius:8px;padding:8px 11px;transition:.15s}button:hover{border-color:#a8c8b1;background:#f6faf6}button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid #80b49a;outline-offset:2px}button.primary{background:#e5f3e9;color:#34775e;border-color:#c4dfcc;font-weight:700}button.danger{background:#fff5f4;color:#b34e52;border-color:#edcece}button.active{background:#e9f4eb;border-color:#c9e1cd;color:#34785d;font-weight:700}button:disabled{opacity:.45;cursor:not-allowed}
+#app{min-width:1100px;max-width:2100px;margin:auto;min-height:100vh;display:flex;flex-direction:column;gap:0}.topbar{height:66px;flex:none;background:#fff;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:15px;padding:0 18px;position:relative;z-index:5}.brand{display:flex;align-items:center;gap:10px;min-width:255px}.brand-mark{width:39px;height:39px;border-radius:12px;background:#e3f2e8;color:#368668;display:grid;place-items:center;font-size:22px;font-weight:800;border:1px solid #cbe5d3}.brand small{display:block;font-size:9px;letter-spacing:1.7px;color:#7da28e;font-weight:800;margin-bottom:3px}.brand strong{font-size:14px;color:#30493b}.project-name{height:36px;width:190px;border:1px solid var(--line);border-radius:8px;background:#fbfdfb;padding:0 10px;color:#3c5548;font-weight:650}.top-actions{display:flex;gap:6px;align-items:center;white-space:nowrap}.top-actions button,.top-right button{font-size:11px}.top-right{margin-left:auto;display:flex;gap:7px;align-items:center;white-space:nowrap}.status-pill{font-size:10px;color:#58876b;background:#eff7ef;border:1px solid #d2e7d2;border-radius:99px;padding:7px 10px}
+.dashboard{flex:none;display:grid;grid-template-columns:repeat(6,minmax(115px,1fr));gap:10px;padding:10px 15px;background:#f6f8f3;border-bottom:1px solid #e5ebe1}.metric{background:#fff;border:1px solid var(--line);border-radius:11px;padding:9px 12px;min-width:0;box-shadow:0 2px 8px rgba(35,60,40,.025)}.metric .label{font-size:9px;text-transform:uppercase;letter-spacing:.55px;color:#8b9b90;font-weight:750}.metric .value{font-size:20px;font-weight:800;color:#315a48;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.metric .unit{font-size:10px;color:#91a197;font-weight:500;margin-left:3px}.metric.status .value{font-size:12px;color:#6a8071;display:flex;gap:7px;align-items:center}.dot{width:8px;height:8px;border-radius:50%;background:#64a77d;display:inline-block}.dot.warn{background:#d3a14d}.dot.bad{background:#c96b70}
+.workspace{height:calc(100vh - 66px - 96px - 154px);min-height:560px;max-height:900px;flex:none;display:grid;grid-template-columns:225px minmax(420px,1fr) 306px;gap:10px;padding:10px 14px;background:var(--bg)}.panel{min-height:0;background:var(--panel);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);overflow:hidden;display:flex;flex-direction:column}.panel-head{padding:12px 13px;border-bottom:1px solid #edf1eb;display:flex;align-items:center;justify-content:space-between;gap:8px;flex:none}.panel-head h3{margin:0;color:#789482;letter-spacing:1px;font-size:10px;text-transform:uppercase}.panel-head small{font-size:9px;color:#9aa99f}.panel-body{padding:11px;overflow:auto;min-height:0}.lib-search{width:100%;height:34px;border:1px solid #e0e8dd;background:#fbfdfb;padding:0 9px;border-radius:8px;color:#40564b;margin-bottom:9px;font-size:11px}.lib-group-title{margin:10px 2px 5px;color:#91a296;font-size:9px;font-weight:800;letter-spacing:1px;text-transform:uppercase}.lib-grid{display:grid;grid-template-columns:1fr;gap:4px}.lib-item{width:100%;min-height:48px;display:grid;grid-template-columns:34px minmax(0,1fr) auto;align-items:center;gap:8px;text-align:left;padding:6px 7px;background:#fff;border:1px solid transparent;border-radius:8px}.lib-item:hover{background:#f4faf5;border-color:#dceade}.lib-icon{height:32px;width:32px;border-radius:8px;background:#f0f6f1;display:grid;place-items:center;font-size:17px}.lib-item b{font-size:10px;color:#40584a}.lib-item small{font-size:9px;color:#9aa99e;white-space:nowrap}.library-foot{display:flex;gap:9px;border-top:1px solid #edf1eb;margin-top:12px;padding:12px 4px 4px;color:#819487;font-size:9px;line-height:1.5}.library-foot strong{color:#64836e;font-size:10px}
+.viewport{position:relative;min-width:0;min-height:0;background:#edf3e8;border:1px solid #d9e5d5;border-radius:12px;overflow:hidden;box-shadow:var(--shadow)}#planSvg,#view3d{position:absolute;inset:0;width:100%;height:100%;display:block}#planSvg{touch-action:none;user-select:none}#view3d{display:none;touch-action:none}.view-tools{position:absolute;z-index:4;top:10px;left:12px;right:12px;display:flex;align-items:center;gap:5px;flex-wrap:wrap;padding:6px;background:#ffffffef;border:1px solid #e2e9df;border-radius:10px;box-shadow:0 2px 8px rgba(30,60,35,.04)}.view-tools button{font-size:10px;padding:7px 9px}.view-switch{display:flex;gap:3px;padding:2px;background:#f0f4ee;border-radius:8px}.view-switch button{border-color:transparent}.view-switch button.active{background:#fff;border-color:#dce7dc;box-shadow:0 1px 4px #243d2412}.tool-sep{width:1px;height:23px;background:#e4ebe1;margin:0 3px}.canvas-status{position:absolute;z-index:3;top:66px;left:16px;background:#ffffffeb;border:1px solid #dce7d8;border-radius:7px;padding:7px 9px;color:#78947f;font-size:9px;font-weight:800;letter-spacing:.6px;pointer-events:none}.led{display:inline-block;width:7px;height:7px;border-radius:50%;background:#86a77a;margin-right:6px}.legend{position:absolute;z-index:3;top:66px;right:15px;background:#ffffffed;border:1px solid #e0e9dc;border-radius:9px;padding:9px 11px;color:#728579;min-width:145px;box-shadow:0 2px 8px rgba(35,55,40,.04);font-size:9px;pointer-events:none}.legend b{display:block;color:#78947f;letter-spacing:.7px;margin-bottom:5px}.legend div{margin-top:4px}.legend-line{display:inline-block;width:17px;height:3px;background:var(--teal);vertical-align:middle;margin-right:6px;border-radius:3px}.legend-line.press{background:var(--gold)}.legend-line.air{background:var(--purple)}.legend-line.waste{background:#9a806f;height:3px;background-image:linear-gradient(90deg,#9a806f 45%,transparent 45%);background-size:7px 3px}.viewport-hint{position:absolute;z-index:3;bottom:11px;left:14px;max-width:55%;background:#ffffffec;border:1px solid #e0e9dc;border-radius:8px;padding:7px 9px;color:#819487;font-size:9px;pointer-events:none}.scene-bottom{position:absolute;z-index:4;bottom:8px;left:12px;right:12px;display:flex;align-items:center;justify-content:flex-end;gap:4px;padding:4px 5px;background:#ffffffeb;border:1px solid #e1e9de;border-radius:8px}.scene-bottom button{font-size:9px;padding:5px 7px}.scene-bottom span{font-size:9px;color:#819487;padding:0 4px}#viewportMeta{margin-right:auto}
+.right-tabs{display:flex;gap:4px}.right-tabs button{padding:6px 8px;font-size:9px}.right-tabs button.active{background:#e6f3e9;border-color:#c9e2d0;color:#34785d}.field{margin:0 0 9px}.field label{display:flex;justify-content:space-between;gap:6px;color:#72887a;font-size:9px;margin-bottom:4px}.field label em{font-style:normal;color:#9aaa9d}.field input,.field select{width:100%;height:32px;border:1px solid #dfe8dc;border-radius:7px;background:#fbfdfb;color:#344a3e;padding:0 8px;font-size:11px}.field-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 8px}.subcard{background:#fbfdfb;border:1px solid #e5ece2;border-radius:9px;padding:9px;margin:8px 0}.subcard h4{margin:0 0 8px;color:#73947f;font-size:9px;letter-spacing:.8px;text-transform:uppercase}.muted{font-size:9px;line-height:1.5;color:#8b9d90}.button-row{display:flex;flex-wrap:wrap;gap:5px;margin:8px 0}.button-row button{flex:1;font-size:9px;padding:7px 6px}.stat-line{display:flex;justify-content:space-between;gap:8px;padding:6px 0;border-bottom:1px solid #edf1eb;font-size:10px}.stat-line:last-child{border:0}.stat-line span{color:#819387}.stat-line strong{text-align:right;color:#405b4c}.tag{font-size:9px;padding:4px 6px;background:#eef6ee;color:#73957b;border-radius:5px}.empty{text-align:center;padding:28px 12px;color:#8fa095;font-size:11px;line-height:1.6}.empty .big{display:block;font-size:30px;margin-bottom:8px}
+.bottom-area{height:154px;flex:none;display:grid;grid-template-columns:1.35fr 1fr;gap:9px;padding:5px 14px 10px;background:#f6f8f3}.bottom-panel{min-width:0;overflow:hidden;display:flex;flex-direction:column;background:#fff;border:1px solid var(--line);border-radius:10px}.bottom-head{padding:7px 10px;border-bottom:1px solid #edf1eb;display:flex;align-items:center;justify-content:space-between;color:#779481;font-size:9px;font-weight:800;letter-spacing:.7px}.bottom-head button{font-size:9px;padding:4px 7px}.flow-steps{flex:1;display:flex;align-items:center;gap:5px;overflow:auto;padding:7px}.flow-node{flex:none;min-width:84px;text-align:center;border:1px solid #dce9dc;border-radius:7px;padding:7px 6px;background:#f5f9f5;color:#4b6956;font-size:9px}.flow-node small{display:block;color:#91a197;margin-top:4px;font-size:8px}.flow-arrow{color:#4caaa0;font-weight:800}.warning-list{padding:6px 9px;overflow:auto;font-size:9px;line-height:1.4}.warning{padding:5px 7px;margin:3px 0;border-left:3px solid #d3a04a;background:#fff8e9;color:#9b7438;border-radius:3px}.warning.error{border-color:#d17b7e;background:#fff1f1;color:#a95459}.warning.ok{border-color:#75b68b;background:#eff8f0;color:#588669}
+.modal-backdrop{position:fixed;inset:0;z-index:20;display:none;align-items:center;justify-content:center;padding:16px;background:#2d45388c}.modal-backdrop.show{display:flex}.modal{width:min(980px,96vw);max-height:90vh;overflow:auto;background:#fff;border:1px solid #dfe8dc;border-radius:13px;box-shadow:0 20px 65px #0003}.modal-head{position:sticky;top:0;background:#fff;padding:13px 16px;border-bottom:1px solid #e5ece2;display:flex;align-items:center;justify-content:space-between;z-index:1}.modal-head h2{margin:0;font-size:15px}.modal-content{padding:14px 16px;color:#344b3e}.report-table{width:100%;border-collapse:collapse;font-size:10px}.report-table th,.report-table td{border-bottom:1px solid #e8eee6;padding:8px;text-align:left;vertical-align:top}.report-table th{background:#f1f7f1;color:#638671}.report-table td:last-child{text-align:left}.report-note{font-size:9px;color:#819387;line-height:1.55;margin-top:10px}.close{padding:4px 9px}.toast{position:fixed;z-index:40;bottom:18px;left:50%;transform:translate(-50%,20px);opacity:0;pointer-events:none;background:#fff;color:#4c795c;border:1px solid #9bc9ad;border-radius:8px;padding:9px 14px;font-size:11px;box-shadow:var(--shadow);transition:.2s}.toast.show{opacity:1;transform:translate(-50%,0)}.hidden{display:none!important}#printArea{display:none}
+.plan-svg{position:absolute;inset:0;width:100%;height:100%;display:block;touch-action:none;user-select:none}.plan-svg .device-node{cursor:grab}.plan-svg .device-node:active{cursor:grabbing}.plan-svg .tank-shell{fill:#d9eeeb;fill-opacity:.92;stroke:#58aaa3;stroke-width:3}.plan-svg .tank-water{fill:#85d8d3;fill-opacity:.38;stroke:#73c5be;stroke-width:1.4}.plan-svg .equipment-shell{fill:#edf2e8;stroke:#99af99;stroke-width:2.5}.plan-svg .device-label{font:600 13px Inter,Segoe UI,Arial,sans-serif;fill:#536c5b;text-anchor:middle}.plan-svg .pipe-water{fill:none;stroke:#299c9b;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;opacity:.9}.plan-svg .pipe-press{fill:none;stroke:#d49b47;stroke-width:4;stroke-linecap:round;stroke-linejoin:round}.plan-svg .pipe-air{fill:none;stroke:#a58bc0;stroke-width:3;stroke-dasharray:7 6;stroke-linecap:round}.plan-svg .pipe-waste{fill:none;stroke:#9a806f;stroke-width:3.2;stroke-dasharray:3 5;stroke-linecap:round}.plan-svg .node-select{fill:none;stroke:#2a9c88;stroke-width:3;stroke-dasharray:6 4}.plan-svg text{pointer-events:none}.plan-svg .pipe-layer{pointer-events:none}.plan-svg .plot-title{font:700 11px Inter,Arial,sans-serif;fill:#8ca18d;letter-spacing:1.5px}.plan-svg .dimension{font:10px Inter,Arial,sans-serif;fill:#a0b09f}
+@media(max-width:1280px){.workspace{grid-template-columns:205px minmax(380px,1fr) 280px}.dashboard{grid-template-columns:repeat(3,minmax(125px,1fr))}.brand{min-width:225px}.project-name{width:150px}}
+@media(max-width:1120px){#app{min-width:1050px}.workspace{grid-template-columns:190px minmax(370px,1fr) 260px}.top-actions{display:none}}
+@media print{body{background:#fff;overflow:visible}#app,.modal-backdrop,.toast{display:none!important}#printArea{display:block!important;padding:12mm;color:#222}#printArea table{width:100%;border-collapse:collapse}#printArea th,#printArea td{border:1px solid #aaa;padding:6px;font-size:10pt;text-align:left}}
+
+/* ===== 2D PLAN – corrected SVG class, polished technical drawing ===== */
+#planSvg.plan-svg{background:#f2f6ef;overflow:hidden}
+#planSvg .plan-bg{fill:#f3f7f1}
+#planSvg .plan-frame{fill:#fff;stroke:#cbd9cb;stroke-width:1.8;rx:10;filter:url(#boardShadow);pointer-events:none}
+#planSvg .plan-board-inner{fill:#fff;stroke:#d6e2d4;stroke-width:1.2;pointer-events:none}
+#planSvg .grid-minor{fill:url(#gridMinor);opacity:.95;pointer-events:none}
+#planSvg .grid-major{fill:url(#gridMajor);opacity:.92;pointer-events:none}
+#planSvg .board-edge{fill:none;stroke:#8eaa91;stroke-width:2.3;pointer-events:none}
+#planSvg .plot-title{font:700 13px Inter,"Segoe UI",Arial,sans-serif;fill:#496c57;letter-spacing:1.1px}
+#planSvg .plot-subtitle{font:10px Inter,"Segoe UI",Arial,sans-serif;fill:#91a193}
+#planSvg .dimension{font:700 11px Inter,"Segoe UI",Arial,sans-serif;fill:#6e8c76}
+#planSvg .ruler-label{font:9px Inter,"Segoe UI",Arial,sans-serif;fill:#8b9e8d}
+#planSvg .ruler-tick{stroke:#a5b9a3;stroke-width:1}
+#planSvg .tank-shadow{fill:#8da99a;opacity:.16}
+#planSvg .tank-shell{fill:#e8f4f1;fill-opacity:1;stroke:#51aaa1;stroke-width:2.6}
+#planSvg .tank-water{fill:#8bd5d0;fill-opacity:.52;stroke:#6ec4bd;stroke-width:1.2}
+#planSvg .tank-rim{fill:none;stroke:#fff;stroke-width:2;opacity:.9}
+#planSvg .equipment-shadow{fill:#7d9987;opacity:.14}
+#planSvg .equipment-shell{fill:#fff;stroke:#a4b9a7;stroke-width:2.1}
+#planSvg .equipment-face{fill:#edf4ed;stroke:#d4e1d5;stroke-width:1}
+#planSvg .device-label{font:650 11px Inter,"Segoe UI",Arial,sans-serif;fill:#3d5b49;text-anchor:middle}
+#planSvg .label-plate{fill:#fff;stroke:#dce7dc;stroke-width:1;filter:url(#labelShadow)}
+#planSvg .label-dot{stroke:#fff;stroke-width:1.5}
+#planSvg .pipe-halo{fill:none;stroke:#fff;stroke-width:9;stroke-linecap:round;stroke-linejoin:round;opacity:.92}
+#planSvg .pipe-water{fill:none;stroke:#299c9b;stroke-width:4.2;stroke-linecap:round;stroke-linejoin:round;opacity:.96}
+#planSvg .pipe-press{fill:none;stroke:#d69a43;stroke-width:4;stroke-linecap:round;stroke-linejoin:round}
+#planSvg .pipe-air{fill:none;stroke:#a58bc0;stroke-width:3.2;stroke-dasharray:7 6;stroke-linecap:round}
+#planSvg .pipe-waste{fill:none;stroke:#9a806f;stroke-width:3.1;stroke-dasharray:3 5;stroke-linecap:round}
+#planSvg .node-select{fill:#39a58d;fill-opacity:.07;stroke:#239b82;stroke-width:2.8;stroke-dasharray:7 5}
+#planSvg .device-node{cursor:grab;outline:none;pointer-events:all}
+#planSvg .device-hit-area{fill:transparent;pointer-events:all}
+#planSvg .device-node:active{cursor:grabbing}
+#planSvg .device-node:hover .tank-shell,#planSvg .device-node:hover .equipment-shell{stroke:#278e7c;stroke-width:3}
+#planSvg .device-icon{font:700 13px Inter,"Segoe UI",Arial,sans-serif;fill:#547665;text-anchor:middle;dominant-baseline:middle}
+#planSvg .port-dot{fill:#fff;stroke:#6daaa0;stroke-width:1.5}
+#planSvg text{pointer-events:none;user-select:none}
+#planSvg .pipe-layer{pointer-events:none}
+#planSvg .board-caption{font:10px Inter,"Segoe UI",Arial,sans-serif;fill:#91a393}
+#planSvg .selection-tag{fill:#e8f5ed;stroke:#b8dac4;stroke-width:1}
+#planSvg .selection-text{font:700 9px Inter,"Segoe UI",Arial,sans-serif;fill:#34775f;letter-spacing:.5px}
+.viewport:has(#planSvg[style*="block"]) .canvas-status{background:#fff;border-color:#d7e5d6}
+/* ===== Local account UI ===== */
+.auth-area{display:flex;align-items:center;gap:6px}
+.account-button{font-size:10px!important;font-weight:700;background:#edf6ef;color:#39775b;border-color:#d1e5d3;white-space:nowrap}
+.auth-user{font-size:10px!important;background:#f4f8f4;color:#446b53;border-color:#dce8dc;white-space:nowrap}
+.auth-backdrop{position:fixed;inset:0;z-index:60;display:none;align-items:center;justify-content:center;padding:18px;background:rgba(19,39,29,.48);backdrop-filter:blur(5px)}
+.auth-backdrop.show{display:flex}
+.auth-card{width:min(820px,96vw);min-height:500px;display:grid;grid-template-columns: .9fr 1.1fr;background:#fff;border:1px solid #e0e9df;border-radius:22px;overflow:hidden;box-shadow:0 28px 90px rgba(23,50,34,.24)}
+.auth-visual{padding:40px 34px;background:radial-gradient(circle at 90% 10%,rgba(255,255,255,.42),transparent 32%),linear-gradient(145deg,#174b43,#267d69 58%,#8bbd91);color:#fff;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden}
+.auth-visual:after{content:"";position:absolute;width:300px;height:300px;border:1px solid rgba(255,255,255,.18);border-radius:50%;right:-130px;bottom:-130px;box-shadow:0 0 0 28px rgba(255,255,255,.04),0 0 0 58px rgba(255,255,255,.035)}
+.auth-logo{width:52px;height:52px;border-radius:16px;display:grid;place-items:center;background:rgba(255,255,255,.17);border:1px solid rgba(255,255,255,.28);font-size:28px;font-weight:800;margin-bottom:25px}
+.auth-kicker{font-size:10px;letter-spacing:2px;font-weight:800;color:#d7f1df}
+.auth-visual h2{font-size:25px;line-height:1.25;margin:13px 0 12px;max-width:330px;color:#fff}
+.auth-visual p{font-size:12px;line-height:1.7;color:#e1f0e5;max-width:320px;margin:0}
+.auth-visual-grid{display:grid;gap:9px;margin-top:32px;position:relative;z-index:1}
+.auth-visual-grid span{font-size:10px;color:#eff9f0;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.08);border-radius:9px;padding:9px 11px;width:max-content;min-width:185px}
+.auth-main{padding:39px 42px 28px;position:relative;display:flex;flex-direction:column;justify-content:center}
+.auth-close{position:absolute;right:17px;top:15px;border:0;background:#f4f7f3;color:#66806e;border-radius:50%;width:31px;height:31px;padding:0;font-size:20px}
+.auth-tabs{display:flex;gap:6px;padding:4px;background:#f2f6f1;border-radius:10px;width:max-content;margin-bottom:22px}
+.auth-tabs button{border:0;background:transparent;padding:8px 15px;font-size:11px;color:#7b8e80}
+.auth-tabs button.active{background:#fff;color:#34775e;box-shadow:0 1px 5px rgba(35,65,40,.09);font-weight:800}
+.auth-main h2{font-size:22px;color:#294a38;margin:0 0 6px}
+.auth-subtitle{font-size:11px;color:#849489;margin:0 0 20px;line-height:1.5}
+.auth-form{display:grid;gap:10px}
+.auth-field{display:grid;gap:5px}
+.auth-field label{font-size:10px;font-weight:700;color:#60796a}
+.auth-field input{width:100%;height:42px;border:1px solid #dce7dc;border-radius:9px;padding:0 12px;font-size:12px;color:#30493b;background:#fbfdfb}
+.auth-field input:focus{outline:2px solid #c7e3cf;border-color:#8fbea0}
+.auth-submit{height:43px;border:0;border-radius:9px;background:linear-gradient(90deg,#23775e,#3e9b77);color:#fff;font-weight:800;font-size:12px;margin-top:5px;box-shadow:0 5px 13px rgba(42,128,91,.17)}
+.auth-submit:hover{background:linear-gradient(90deg,#1d684f,#318a67);color:#fff}
+.auth-switch{font-size:10px;color:#7e9083;text-align:center;margin:7px 0 0}
+.auth-switch button{border:0;padding:0;background:none;color:#287a5b;font-weight:800;font-size:10px}
+.auth-message{font-size:10px;line-height:1.5;padding:8px 10px;border-radius:8px;background:#fff2f0;color:#a34e49;border:1px solid #f0d2ce}
+.auth-message.success{background:#eff8f0;color:#397654;border-color:#d0e7d4}
+.auth-local-note{font-size:9px;line-height:1.55;color:#9aa79d;border-top:1px solid #eef2ec;margin:19px 0 0;padding-top:12px}
+.auth-local-note b{color:#738b79}
+@media(max-width:900px){.auth-card{grid-template-columns:1fr;max-width:500px}.auth-visual{display:none}.auth-main{padding:38px 28px 24px}.top-right .auth-area{display:none}}
+
+
+/* V4 reference layout styling */
+#planSvg.plan-svg{background:#f5f8f3}
+#planSvg .plan-bg{fill:#f4f7f2}
+#planSvg .plan-frame{fill:#fff;stroke:#c9d9cb;stroke-width:1.6}
+#planSvg .plan-board-inner{fill:#fff;stroke:#e1eae0;stroke-width:1}
+#planSvg .grid-minor{fill:url(#gridMinor)}
+#planSvg .grid-major{fill:url(#gridMajor)}
+#planSvg .device-label{font:600 11px Inter,"Segoe UI",Arial,sans-serif;fill:#355548;text-anchor:middle}
+#planSvg .device-sub-label{font:500 9px Inter,"Segoe UI",Arial,sans-serif;fill:#6f8c7d;text-anchor:middle}
+#planSvg .label-plate{fill:#fff;stroke:#d8e5d9;stroke-width:1;filter:url(#labelShadow)}
+#planSvg .pipe-label rect{fill:#fff;stroke:#deeadf;stroke-width:1;filter:url(#labelShadow)}
+#planSvg .pipe-label text{font:600 9px Inter,"Segoe UI",Arial,sans-serif;fill:#5e7d70;text-anchor:middle;dominant-baseline:middle}
+#planSvg .board-dimensions .dimension{font:700 11px Inter,Arial,sans-serif;fill:#668b72}
+#planSvg .board-caption{font:9px Inter,Arial,sans-serif;fill:#91a393}
+#planSvg .device-hit-area{fill:transparent;stroke:transparent;pointer-events:all}
+#planSvg .device-node:hover .tank-shell,#planSvg .device-node:hover .equipment-shell{filter:drop-shadow(0 2px 3px rgba(34,95,73,.2))}
+
+
+/* V5 – interactive pipe editing */
+#planSvg .pipe-layer{pointer-events:all}
+#planSvg .plan-bg,#planSvg .plan-frame,#planSvg .plan-board-inner,#planSvg .grid-minor,#planSvg .grid-major,#planSvg .board-edge,#planSvg .ruler-label,#planSvg .plot-title,#planSvg .plot-subtitle,#planSvg .board-dimensions{pointer-events:none}
+#planSvg .device-hit-area{pointer-events:none}
+#planSvg .pipe-group{pointer-events:none}
+#planSvg .pipe-group .pipe-hit{fill:none;stroke:#ffffff;stroke-opacity:.01;stroke-width:19;stroke-linecap:round;stroke-linejoin:round;pointer-events:all;cursor:pointer}
+#planSvg .pipe-group .pipe-selected{fill:none;stroke:#347bc0;stroke-width:8;stroke-dasharray:3 5;stroke-linecap:round;stroke-linejoin:round;opacity:.42}
+#planSvg .pipe-group .pipe-control-line{fill:none;stroke:#3c82bf;stroke-width:1.5;stroke-dasharray:4 4;opacity:.75}
+#planSvg .pipe-point-handle{fill:#fff;stroke:#317fbd;stroke-width:2.5;cursor:move;pointer-events:all;filter:drop-shadow(0 1px 2px rgba(34,65,90,.24))}
+#planSvg .pipe-point-handle:hover{fill:#e7f3ff;stroke:#145d9b;stroke-width:3.5}
+#planSvg .pipe-start-end{fill:#fff;stroke:#4f9c91;stroke-width:2;pointer-events:none}
+#btnPipeEdit.active{background:#e3f1ff;border-color:#9bc4e8;color:#245d91}
+.pipe-editor-note{font-size:11px;line-height:1.5;color:#6d8377;background:#f2f7f3;border:1px solid #dce9df;border-radius:8px;padding:9px;margin:8px 0}
+.pipe-editor-actions{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+.pipe-editor-actions button{flex:1 1 110px}
+.pipe-type-pill{display:inline-flex;align-items:center;gap:6px;padding:4px 8px;background:#edf5f1;border:1px solid #d8e8df;border-radius:20px;font-size:10px;color:#547764}
+
+
+/* V7.3 – authentication is required before the workspace is visible */
+body.auth-locked{overflow:hidden!important;background:#edf4ee}
+body.auth-locked #app{visibility:hidden!important;pointer-events:none!important;user-select:none!important}
+#authBackdrop.auth-gate{display:flex!important;position:fixed;inset:0;z-index:99999;padding:22px;overflow:auto;background:radial-gradient(ellipse at 18% 15%,rgba(110,179,137,.20),transparent 35%),linear-gradient(145deg,#eaf2eb 0%,#f7faf6 48%,#e5efe7 100%);backdrop-filter:none}
+#authBackdrop.auth-gate .auth-card{width:min(900px,96vw);min-height:540px;box-shadow:0 26px 90px rgba(26,66,43,.18);border-color:#d9e7da}
+#authBackdrop.auth-gate .auth-close{display:none!important}
+#authBackdrop.auth-gate .auth-visual{padding:48px 40px}
+#authBackdrop.auth-gate .auth-main{padding:44px 48px 34px}
+#authBackdrop.auth-gate .auth-tabs button{min-width:112px}
+#authBackdrop.auth-gate .auth-local-note{font-size:9px}
+.auth-gate-caption{font-size:10px;color:#6f8b78;line-height:1.6;margin-top:14px}
+@media(max-width:700px){#authBackdrop.auth-gate{padding:10px}#authBackdrop.auth-gate .auth-card{min-height:0;width:100%;max-width:480px}#authBackdrop.auth-gate .auth-main{padding:34px 22px 24px}}
+
+
+/* ===== V7.4 Authentication redesign ===== */
+:root{--auth-ink:#183b3c;--auth-muted:#789091;--auth-teal:#149a92;--auth-green:#2d8f72}
+#authBackdrop.auth-gate{padding:clamp(12px,2.3vw,34px);background:radial-gradient(ellipse at 10% 12%,rgba(109,206,185,.19),transparent 30%),radial-gradient(ellipse at 88% 88%,rgba(91,153,187,.13),transparent 29%),linear-gradient(135deg,#eaf3f1 0%,#f4f8f5 48%,#e7f0ec 100%);}
+#authBackdrop.auth-gate .auth-card-v74{width:min(1160px,96vw);min-height:690px;max-height:min(820px,calc(100vh - 44px));grid-template-columns:minmax(0,1.08fr) minmax(430px,.92fr);border:1px solid rgba(255,255,255,.9);border-radius:28px;box-shadow:0 34px 100px rgba(20,65,60,.20),0 4px 15px rgba(20,65,60,.06);background:#fff;overflow:hidden;}
+#authBackdrop.auth-gate .auth-visual{padding:34px 42px 25px;background:linear-gradient(145deg,#0d3439 0%,#105653 48%,#147b70 100%);color:#fff;justify-content:space-between;isolation:isolate;}
+#authBackdrop.auth-gate .auth-visual:before{content:"";position:absolute;inset:0;z-index:-2;background:radial-gradient(circle at 7% 16%,rgba(69,200,174,.22),transparent 30%),radial-gradient(circle at 85% 75%,rgba(86,171,190,.18),transparent 34%);}
+#authBackdrop.auth-gate .auth-visual:after{width:520px;height:520px;right:-290px;bottom:-300px;border-color:rgba(191,245,224,.13);box-shadow:0 0 0 42px rgba(255,255,255,.025),0 0 0 90px rgba(255,255,255,.02);}
+.auth-visual-glow{position:absolute;border-radius:50%;filter:blur(2px);pointer-events:none;z-index:-1}.auth-glow-one{width:220px;height:220px;left:-120px;bottom:110px;background:rgba(39,182,164,.12)}.auth-glow-two{width:180px;height:180px;right:28px;top:170px;background:rgba(100,190,176,.10)}
+.auth-brand-row{display:flex;align-items:center;gap:12px;position:relative;z-index:2}.auth-logo{width:44px;height:44px;display:grid;place-items:center;border-radius:14px;background:linear-gradient(145deg,rgba(255,255,255,.2),rgba(255,255,255,.08));border:1px solid rgba(220,255,246,.25);color:#a9f2df;margin:0;box-shadow:inset 0 1px rgba(255,255,255,.12)}.auth-logo svg{width:29px;height:29px}.auth-brand-word{display:grid;gap:3px}.auth-brand-word strong{font-size:13px;letter-spacing:2.1px;color:#f2fffa}.auth-brand-word span{font-size:8px;letter-spacing:2.4px;color:#9cc9bf;font-weight:800}.auth-version{margin-left:auto;border:1px solid rgba(205,244,231,.24);border-radius:999px;padding:6px 10px;color:#c5e9dc;background:rgba(255,255,255,.07);font-size:9px;letter-spacing:1px;font-weight:800}
+.auth-hero-copy{position:relative;z-index:2;margin:38px 0 18px}.auth-kicker{display:flex;align-items:center;gap:8px;color:#a9d9ca;font-size:9px;letter-spacing:1.7px;font-weight:800}.auth-kicker i{width:7px;height:7px;border-radius:50%;background:#6be0bb;box-shadow:0 0 0 4px rgba(107,224,187,.13)}.auth-hero-copy h1{font-size:clamp(30px,3.1vw,42px);line-height:1.12;letter-spacing:-1.4px;color:#f3fffa;margin:17px 0 13px;font-weight:780}.auth-hero-copy h1 em{font-style:normal;color:#7be0c5}.auth-hero-copy p{font-size:12px;line-height:1.8;color:#c0ded5;max-width:390px;margin:0}
+.auth-diagram-card{position:relative;z-index:2;border:1px solid rgba(205,247,232,.18);border-radius:18px;padding:13px 15px 10px;background:linear-gradient(145deg,rgba(226,255,245,.12),rgba(226,255,245,.045));box-shadow:inset 0 1px rgba(255,255,255,.07),0 14px 35px rgba(0,20,23,.12);backdrop-filter:blur(8px)}.auth-diagram-head{display:flex;align-items:center;justify-content:space-between;color:#d9f5e9;font-size:9px;letter-spacing:1.2px}.auth-diagram-head>div{display:flex;align-items:center;gap:8px}.auth-diagram-dot{width:7px;height:7px;border-radius:50%;background:#68dfb8;box-shadow:0 0 0 4px rgba(104,223,184,.12)}.auth-diagram-head small{color:#8cbeb0;font-size:8px;letter-spacing:1px}.auth-ras-diagram{display:block;width:100%;height:auto;max-height:190px;margin:2px 0}.auth-diagram-foot{display:flex;flex-wrap:wrap;gap:16px;padding:3px 2px 0;color:#b9d9d0;font-size:8px}.auth-diagram-foot span{display:flex;align-items:center;gap:6px}.flow-swatch{width:16px;height:3px;border-radius:3px;display:inline-block}.flow-swatch.water{background:#8ce0d1}.flow-swatch.air{background:#c1a9e5}.flow-swatch.bio{background:#b3d89c}
+.auth-feature-row{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin:17px 0 8px;position:relative;z-index:2}.auth-feature-row>div{display:flex;align-items:center;gap:8px;padding:10px 10px;border-radius:11px;border:1px solid rgba(218,249,237,.13);background:rgba(255,255,255,.055)}.auth-feature-row b{font-size:9px;color:#7be0c5}.auth-feature-row span{font-size:9px;color:#d7eee6;font-weight:650}.auth-visual-footer{display:flex;justify-content:space-between;gap:10px;color:#81b2a5;font-size:8px;letter-spacing:1.25px;font-weight:750;position:relative;z-index:2}.auth-visual-footer span:last-child{display:flex;align-items:center;gap:7px}.auth-visual-footer i{width:6px;height:6px;border-radius:50%;background:#71dcaa}
+#authBackdrop.auth-gate .auth-main{padding:44px clamp(30px,4vw,58px) 26px;justify-content:center;overflow-y:auto;background:linear-gradient(180deg,#fff 0%,#fcfefd 100%);}
+.auth-main-brand{display:none;align-items:center;gap:9px;margin-bottom:26px}.auth-main-brand-icon{width:34px;height:34px;display:grid;place-items:center;border-radius:11px;background:#e8f6f0;color:#238a75;font-size:23px;font-weight:900}.auth-main-brand>span:last-child{display:grid;gap:2px}.auth-main-brand b{font-size:11px;letter-spacing:1.5px;color:#1c4946}.auth-main-brand small{font-size:7px;letter-spacing:1.8px;color:#91a9a0;font-weight:800}
+.auth-form-overline{display:flex;align-items:center;gap:8px;color:#88a29b;font-size:8px;font-weight:850;letter-spacing:1.55px;margin:0 0 21px}.auth-lock-icon{width:27px;height:27px;display:grid;place-items:center;border-radius:9px;background:#edf7f3;color:#328b78}.auth-lock-icon svg{width:15px;height:15px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}.auth-overline-line{height:1px;flex:1;background:linear-gradient(90deg,#e0ece6,transparent)}
+#authBackdrop.auth-gate .auth-tabs{width:100%;display:grid;grid-template-columns:1fr 1fr;gap:4px;padding:5px;border-radius:12px;background:#f1f6f3;margin:0 0 25px}.auth-tabs button{border:0!important;border-radius:9px!important;padding:11px 15px!important;font-size:11px!important;color:#82968c!important;font-weight:700!important;background:transparent!important;box-shadow:none!important}.auth-tabs button.active{background:#fff!important;color:#187d6c!important;box-shadow:0 2px 8px rgba(31,87,65,.09)!important;font-weight:850!important}
+#authBackdrop.auth-gate .auth-main h2{font-size:27px;letter-spacing:-.75px;color:#193e3c;margin:0 0 8px;font-weight:780}.auth-subtitle{font-size:11px;color:#849992;line-height:1.7;margin:0 0 24px!important;max-width:360px}
+.auth-form{gap:16px!important}.auth-field{gap:7px!important}.auth-field label{font-size:8px!important;letter-spacing:1px;color:#58736c!important;font-weight:850!important}.auth-input-wrap{height:49px;position:relative;display:flex;align-items:center;border:1px solid #dce9e3;border-radius:11px;background:#fbfdfc;transition:border-color .18s,box-shadow .18s,background .18s}.auth-input-wrap:focus-within{border-color:#56ae98;background:#fff;box-shadow:0 0 0 4px rgba(73,174,143,.11)}.auth-field-icon{width:43px;display:grid;place-items:center;flex:none;color:#91aaa0}.auth-field-icon svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}.auth-input-wrap input{height:100%!important;min-width:0;flex:1;border:0!important;outline:0!important;box-shadow:none!important;background:transparent!important;padding:0 10px 0 0!important;font-size:11px!important;color:#24463f!important}.auth-input-wrap input::placeholder{color:#b2c1ba}.auth-password-toggle{width:38px;height:38px;display:grid;place-items:center;flex:none;padding:0;border:0;background:transparent;color:#91aaa0;border-radius:8px;margin-right:5px}.auth-password-toggle:hover{background:#eef6f1;color:#397f6d}.auth-password-toggle svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.auth-form-meta{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:-4px;color:#8da29a;font-size:8px}.auth-form-meta>span:first-child{display:flex;align-items:center;gap:7px}.auth-meta-dot{width:6px;height:6px;border-radius:50%;background:#49ae91;box-shadow:0 0 0 3px #e8f5ef}.auth-form-meta>span:last-child{font-size:7px;letter-spacing:1px;color:#9aafa6;font-weight:800}.auth-submit{width:100%;height:49px!important;display:flex;align-items:center;justify-content:center;gap:12px;border-radius:11px!important;background:linear-gradient(105deg,#167d70,#269c86 58%,#36a58c)!important;color:#fff!important;font-size:11px!important;font-weight:850!important;letter-spacing:.15px;box-shadow:0 8px 18px rgba(30,137,111,.19)!important;transition:transform .18s,box-shadow .18s,filter .18s}.auth-submit:hover{filter:brightness(1.04);transform:translateY(-1px);box-shadow:0 11px 22px rgba(30,137,111,.24)!important}.auth-submit:active{transform:translateY(0)}.auth-submit svg{width:17px;height:17px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}.auth-submit:disabled{opacity:.7;transform:none}
+.auth-switch{font-size:10px!important;color:#879b93!important;margin:0!important;text-align:center}.auth-switch button{font-size:10px!important;color:#168675!important;font-weight:850!important;padding:0 2px!important}.auth-switch button span{font-size:14px;margin-left:2px}.auth-message{font-size:10px!important;line-height:1.55;padding:10px 12px!important;border-radius:10px!important;background:#fff3f1!important;color:#a44d48!important;border:1px solid #f1d9d5!important}.auth-message.success{background:#edf8f1!important;color:#317b55!important;border-color:#cfe8d6!important}.auth-register-hint{display:flex;align-items:center;gap:7px;margin-top:-5px;color:#82988e;font-size:9px}.auth-register-hint span{width:17px;height:17px;display:grid;place-items:center;border-radius:50%;background:#eaf6ee;color:#36865e;font-weight:900}
+.auth-local-note{display:flex;align-items:flex-start;gap:10px;border:1px solid #e5eee9!important;border-radius:11px;background:#f8fbf9;padding:11px 12px!important;margin:24px 0 0!important;color:#82968c!important;font-size:8px!important;line-height:1.6!important}.auth-local-note p{margin:0}.auth-local-note b{color:#496d60!important;font-size:8px}.auth-note-icon{width:18px;height:18px;display:grid;place-items:center;flex:none;border-radius:50%;border:1px solid #a8cabe;color:#4e9580;font-size:11px;font-weight:800}.auth-main-footer{display:flex;justify-content:space-between;gap:9px;margin-top:20px;color:#a7b6ae;font-size:7px;letter-spacing:1px;font-weight:750}
+.auth-form-register{grid-template-columns:1fr 1fr!important;column-gap:12px!important;row-gap:13px!important}.auth-form-register .auth-register-hint,.auth-form-register .auth-message,.auth-form-register .auth-submit,.auth-form-register .auth-switch{grid-column:1/-1}.auth-form-register .auth-field{min-width:0}
+#authBackdrop.auth-gate .auth-close{display:none!important}
+@keyframes authRise{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:translateY(0)}}#authBackdrop.show .auth-card-v74{animation:authRise .36s cubic-bezier(.2,.7,.2,1) both}
+@media(max-width:900px){#authBackdrop.auth-gate .auth-card-v74{width:min(560px,96vw);min-height:0;max-height:calc(100vh - 24px);display:block;border-radius:22px}#authBackdrop.auth-gate .auth-visual{display:none}#authBackdrop.auth-gate .auth-main{padding:30px clamp(24px,7vw,46px) 22px}.auth-main-brand{display:flex}.auth-form-overline{margin-bottom:15px}#authBackdrop.auth-gate .auth-tabs{margin-bottom:21px}.auth-local-note{margin-top:18px!important}.auth-main-footer{margin-top:14px}}
+@media(max-width:520px){#authBackdrop.auth-gate{padding:8px}#authBackdrop.auth-gate .auth-card-v74{width:100%;max-height:calc(100vh - 16px);border-radius:18px}#authBackdrop.auth-gate .auth-main{padding:23px 19px 18px}.auth-form-register{grid-template-columns:1fr!important}.auth-form-register .auth-field,.auth-form-register .auth-register-hint,.auth-form-register .auth-message,.auth-form-register .auth-submit,.auth-form-register .auth-switch{grid-column:1}.auth-main-footer{font-size:6px}.auth-local-note{font-size:7.5px!important}}
+@media(prefers-reduced-motion:reduce){#authBackdrop.show .auth-card-v74{animation:none}.auth-submit,.auth-input-wrap{transition:none}}
+
+
+/* =========================================================
+   V7.5 AUTH EXPERIENCE — immersive aquaculture technology
+   ========================================================= */
+#authBackdrop.auth-gate-v75{
+  --a75-bg:#071b22;--a75-deep:#092b32;--a75-teal:#35e0ce;--a75-mint:#a5f5df;--a75-ink:#153b40;
+  position:fixed;inset:0;z-index:99999;display:none;align-items:center;justify-content:center;
+  padding:clamp(12px,2vw,28px);overflow:auto;
+  background:radial-gradient(ellipse at 13% 12%,rgba(28,173,151,.18),transparent 32%),radial-gradient(ellipse at 85% 90%,rgba(46,116,160,.18),transparent 34%),#07161d;
+  backdrop-filter:none;
+}
+#authBackdrop.auth-gate-v75.show{display:flex}
+#authBackdrop.auth-gate-v75.auth-gate{display:flex!important}
+#authBackdrop.auth-gate-v75 .auth-card{
+  width:min(1460px,100%);min-height:min(820px,calc(100dvh - 36px));max-height:calc(100dvh - 36px);
+  grid-template-columns:minmax(0,1.16fr) minmax(380px,.84fr);border:1px solid rgba(143,221,204,.23);
+  border-radius:26px;overflow:hidden;background:#f8fbfa;box-shadow:0 34px 110px rgba(0,0,0,.42),0 0 0 1px rgba(96,226,202,.06);
+}
+#authBackdrop.auth-gate-v75 .auth-visual-v75{
+  isolation:isolate;position:relative;display:flex;flex-direction:column;justify-content:flex-start;gap:0;
+  padding:clamp(28px,4.1vw,58px) clamp(26px,4vw,58px) 24px;overflow:hidden;color:#eafff8;
+  background:radial-gradient(ellipse at 70% 44%,rgba(16,135,130,.2),transparent 43%),linear-gradient(145deg,#082b32 0%,#0a3a3c 48%,#0b2834 100%);
+}
+#authBackdrop.auth-gate-v75 .auth-visual-v75:before{content:"";position:absolute;inset:0;z-index:-3;opacity:.5;background-image:linear-gradient(rgba(112,223,203,.075) 1px,transparent 1px),linear-gradient(90deg,rgba(112,223,203,.075) 1px,transparent 1px);background-size:34px 34px;mask-image:linear-gradient(180deg,#000 0%,rgba(0,0,0,.75) 65%,transparent 100%)}
+#authBackdrop.auth-gate-v75 .auth-visual-v75:after{content:"";position:absolute;z-index:-2;inset:0;background:linear-gradient(90deg,rgba(4,24,31,.38),transparent 48%),linear-gradient(0deg,rgba(4,25,31,.42),transparent 30%);pointer-events:none}
+.auth-tech-grid{position:absolute;inset:0;z-index:-1;opacity:.32;background:radial-gradient(circle at 1px 1px,rgba(151,240,221,.55) 1px,transparent 1.5px);background-size:20px 20px;mask-image:radial-gradient(ellipse at 55% 55%,#000,transparent 72%)}
+.auth-tech-orbit{position:absolute;z-index:-1;border:1px solid rgba(91,230,207,.15);border-radius:50%;pointer-events:none}.auth-orbit-a{width:590px;height:590px;right:-245px;top:90px;box-shadow:0 0 0 28px rgba(81,219,195,.025),0 0 0 72px rgba(81,219,195,.02)}.auth-orbit-b{width:390px;height:390px;right:-145px;top:190px;border-style:dashed;animation:authOrbit 55s linear infinite}
+.auth-tech-glow{position:absolute;z-index:-1;border-radius:50%;filter:blur(55px);pointer-events:none}.auth-tech-glow-a{width:230px;height:230px;right:12%;top:30%;background:rgba(27,207,177,.15)}.auth-tech-glow-b{width:190px;height:190px;left:-90px;bottom:6%;background:rgba(39,125,173,.14)}
+#authBackdrop.auth-gate-v75 .auth-brand-row-v75{position:relative;z-index:2;display:flex;align-items:center;gap:13px;margin:0 0 clamp(30px,4vh,48px)}
+#authBackdrop.auth-gate-v75 .auth-logo{width:46px;height:46px;margin:0;border-radius:14px;background:linear-gradient(145deg,rgba(80,238,207,.22),rgba(68,146,168,.1));border:1px solid rgba(139,247,220,.36);color:#a2ffe8;box-shadow:0 0 24px rgba(57,221,190,.1),inset 0 1px rgba(255,255,255,.12)}
+#authBackdrop.auth-gate-v75 .auth-logo svg{width:27px;height:27px}
+#authBackdrop.auth-gate-v75 .auth-brand-word strong{font-size:13px;letter-spacing:2.1px;color:#effff9}#authBackdrop.auth-gate-v75 .auth-brand-word span{font-size:8px;letter-spacing:2.2px;color:#86cbbd}
+#authBackdrop.auth-gate-v75 .auth-version{margin-left:auto;padding:7px 10px;border:1px solid rgba(134,225,206,.24);border-radius:7px;color:#9bd9cb;background:rgba(255,255,255,.035);font-size:8px;letter-spacing:1.5px}
+#authBackdrop.auth-gate-v75 .auth-hero-copy{position:relative;z-index:2;margin:0 0 clamp(20px,3vh,34px)}
+#authBackdrop.auth-gate-v75 .auth-kicker{display:flex;align-items:center;gap:10px;color:#83d9c6;font-size:9px;letter-spacing:2.1px;font-weight:850}
+#authBackdrop.auth-gate-v75 .auth-kicker i{display:block;width:7px;height:7px;border-radius:50%;background:#46e3c1;box-shadow:0 0 0 5px rgba(70,227,193,.11),0 0 16px #46e3c1}
+#authBackdrop.auth-gate-v75 .auth-hero-copy h1{font-size:clamp(38px,4.6vw,66px);line-height:1.08;letter-spacing:-2.4px;font-weight:820;color:#f1fff9;margin:22px 0 16px;max-width:770px}
+#authBackdrop.auth-gate-v75 .auth-hero-copy h1 em{font-style:normal;color:#7cebd3;text-shadow:0 0 28px rgba(74,228,196,.12)}
+#authBackdrop.auth-gate-v75 .auth-hero-copy p{max-width:600px;font-size:clamp(11px,.95vw,13px);line-height:1.9;color:#b2d8ce;margin:0}
+#authBackdrop.auth-gate-v75 .auth-diagram-card-v75{position:relative;z-index:2;margin-top:auto;padding:14px 16px 11px;border:1px solid rgba(132,229,207,.22);border-radius:16px;background:linear-gradient(140deg,rgba(12,67,70,.76),rgba(8,35,47,.67));box-shadow:inset 0 1px rgba(255,255,255,.07),0 20px 48px rgba(0,0,0,.17);backdrop-filter:blur(12px)}
+#authBackdrop.auth-gate-v75 .auth-diagram-head-v75{font-size:9px;color:#d5fff2;letter-spacing:1.6px}
+#authBackdrop.auth-gate-v75 .auth-diagram-head-v75 small{display:flex;align-items:center;gap:8px;color:#7fbaad;font-size:7px;letter-spacing:1.2px}
+.auth-live-pulse{width:6px;height:6px;border-radius:50%;background:#54edc1;box-shadow:0 0 0 4px rgba(84,237,193,.12),0 0 12px #54edc1;animation:authPulse 1.8s ease-in-out infinite}
+#authBackdrop.auth-gate-v75 .auth-ras-diagram-v75{display:block;width:100%;height:auto;max-height:clamp(170px,25vh,250px);margin:7px 0 2px;overflow:visible}
+.auth-v75-pipe-water,.auth-v75-pipe-return,.auth-v75-pipe-air{stroke-width:4;filter:url(#authV75Glow)}.auth-v75-pipe-water{stroke:#50e5d0}.auth-v75-pipe-return{stroke:#6db8f1;stroke-width:3.2;stroke-dasharray:8 8}.auth-v75-pipe-air{stroke:#b9a1f4;stroke-width:3;stroke-dasharray:6 7}.auth-v75-flow-particles circle{opacity:.95}
+.auth-v75-tank,.auth-v75-drum,.auth-v75-bio,.auth-v75-degas,.auth-v75-pump,.auth-v75-uv{transform-box:fill-box;transform-origin:center;animation:authDeviceFloat 5s ease-in-out infinite}.auth-v75-drum{animation-delay:-1s}.auth-v75-bio{animation-delay:-2s}.auth-v75-pump{animation-delay:-3s}
+#authBackdrop.auth-gate-v75 .auth-diagram-foot-v75{gap:18px;color:#a6d2c6;font-size:8px;letter-spacing:.3px}
+#authBackdrop.auth-gate-v75 .auth-diagram-foot .flow-swatch.water{background:#50e5d0;box-shadow:0 0 10px rgba(80,229,208,.65)}#authBackdrop.auth-gate-v75 .auth-diagram-foot .flow-swatch.air{background:#b9a1f4}#authBackdrop.auth-gate-v75 .auth-diagram-foot .flow-swatch.bio{background:#9de6a6}
+.auth-tech-stats{position:relative;z-index:2;display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin:13px 0 18px}.auth-tech-stats>div{min-width:0;padding:10px 12px;border:1px solid rgba(132,229,207,.15);border-radius:10px;background:rgba(255,255,255,.035)}.auth-tech-stats small,.auth-tech-stats b,.auth-tech-stats span{display:block}.auth-tech-stats small{font-size:7px;letter-spacing:1.2px;color:#71b9a9}.auth-tech-stats b{margin:4px 0 2px;font-size:11px;letter-spacing:.4px;color:#dbfff3}.auth-tech-stats span{font-size:8px;color:#9bc7ba}
+#authBackdrop.auth-gate-v75 .auth-visual-footer-v75{position:relative;z-index:2;color:#76b6a8;font-size:7px;letter-spacing:1.3px}
+#authBackdrop.auth-gate-v75 .auth-visual-footer-v75 i{background:#53ebbd;box-shadow:0 0 10px #53ebbd}
+#authBackdrop.auth-gate-v75 .auth-main-v75{min-width:0;padding:clamp(30px,4vw,58px) clamp(26px,4vw,58px) 25px;overflow-y:auto;background:radial-gradient(ellipse at 100% 0%,rgba(66,185,158,.07),transparent 32%),linear-gradient(180deg,#fbfdfc,#f5faf7);display:flex;flex-direction:column;justify-content:center}
+.auth-main-topline{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:clamp(30px,6vh,62px)}
+#authBackdrop.auth-gate-v75 .auth-main-brand{display:flex;align-items:center;gap:10px;margin:0}.auth-main-brand-icon{background:linear-gradient(145deg,#e2f8ef,#d9f1ee)!important;color:#148a79!important;border:1px solid #cce9df}.auth-main-brand b{font-size:11px!important;letter-spacing:1.8px!important;color:#1c4946!important}.auth-main-brand small{font-size:7px!important;letter-spacing:1.7px!important}
+.auth-secure-badge{display:flex;align-items:center;gap:7px;border:1px solid #dcebe5;border-radius:20px;padding:7px 9px;color:#718e83;background:#fff;font-size:7px;letter-spacing:1px;font-weight:850;white-space:nowrap}.auth-secure-badge i{width:6px;height:6px;background:#27b58b;border-radius:50%;box-shadow:0 0 0 3px #e2f5ed}
+#authBackdrop.auth-gate-v75 .auth-form-overline{margin-bottom:18px;color:#66877a;font-size:8px;letter-spacing:1.5px}
+#authBackdrop.auth-gate-v75 .auth-tabs{margin-bottom:25px}
+#authBackdrop.auth-gate-v75 .auth-main h2{font-size:clamp(24px,2.2vw,30px);color:#153b40;letter-spacing:-.9px}
+#authBackdrop.auth-gate-v75 .auth-subtitle{font-size:11px;line-height:1.8;color:#82988f;margin-bottom:27px!important}
+#authBackdrop.auth-gate-v75 .auth-local-note{margin-top:25px!important;background:#f2f8f5!important;border-color:#e1eee7!important}
+#authBackdrop.auth-gate-v75 .auth-main-footer-v75{margin-top:18px;color:#a3b5ac;font-size:7px}
+@keyframes authPulse{0%,100%{opacity:1;box-shadow:0 0 0 4px rgba(84,237,193,.12),0 0 12px #54edc1}50%{opacity:.62;box-shadow:0 0 0 7px rgba(84,237,193,.04),0 0 5px #54edc1}}
+@keyframes authOrbit{to{transform:rotate(360deg)}}@keyframes authDeviceFloat{0%,100%{translate:0 0}50%{translate:0 -3px}}
+@media(max-width:1120px){#authBackdrop.auth-gate-v75 .auth-card{grid-template-columns:minmax(0,1.02fr) minmax(360px,.9fr)}#authBackdrop.auth-gate-v75 .auth-visual-v75{padding:28px 28px 20px}#authBackdrop.auth-gate-v75 .auth-hero-copy h1{font-size:clamp(36px,4.2vw,52px)}.auth-tech-stats{gap:6px}.auth-tech-stats>div{padding:8px}}
+@media(max-width:820px){#authBackdrop.auth-gate-v75{padding:12px}#authBackdrop.auth-gate-v75 .auth-card{width:min(560px,100%);min-height:0;max-height:calc(100dvh - 24px);display:block;overflow:auto;border-radius:22px}#authBackdrop.auth-gate-v75 .auth-visual-v75{display:none}#authBackdrop.auth-gate-v75 .auth-main-v75{min-height:100%;padding:30px clamp(24px,7vw,46px) 24px}.auth-main-topline{margin-bottom:32px}}
+@media(max-width:520px){#authBackdrop.auth-gate-v75{padding:7px}#authBackdrop.auth-gate-v75 .auth-card{max-height:calc(100dvh - 14px);border-radius:17px}#authBackdrop.auth-gate-v75 .auth-main-v75{padding:23px 19px 18px}.auth-main-topline{margin-bottom:25px}.auth-secure-badge{font-size:6px}.auth-form-register{grid-template-columns:1fr!important}.auth-form-register .auth-field,.auth-form-register .auth-register-hint,.auth-form-register .auth-message,.auth-form-register .auth-submit,.auth-form-register .auth-switch{grid-column:1}.auth-main-footer-v75{font-size:6px!important}}
+@media(max-height:720px) and (min-width:821px){#authBackdrop.auth-gate-v75 .auth-card{min-height:0}#authBackdrop.auth-gate-v75 .auth-visual-v75{padding-top:22px;padding-bottom:17px}#authBackdrop.auth-gate-v75 .auth-brand-row-v75{margin-bottom:20px}#authBackdrop.auth-gate-v75 .auth-hero-copy{margin-bottom:16px}#authBackdrop.auth-gate-v75 .auth-hero-copy h1{font-size:42px;margin:14px 0 10px}#authBackdrop.auth-gate-v75 .auth-ras-diagram-v75{max-height:155px}.auth-tech-stats{margin:8px 0 10px}#authBackdrop.auth-gate-v75 .auth-main-v75{padding-top:22px;padding-bottom:18px}.auth-main-topline{margin-bottom:22px}}
+@media(prefers-reduced-motion:reduce){.auth-orbit-a,.auth-orbit-b,.auth-live-pulse,.auth-v75-tank,.auth-v75-drum,.auth-v75-bio,.auth-v75-degas,.auth-v75-pump,.auth-v75-uv,.auth-v75-flow-particles{animation:none!important}#authBackdrop.auth-gate-v75 *{scroll-behavior:auto!important}}
+
+@media(min-width:821px) and (max-width:900px){#authBackdrop.auth-gate-v75 .auth-card{display:grid;grid-template-columns:minmax(0,1fr) minmax(340px,.92fr)}#authBackdrop.auth-gate-v75 .auth-visual-v75{display:flex;padding:22px 20px 17px}#authBackdrop.auth-gate-v75 .auth-hero-copy h1{font-size:34px;letter-spacing:-1.5px}#authBackdrop.auth-gate-v75 .auth-ras-diagram-v75{max-height:145px}.auth-tech-stats{grid-template-columns:1fr;gap:5px;margin:8px 0}.auth-tech-stats>div{padding:6px 8px}.auth-tech-stats span{display:none}#authBackdrop.auth-gate-v75 .auth-main-v75{padding:24px 20px 18px}}
+
+
+
+
+/* =========================================================
+   V7.6 AUTH — INDUSTRIAL EDITORIAL / GRAPHITE + SIGNAL ORANGE
+   A deliberately different visual direction from V7.5.
+   ========================================================= */
+#authBackdrop.auth-gate-v76{
+  --a76-paper:#f1efe8;--a76-ink:#18252c;--a76-muted:#78858a;
+  --a76-graphite:#151f26;--a76-graphite-2:#1d2a32;--a76-line:#394850;
+  --a76-orange:#f07852;--a76-orange-hot:#ff946c;--a76-lime:#d5df79;
+  background:radial-gradient(circle at 12% 14%,rgba(240,120,82,.10),transparent 28%),#deded7;
+  padding:clamp(12px,2vw,30px);
+}
+#authBackdrop.auth-gate-v76 .auth-card{
+  width:min(1480px,100%);min-height:min(820px,calc(100dvh - 48px));max-height:calc(100dvh - 48px);
+  display:grid;grid-template-columns:minmax(0,1.13fr) minmax(390px,.87fr);
+  border:1px solid #c8c7bf;border-radius:14px;overflow:hidden;background:var(--a76-paper);
+  box-shadow:0 30px 90px rgba(22,31,36,.22),0 4px 14px rgba(22,31,36,.08);
+}
+#authBackdrop.auth-gate-v76 .auth-visual-v75{
+  position:relative;isolation:isolate;display:flex;flex-direction:column;justify-content:flex-start;
+  padding:clamp(30px,4.2vw,62px) clamp(28px,4.3vw,64px) 25px;overflow:hidden;
+  color:var(--a76-ink);background:linear-gradient(145deg,#f7f5ee 0%,#eeece3 62%,#e7e7df 100%);
+}
+#authBackdrop.auth-gate-v76 .auth-visual-v75:before{
+  content:"";position:absolute;inset:0;z-index:-3;opacity:.55;
+  background-image:linear-gradient(rgba(36,54,59,.075) 1px,transparent 1px),linear-gradient(90deg,rgba(36,54,59,.075) 1px,transparent 1px);
+  background-size:28px 28px;mask-image:linear-gradient(140deg,#000 0%,rgba(0,0,0,.7) 62%,transparent 100%);
+}
+#authBackdrop.auth-gate-v76 .auth-visual-v75:after{
+  content:"01";position:absolute;z-index:-2;inset:auto -18px 12% auto;width:auto;height:auto;
+  border:0;border-radius:0;box-shadow:none;background:none;pointer-events:none;
+  color:rgba(24,37,44,.045);font-size:clamp(180px,23vw,360px);font-weight:950;
+  line-height:.78;letter-spacing:-.12em;font-family:Inter,"Segoe UI",Arial,sans-serif;
+}
+#authBackdrop.auth-gate-v76 .auth-tech-grid{opacity:.18;background-image:radial-gradient(circle at 1px 1px,rgba(24,37,44,.55) 1px,transparent 1.5px);background-size:17px 17px;mask-image:radial-gradient(ellipse at 65% 58%,#000,transparent 74%)}
+#authBackdrop.auth-gate-v76 .auth-tech-orbit,#authBackdrop.auth-gate-v76 .auth-tech-glow{display:none!important}
+#authBackdrop.auth-gate-v76 .auth-brand-row-v75{margin:0 0 clamp(30px,4.8vh,58px);gap:12px}
+#authBackdrop.auth-gate-v76 .auth-logo{width:48px;height:48px;border-radius:10px;margin:0;background:var(--a76-graphite);border:1px solid #26353c;color:var(--a76-orange-hot);box-shadow:4px 4px 0 rgba(24,37,44,.10)}
+#authBackdrop.auth-gate-v76 .auth-brand-word strong{color:var(--a76-ink);font-size:14px;letter-spacing:2.8px}
+#authBackdrop.auth-gate-v76 .auth-brand-word span{color:#78858a;font-size:8px;letter-spacing:2.6px}
+#authBackdrop.auth-gate-v76 .auth-version{margin-left:auto;border:1px solid #c8c9c1;border-radius:5px;padding:7px 9px;background:rgba(255,255,255,.52);color:#5d696d;font-size:8px;letter-spacing:1.4px}
+#authBackdrop.auth-gate-v76 .auth-hero-copy{margin:0 0 22px;max-width:700px}
+#authBackdrop.auth-gate-v76 .auth-kicker{color:#c55c3d;font-size:9px;letter-spacing:2.2px;font-weight:900}
+#authBackdrop.auth-gate-v76 .auth-kicker i{width:8px;height:8px;background:var(--a76-orange);box-shadow:0 0 0 4px rgba(240,120,82,.15)}
+#authBackdrop.auth-gate-v76 .auth-hero-copy h1{font-size:clamp(42px,5.2vw,72px);line-height:.99;letter-spacing:-3.1px;color:var(--a76-ink);font-weight:880;margin:22px 0 18px;max-width:720px}
+#authBackdrop.auth-gate-v76 .auth-hero-copy h1 em{color:#dd6848;text-shadow:none}
+#authBackdrop.auth-gate-v76 .auth-hero-copy p{max-width:470px;color:#647176;font-size:12px;line-height:1.9}
+#authBackdrop.auth-gate-v76 .auth-diagram-card-v75{
+  margin-top:auto;padding:13px 15px 11px;border:1px solid #394b53;border-radius:9px;
+  background:linear-gradient(145deg,#1b2a32,#101a21);box-shadow:0 16px 35px rgba(20,31,37,.15);backdrop-filter:none;
+}
+#authBackdrop.auth-gate-v76 .auth-diagram-head-v75{color:#f3f0e7;font-size:9px;letter-spacing:1.7px}
+#authBackdrop.auth-gate-v76 .auth-diagram-head-v75 small{color:#93a0a3;font-size:7px;letter-spacing:1.2px}
+#authBackdrop.auth-gate-v76 .auth-diagram-dot{background:var(--a76-orange);box-shadow:0 0 0 4px rgba(240,120,82,.15)}
+#authBackdrop.auth-gate-v76 .auth-live-pulse{background:var(--a76-lime);box-shadow:0 0 0 4px rgba(213,223,121,.12),0 0 10px rgba(213,223,121,.7)}
+#authBackdrop.auth-gate-v76 .auth-ras-diagram-v75{max-height:clamp(165px,24vh,235px);margin:8px 0 3px}
+#authBackdrop.auth-gate-v76 #authV75Grid path{stroke:#9eaaa9!important;stroke-opacity:.19!important}
+#authBackdrop.auth-gate-v76 .auth-v75-pipe-water{stroke:#f07852;filter:none}
+#authBackdrop.auth-gate-v76 .auth-v75-pipe-return{stroke:#75c9e7;filter:none}
+#authBackdrop.auth-gate-v76 .auth-v75-pipe-air{stroke:#c8d875;filter:none}
+#authBackdrop.auth-gate-v76 .auth-v75-flow-particles{fill:#fff0bf;filter:none}
+#authBackdrop.auth-gate-v76 .auth-v75-labels{fill:#f5f2e9!important}
+#authBackdrop.auth-gate-v76 .auth-ras-diagram-v75>g:last-of-type text{fill:#c7d4d1!important}
+#authBackdrop.auth-gate-v76 .auth-diagram-foot-v75{color:#b7c2bd;font-size:7px;gap:15px}
+#authBackdrop.auth-gate-v76 .auth-diagram-foot .flow-swatch.water{background:#f07852;box-shadow:none}
+#authBackdrop.auth-gate-v76 .auth-diagram-foot .flow-swatch.air{background:#c8d875}
+#authBackdrop.auth-gate-v76 .auth-diagram-foot .flow-swatch.bio{background:#75c9e7}
+#authBackdrop.auth-gate-v76 .auth-tech-stats{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:12px 0 14px}
+#authBackdrop.auth-gate-v76 .auth-tech-stats>div{padding:9px 10px;border:1px solid #d4d3c9;border-radius:6px;background:rgba(255,255,255,.54)}
+#authBackdrop.auth-gate-v76 .auth-tech-stats small{color:#9a684f;font-size:7px;letter-spacing:1.1px}
+#authBackdrop.auth-gate-v76 .auth-tech-stats b{color:#26343a;font-size:10px}
+#authBackdrop.auth-gate-v76 .auth-tech-stats span{color:#7d898b;font-size:7px}
+#authBackdrop.auth-gate-v76 .auth-visual-footer-v75{color:#7d8889;font-size:7px;letter-spacing:1.2px}
+#authBackdrop.auth-gate-v76 .auth-visual-footer-v75 i{background:var(--a76-orange);box-shadow:none}
+
+/* Dark access console on the right */
+#authBackdrop.auth-gate-v76 .auth-main-v75{
+  position:relative;min-width:0;overflow-y:auto;display:flex;flex-direction:column;justify-content:center;
+  padding:clamp(30px,4.3vw,62px) clamp(26px,4vw,58px) 25px;
+  background:radial-gradient(circle at 100% 0%,rgba(240,120,82,.10),transparent 28%),linear-gradient(160deg,#1b2931,#111a21 78%);
+}
+#authBackdrop.auth-gate-v76 .auth-main-topline{margin-bottom:clamp(28px,5vh,52px)}
+#authBackdrop.auth-gate-v76 .auth-main-brand-icon{background:#2a3a42!important;color:var(--a76-orange-hot)!important;border:1px solid #45535a!important;border-radius:8px!important}
+#authBackdrop.auth-gate-v76 .auth-main-brand b{color:#f2f0e8!important;font-size:11px!important;letter-spacing:2px!important}
+#authBackdrop.auth-gate-v76 .auth-main-brand small{color:#8f9da0!important}
+#authBackdrop.auth-gate-v76 .auth-secure-badge{color:#b7c5c2;background:#202e36;border:1px solid #3b4b52;border-radius:5px;font-size:7px}
+#authBackdrop.auth-gate-v76 .auth-secure-badge i{background:var(--a76-lime);box-shadow:0 0 0 3px rgba(213,223,121,.12)}
+#authBackdrop.auth-gate-v76 .auth-form-overline{color:#a8b2b1;font-size:8px;letter-spacing:1.65px;margin-bottom:18px}
+#authBackdrop.auth-gate-v76 .auth-lock-icon{background:rgba(240,120,82,.13);color:var(--a76-orange-hot);border:1px solid rgba(240,120,82,.2);border-radius:6px}
+#authBackdrop.auth-gate-v76 .auth-overline-line{background:linear-gradient(90deg,#495960,transparent)}
+#authBackdrop.auth-gate-v76 .auth-tabs{background:#202d35;border:1px solid #37474e;border-radius:7px;padding:4px;margin-bottom:24px}
+#authBackdrop.auth-gate-v76 .auth-tabs button{color:#9eacad!important;border-radius:5px!important}
+#authBackdrop.auth-gate-v76 .auth-tabs button.active{background:#f07852!important;color:#172229!important;box-shadow:0 3px 9px rgba(0,0,0,.18)!important}
+#authBackdrop.auth-gate-v76 .auth-main h2{color:#f3f1e9;font-size:clamp(24px,2.2vw,31px);letter-spacing:-.9px}
+#authBackdrop.auth-gate-v76 .auth-subtitle{color:#a6b2b2;line-height:1.8;margin-bottom:25px!important}
+#authBackdrop.auth-gate-v76 .auth-form{gap:15px!important}
+#authBackdrop.auth-gate-v76 .auth-field label{color:#c0c9c5!important;font-size:8px!important;letter-spacing:1.1px}
+#authBackdrop.auth-gate-v76 .auth-input-wrap{height:49px;background:#202c34;border:1px solid #405159;border-radius:7px;box-shadow:none}
+#authBackdrop.auth-gate-v76 .auth-input-wrap:focus-within{background:#24333b;border-color:var(--a76-orange);box-shadow:0 0 0 3px rgba(240,120,82,.13)}
+#authBackdrop.auth-gate-v76 .auth-field-icon{color:#e49a79}
+#authBackdrop.auth-gate-v76 .auth-input-wrap input{color:#f2f4ed!important;caret-color:var(--a76-orange-hot)}
+#authBackdrop.auth-gate-v76 .auth-input-wrap input::placeholder{color:#788a90}
+#authBackdrop.auth-gate-v76 .auth-password-toggle{color:#98a9a8}
+#authBackdrop.auth-gate-v76 .auth-password-toggle:hover{background:#34454d;color:#fff}
+#authBackdrop.auth-gate-v76 .auth-form-meta{color:#99aaa6}
+#authBackdrop.auth-gate-v76 .auth-form-meta>span:last-child{color:#d49a7c}
+#authBackdrop.auth-gate-v76 .auth-meta-dot{background:var(--a76-lime);box-shadow:0 0 0 3px rgba(213,223,121,.12)}
+#authBackdrop.auth-gate-v76 .auth-submit{background:linear-gradient(105deg,#e96947,#f58a60)!important;color:#18252b!important;border-radius:7px!important;box-shadow:0 9px 22px rgba(0,0,0,.2)!important;font-weight:900!important;letter-spacing:.55px}
+#authBackdrop.auth-gate-v76 .auth-submit:hover{filter:brightness(1.08);box-shadow:0 12px 25px rgba(0,0,0,.28)!important}
+#authBackdrop.auth-gate-v76 .auth-switch{color:#9fadaa!important}
+#authBackdrop.auth-gate-v76 .auth-switch button{color:#ff9876!important}
+#authBackdrop.auth-gate-v76 .auth-register-hint{color:#a5b3ae}
+#authBackdrop.auth-gate-v76 .auth-register-hint span{background:#34443b;color:#d5df79}
+#authBackdrop.auth-gate-v76 .auth-local-note{background:#202c33!important;border:1px solid #3a4a50!important;border-radius:7px!important;color:#9eaeaa!important;margin-top:22px!important}
+#authBackdrop.auth-gate-v76 .auth-local-note b{color:#e1e8df!important}
+#authBackdrop.auth-gate-v76 .auth-note-icon{border-color:#66766e;color:#d5df79}
+#authBackdrop.auth-gate-v76 .auth-main-footer-v75{color:#7e8d90;font-size:7px;letter-spacing:.9px}
+#authBackdrop.auth-gate-v76 .auth-message{background:#3a2927!important;color:#ffc0ad!important;border-color:#69453c!important}
+#authBackdrop.auth-gate-v76 .auth-message.success{background:#203b32!important;color:#b9ebca!important;border-color:#3c6853!important}
+#authBackdrop.auth-gate-v76 .auth-close{background:#293840;color:#b9c7c3}
+#authBackdrop.auth-gate-v76 .auth-close:hover{background:#3b4a50;color:white}
+#authBackdrop.auth-gate-v76 .auth-card{animation:auth76Enter .42s cubic-bezier(.2,.72,.2,1) both}
+@keyframes auth76Enter{from{opacity:0;transform:translateY(12px) scale(.992)}to{opacity:1;transform:translateY(0) scale(1)}}
+@media(max-width:1000px){#authBackdrop.auth-gate-v76 .auth-card{grid-template-columns:minmax(0,1fr) minmax(350px,.9fr)}#authBackdrop.auth-gate-v76 .auth-visual-v75{padding:28px 28px 20px}#authBackdrop.auth-gate-v76 .auth-hero-copy h1{font-size:clamp(38px,4.7vw,55px)}#authBackdrop.auth-gate-v76 .auth-ras-diagram-v75{max-height:170px}}
+@media(max-width:820px){#authBackdrop.auth-gate-v76{padding:10px}#authBackdrop.auth-gate-v76 .auth-card{display:block;width:min(560px,100%);min-height:0;max-height:calc(100dvh - 20px);overflow:auto;border-radius:12px}#authBackdrop.auth-gate-v76 .auth-visual-v75{display:none}#authBackdrop.auth-gate-v76 .auth-main-v75{min-height:100%;padding:30px clamp(24px,7vw,46px) 24px}.auth-main-topline{margin-bottom:30px}}
+@media(max-width:520px){#authBackdrop.auth-gate-v76{padding:6px}#authBackdrop.auth-gate-v76 .auth-card{max-height:calc(100dvh - 12px);border-radius:9px}#authBackdrop.auth-gate-v76 .auth-main-v75{padding:23px 18px 18px}.auth-main-topline{margin-bottom:24px}.auth-secure-badge{font-size:6px}.auth-form-register{grid-template-columns:1fr!important}.auth-form-register .auth-field,.auth-form-register .auth-register-hint,.auth-form-register .auth-message,.auth-form-register .auth-submit,.auth-form-register .auth-switch{grid-column:1}.auth-main-footer-v75{font-size:6px!important}}
+@media(max-height:720px) and (min-width:821px){#authBackdrop.auth-gate-v76 .auth-card{min-height:0}#authBackdrop.auth-gate-v76 .auth-visual-v75{padding-top:22px;padding-bottom:16px}#authBackdrop.auth-gate-v76 .auth-brand-row-v75{margin-bottom:22px}#authBackdrop.auth-gate-v76 .auth-hero-copy h1{font-size:47px;margin:13px 0 10px}#authBackdrop.auth-gate-v76 .auth-ras-diagram-v75{max-height:145px}#authBackdrop.auth-gate-v76 .auth-tech-stats{margin:8px 0 10px}#authBackdrop.auth-gate-v76 .auth-main-v75{padding-top:20px;padding-bottom:17px}.auth-main-topline{margin-bottom:19px}}
+@media(prefers-reduced-motion:reduce){#authBackdrop.auth-gate-v76 .auth-card,#authBackdrop.auth-gate-v76 .auth-live-pulse,#authBackdrop.auth-gate-v76 .auth-v75-tank,#authBackdrop.auth-gate-v76 .auth-v75-drum,#authBackdrop.auth-gate-v76 .auth-v75-bio,#authBackdrop.auth-gate-v76 .auth-v75-degas,#authBackdrop.auth-gate-v76 .auth-v75-pump,#authBackdrop.auth-gate-v76 .auth-v75-uv,#authBackdrop.auth-gate-v76 .auth-v75-flow-particles{animation:none!important}}
+
+</style>
+</head>
+<body>
+<div id="app">
+ <header class="topbar">
+  <div class="brand"><div class="brand-mark">≈</div><div><small>FARM RAS / DESIGN STUDIO</small><strong>Thiết kế & Tính toán hệ thống RAS · V7.6</strong></div></div>
+  <input id="projectName" class="project-name" value="Dự án RAS mới" aria-label="Tên dự án">
+  <div class="top-actions"><button id="btnConnect">＋ Nối ống</button><button id="btnAutoFlow">Tạo tuyến mẫu</button><button id="btnReferenceLayout" title="Khôi phục sơ đồ giống hình mẫu">Sơ đồ mẫu 2D</button><button id="btnFlowToggle" class="primary">Dòng chảy: Bật</button></div>
+  <div class="top-right"><span id="systemStatus" class="status-pill">● Đang kiểm tra</span><button id="btnSave" class="primary">Lưu</button><button id="btnReport">Báo cáo</button><button id="btnMore">⋯ Quản lý</button><div id="authArea" class="auth-area"><button id="btnOpenAuth" class="account-button">♙ Đăng nhập / Đăng ký</button></div></div>
+ </header>
+ <section class="dashboard">
+  <div class="metric"><div class="label">Tổng thể tích nước</div><div class="value" id="mVolume">0,00 <span class="unit">m³</span></div></div>
+  <div class="metric"><div class="label">Bể nuôi</div><div class="value" id="mTanks">0 <span class="unit">bể</span></div></div>
+  <div class="metric"><div class="label">Thiết bị</div><div class="value" id="mDevices">0 <span class="unit">thiết bị</span></div></div>
+  <div class="metric"><div class="label">Lưu lượng tuần hoàn</div><div class="value" id="mFlow">0,00 <span class="unit">m³/h</span></div></div>
+  <div class="metric"><div class="label">Công suất điện bơm</div><div class="value" id="mPower">0,00 <span class="unit">kW</span></div></div>
+  <div class="metric status"><div class="label">Đánh giá sơ bộ</div><div class="value" id="mStatus"><i class="dot warn"></i> Chưa đủ dữ liệu</div></div>
+ </section>
+ <main class="workspace">
+  <aside class="panel">
+   <div class="panel-head"><h3>Thư viện thiết bị</h3><small id="libraryCount">14 loại</small></div>
+   <div class="panel-body"><input id="libSearch" class="lib-search" placeholder="⌕ Tìm thiết bị..." autocomplete="off"><div id="libraryGrid" class="lib-grid"></div>
+    <div class="library-foot"><span>↖</span><div><strong>Thiết kế theo cách của bạn</strong><br>Nối các cổng để tạo đường ống. Thông số và kết quả được cập nhật theo mô hình.</div></div>
+   </div>
+  </aside>
+  <section class="viewport" id="viewport">
+   <div class="view-tools"><div class="view-switch"><button id="btnTopView" class="active">▦ &nbsp;Mặt bằng 2D</button><button id="btnIso">⬡ &nbsp;Xem 3D</button></div><span class="tool-sep"></span><button id="btnHome" title="Góc nhìn mặc định">⌖</button><button id="btnPipeEdit" title="Chọn đường ống để chỉnh sửa">Sửa đường ống</button><button id="btnGrid" class="active">Lưới 0,5 m</button><button id="btnLabels" class="active">Nhãn: Bật</button><button id="btnFit">Vừa khung</button><button id="btnScreenshot">Xuất sơ đồ</button></div>
+   <div class="canvas-status"><span class="led"></span><span id="canvasStatus">KIỂM TRA BỐ TRÍ 2D</span></div>
+   <svg id="planSvg" class="plan-svg" viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Mặt bằng bố trí thiết bị RAS 2D"></svg>
+   <canvas id="view3d" aria-label="Mô hình không gian RAS 3D"></canvas>
+   <div class="legend"><b>CHÚ GIẢI ĐƯỜNG ỐNG</b><div><span class="legend-line"></span>Nước tự chảy</div><div><span class="legend-line press"></span>Nước có áp</div><div><span class="legend-line air"></span>Khí</div><div><span class="legend-line waste"></span>Xả cặn / bùn</div></div>
+   <div class="viewport-hint" id="viewportHint">Kéo thiết bị để di chuyển · Nhấp thiết bị hoặc đường ống để chỉnh sửa · Chọn “Xem 3D” để quan sát không gian</div>
+   <div class="scene-bottom"><span id="viewportMeta">9 thiết bị · 9 đường ống</span><button id="btnDuplicate">Nhân bản</button><button id="btnRotate">Xoay 90°</button><button id="btnDelete" class="danger">Xóa</button><button id="btnDeselect">Bỏ chọn</button><button id="btnPlanZoomOut">−</button><span id="planZoomValue">100%</span><button id="btnPlanZoomIn">＋</button><button id="btnResetLayout">Về cấu hình RAS mẫu</button></div>
+  </section>
+  <aside class="panel"><div class="panel-head"><h3 id="inspectorTitle">Thông số thiết bị</h3><div class="right-tabs"><button class="active" data-tab="device">Thiết bị</button><button data-tab="calc">Tính toán</button><button data-tab="settings">Cấu hình</button></div></div><div class="panel-body" id="inspectorBody"><div class="empty"><span class="big">⌖</span>Chọn một thiết bị hoặc đường ống trên mô hình để xem và chỉnh sửa thông số.</div></div></aside>
+ </main>
+ <section class="bottom-area">
+  <div class="bottom-panel"><div class="bottom-head"><span>SƠ ĐỒ QUY TRÌNH / ĐƯỜNG ĐI NƯỚC</span><button id="btnFlowDiagram">Làm mới sơ đồ</button></div><div id="flowSteps" class="flow-steps"></div></div>
+  <div class="bottom-panel"><div class="bottom-head"><span>KIỂM TRA & CẢNH BÁO KỸ THUẬT</span><span id="warningCount" class="tag">0 mục</span></div><div id="warningList" class="warning-list"></div></div>
+ </section>
+</div>
+<div id="modalBackdrop" class="modal-backdrop"><div class="modal"><div class="modal-head"><h2 id="modalTitle">Báo cáo tính toán RAS</h2><button class="close" id="modalClose">Đóng ×</button></div><div class="modal-content" id="modalContent"></div></div></div>
+
+<div id="authBackdrop" class="auth-backdrop auth-gate auth-gate-v75 auth-gate-v76" aria-hidden="false">
+ <section class="auth-card auth-card-v74" role="dialog" aria-modal="true" aria-labelledby="authHeading">
+  <aside class="auth-visual auth-visual-v75">
+   <div class="auth-tech-grid" aria-hidden="true"></div>
+   <div class="auth-tech-orbit auth-orbit-a" aria-hidden="true"></div>
+   <div class="auth-tech-orbit auth-orbit-b" aria-hidden="true"></div>
+   <div class="auth-tech-glow auth-tech-glow-a" aria-hidden="true"></div>
+   <div class="auth-tech-glow auth-tech-glow-b" aria-hidden="true"></div>
+   <div class="auth-brand-row auth-brand-row-v75">
+    <div class="auth-logo" aria-hidden="true"><svg viewBox="0 0 40 40"><path d="M5 14c5-6 10-6 15 0s10 6 15 0M5 23c5-6 10-6 15 0s10 6 15 0M5 32c5-6 10-6 15 0s10 6 15 0" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></div>
+    <div class="auth-brand-word"><strong>FARM RAS</strong><span>DESIGN STUDIO</span></div>
+    <span class="auth-version">V7.6 / INDUSTRIAL</span>
+   </div>
+   <div class="auth-hero-copy auth-hero-copy-v75">
+    <div class="auth-kicker"><i></i> RAS ENGINEERING / SYSTEM DESIGN / CONTROL</div>
+    <h1>Thiết kế có<br><em>cơ sở kỹ thuật.</em></h1>
+    <p>Từ bố trí thiết bị đến mạng đường ống. Xây dựng, kiểm tra và tinh chỉnh hệ thống nuôi tuần hoàn trong một không gian làm việc.</p>
+   </div>
+   <div class="auth-diagram-card auth-diagram-card-v75">
+    <div class="auth-diagram-head auth-diagram-head-v75">
+     <div><span class="auth-diagram-dot"></span><b>ENGINEERING / FLOW SCHEMATIC</b></div>
+     <small><span class="auth-live-pulse"></span> LIVE DESIGN PREVIEW</small>
+    </div>
+    <svg class="auth-ras-diagram auth-ras-diagram-v75" viewBox="0 0 920 340" role="img" aria-label="Sơ đồ công nghệ hệ thống RAS gồm bể nuôi, lọc trống, lọc vi sinh, khử khí, bơm và đèn UV">
+     <defs>
+      <pattern id="authV75Grid" width="26" height="26" patternUnits="userSpaceOnUse"><path d="M26 0H0V26" fill="none" stroke="#8bd9d0" stroke-opacity=".11" stroke-width="1"/></pattern>
+      <linearGradient id="authV75Tank" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#5de6d2" stop-opacity=".4"/><stop offset="1" stop-color="#168c91" stop-opacity=".12"/></linearGradient>
+      <linearGradient id="authV75Metal" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#d8fff4" stop-opacity=".2"/><stop offset="1" stop-color="#83cfc0" stop-opacity=".07"/></linearGradient>
+      <filter id="authV75Glow" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      <filter id="authV75Shadow" x="-50%" y="-50%" width="200%" height="200%"><feDropShadow dx="0" dy="8" stdDeviation="9" flood-color="#00191d" flood-opacity=".35"/></filter>
+     </defs>
+     <rect width="920" height="340" rx="14" fill="url(#authV75Grid)"/>
+     <g class="auth-v75-pipes" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path class="auth-v75-pipe-water" d="M166 168H226V118H286"/>
+      <path class="auth-v75-pipe-water" d="M356 118H412V70H460M412 118V166H460M412 166V262H460"/>
+      <path class="auth-v75-pipe-water" d="M540 70H594V166H628M540 166H628M540 262H594V166"/>
+      <path class="auth-v75-pipe-water" d="M694 166H748V118H790"/>
+      <path class="auth-v75-pipe-return" d="M824 146V300H226V190H166"/>
+      <path class="auth-v75-pipe-air" d="M390 294H432V262H460M432 166H460M432 70H460"/>
+     </g>
+     <g class="auth-v75-flow-particles" fill="#8ff9e5" filter="url(#authV75Glow)"><circle r="4"><animateMotion dur="4.5s" repeatCount="indefinite" path="M166 168H226V118H286H356H412V70H460H540H594V166H628H694H748V118H790"/></circle><circle r="3"><animateMotion dur="5.5s" begin="-2s" repeatCount="indefinite" path="M824 146V300H226V190H166"/></circle></g>
+     <g filter="url(#authV75Shadow)">
+      <g class="auth-v75-tank"><ellipse cx="112" cy="106" rx="57" ry="18" fill="#9af4e7" fill-opacity=".13" stroke="#9ef4e4" stroke-width="2"/><path d="M55 106V208C55 223 80 235 112 235S169 223 169 208V106" fill="url(#authV75Tank)" stroke="#7be5d6" stroke-width="2"/><ellipse cx="112" cy="208" rx="57" ry="18" fill="#38b9b2" fill-opacity=".12" stroke="#7be5d6" stroke-width="2"/><ellipse cx="112" cy="106" rx="57" ry="18" fill="#7cebdd" fill-opacity=".18" stroke="#a7fff0" stroke-width="2.4"/><path d="M66 107q23-12 46 0t46 0M66 124q23-12 46 0t46 0" fill="none" stroke="#a8fff2" stroke-opacity=".7" stroke-width="1.7"/><path d="M82 154q9-10 18 0t18 0t18 0" fill="none" stroke="#d6fff8" stroke-width="2" opacity=".72"/><circle cx="112" cy="106" r="4" fill="#c7fff4"/></g>
+      <g class="auth-v75-drum"><rect x="286" y="83" width="70" height="70" rx="13" fill="url(#authV75Metal)" stroke="#a1eee0" stroke-width="2"/><rect x="295" y="94" width="52" height="48" rx="8" fill="#0b6c70" fill-opacity=".25" stroke="#7ed9cb" stroke-opacity=".8"/><path d="M306 100V136M321 100V136M336 100V136" stroke="#a0f8e7" stroke-width="3" stroke-linecap="round"/><path d="M302 117H340" stroke="#a0f8e7" stroke-width="1.5" opacity=".65"/></g>
+      <g class="auth-v75-bio">
+       <g><rect x="460" y="39" width="80" height="62" rx="13" fill="url(#authV75Metal)" stroke="#9de6a6" stroke-width="2"/><circle cx="500" cy="70" r="16" fill="#75c995" fill-opacity=".12" stroke="#a8f0ae" stroke-width="1.5"/><path d="M491 70h18m-9-9v18m-6-12 12 12m0-12-12 12" stroke="#b3f3b7" stroke-width="1.5" opacity=".85"/></g>
+       <g><rect x="460" y="135" width="80" height="62" rx="13" fill="url(#authV75Metal)" stroke="#9de6a6" stroke-width="2"/><circle cx="500" cy="166" r="16" fill="#75c995" fill-opacity=".12" stroke="#a8f0ae" stroke-width="1.5"/><path d="M491 166h18m-9-9v18m-6-12 12 12m0-12-12 12" stroke="#b3f3b7" stroke-width="1.5" opacity=".85"/></g>
+       <g><rect x="460" y="231" width="80" height="62" rx="13" fill="url(#authV75Metal)" stroke="#9de6a6" stroke-width="2"/><circle cx="500" cy="262" r="16" fill="#75c995" fill-opacity=".12" stroke="#a8f0ae" stroke-width="1.5"/><path d="M491 262h18m-9-9v18m-6-12 12 12m0-12-12 12" stroke="#b3f3b7" stroke-width="1.5" opacity=".85"/></g>
+      </g>
+      <g class="auth-v75-degas"><rect x="628" y="119" width="66" height="94" rx="16" fill="url(#authV75Metal)" stroke="#8ddce2" stroke-width="2"/><path d="M642 143h38M642 157h38M642 171h38M642 185h38" stroke="#a9edf0" stroke-opacity=".65" stroke-width="2"/><path d="M660 132v-13m-9 0q9-13 18 0" fill="none" stroke="#a9edf0" stroke-width="2"/></g>
+      <g class="auth-v75-pump"><circle cx="824" cy="118" r="34" fill="url(#authV75Metal)" stroke="#90dcf0" stroke-width="2.5"/><circle cx="824" cy="118" r="20" fill="#51abc4" fill-opacity=".18" stroke="#b1edff" stroke-width="1.5"/><path d="M824 100q20 18 0 36q-20-18 0-36" fill="#a7eaff" fill-opacity=".8"/><circle cx="824" cy="118" r="4" fill="#effcff"/></g>
+      <g class="auth-v75-uv"><rect x="790" y="279" width="68" height="37" rx="10" fill="url(#authV75Metal)" stroke="#d1b5ff" stroke-width="2"/><path d="M801 297H847" stroke="#d6c5ff" stroke-width="3" stroke-linecap="round"/><circle cx="807" cy="297" r="3" fill="#e8dbff"/><circle cx="841" cy="297" r="3" fill="#e8dbff"/></g>
+     </g>
+     <g class="auth-v75-labels" fill="#e5fff7" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="12" font-weight="750" letter-spacing=".5">
+      <text x="112" y="263" text-anchor="middle">FISH TANK</text><text x="321" y="171" text-anchor="middle">DRUM FILTER</text><text x="500" y="25" text-anchor="middle">MBBR 01</text><text x="500" y="121" text-anchor="middle">MBBR 02</text><text x="500" y="217" text-anchor="middle">MBBR 03</text><text x="661" y="235" text-anchor="middle">DEGASSING</text><text x="824" y="171" text-anchor="middle">PUMP</text><text x="824" y="333" text-anchor="middle">UV / RETURN</text>
+     </g>
+     <g fill="#83d8ca" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="9" font-weight="700"><text x="196" y="151">WATER IN</text><text x="568" y="55">BIO LOOP</text><text x="372" y="317">AIR SUPPLY</text><text x="724" y="286">RETURN LINE</text></g>
+     <g fill="#a2fff0" filter="url(#authV75Glow)"><circle cx="226" cy="168" r="4"/><circle cx="412" cy="118" r="4"/><circle cx="594" cy="166" r="4"/><circle cx="748" cy="118" r="4"/></g>
+    </svg>
+    <div class="auth-diagram-foot auth-diagram-foot-v75"><span><i class="flow-swatch water"></i> NƯỚC TUẦN HOÀN</span><span><i class="flow-swatch air"></i> KHÍ CẤP</span><span><i class="flow-swatch bio"></i> LỌC SINH HỌC</span></div>
+   </div>
+   <div class="auth-tech-stats">
+    <div><small>DESIGN MODE</small><b>2D / 3D</b><span>Không gian thiết kế</span></div>
+    <div><small>PIPE NETWORK</small><b>SMART FLOW</b><span>Kết nối đường ống</span></div>
+    <div><small>CALCULATION</small><b>RAS ENGINE</b><span>Tính toán kỹ thuật</span></div>
+   </div>
+   <div class="auth-visual-footer auth-visual-footer-v75"><span>PLAN / CONNECT / VALIDATE</span><span><i></i> ENGINEERING WORKSPACE</span></div>
+  </aside>
+  <div class="auth-main auth-main-v75">
+   <button class="auth-close" id="authClose" type="button" aria-label="Đóng cửa sổ xác thực">×</button>
+   <div class="auth-main-topline"><span class="auth-main-brand"><span class="auth-main-brand-icon">≈</span><span><b>FARM RAS</b><small>DESIGN STUDIO</small></span></span><span class="auth-secure-badge"><i></i> LOCAL ACCESS</span></div>
+   <div class="auth-form-overline"><span class="auth-lock-icon"><svg viewBox="0 0 24 24"><rect x="4.5" y="10" width="15" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></span><span>AUTHORIZED ACCESS / FARM RAS</span><span class="auth-overline-line"></span></div>
+   <div class="auth-tabs" role="tablist" aria-label="Chọn hình thức truy cập"><button type="button" id="authTabLogin" class="active" role="tab" aria-selected="true">Đăng nhập</button><button type="button" id="authTabRegister" role="tab" aria-selected="false">Tạo tài khoản</button></div>
+   <h2 id="authHeading">Chào mừng bạn trở lại</h2>
+   <p class="auth-subtitle" id="authSubtitle">Đăng nhập để tiếp tục thiết kế và quản lý hệ thống RAS.</p>
+   <div id="authFormArea"></div>
+   <div class="auth-local-note"><span class="auth-note-icon">i</span><p><b>Tài khoản trên thiết bị này</b><br>Thông tin đăng nhập được lưu cục bộ trong trình duyệt. Chưa hỗ trợ đồng bộ tài khoản giữa nhiều thiết bị.</p></div>
+   <div class="auth-main-footer auth-main-footer-v75"><span>FARM RAS DESIGN STUDIO · 2026</span><span>BUILT FOR AQUACULTURE</span></div>
+  </div>
+ </section>
+</div>
+
+<div id="toast" class="toast" role="status" aria-live="polite"></div><div id="printArea"></div><input type="file" id="fileImport" accept=".json,application/json" class="hidden">
+<script>
+'use strict';
+// Farm RAS Studio V7.6 - cấu hình RAS mẫu có xả cặn và nguồn oxy riêng; bản độc lập, không dùng thư viện CDN.
+const $ = id => document.getElementById(id);
+const escapeHTML = value => String(value ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+const fmt = (n, digits=2) => Number.isFinite(Number(n)) ? Number(n).toLocaleString('vi-VN',{minimumFractionDigits:digits,maximumFractionDigits:digits}) : '—';
+const uid = () => 'ras-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2,8);
+const CATALOG = [
+ {type:'fishTank',name:'Bể cá tròn',en:'Fish Tank',icon:'◉',group:'Bể & xử lý nước',color:'#68bfc0',defaults:{diameter:2.5,height:1.2,waterLevel:.8,fishCount:500,avgFishWeight:.3,feedRate:1.5,ratedFlow:10}},
+ {type:'rectTank',name:'Bể cá chữ nhật',en:'Rectangular Tank',icon:'▭',group:'Bể & xử lý nước',color:'#73b7c6',defaults:{width:3,depth:2,height:1.2,waterLevel:1,fishCount:400,avgFishWeight:.25,feedRate:1.5,ratedFlow:10}},
+ {type:'settlingTank',name:'Bể lắng',en:'Settling Tank',icon:'◍',group:'Bể & xử lý nước',color:'#c6a46b',defaults:{diameter:1.25,height:1.5,waterLevel:1.4,designHRT:.2,ratedFlow:10}},
+ {type:'drumFilter',name:'Drum filter',en:'Drum Filter',icon:'▤',group:'Bể & xử lý nước',color:'#6a9fb5',defaults:{width:1.2,depth:.8,height:.95,ratedFlow:12,meshMicron:60}},
+ {type:'mechanicalFilter',name:'Lọc cơ học',en:'Mechanical Filter',icon:'▥',group:'Bể & xử lý nước',color:'#8ca9a8',defaults:{width:1,depth:.7,height:.9,ratedFlow:10}},
+ {type:'biofilter',name:'Lọc vi sinh Kaldnes',en:'Moving Bed Biofilter',icon:'❋',group:'Bể & xử lý nước',color:'#6ea98a',defaults:{diameter:1,height:1.3,waterLevel:1.1,mediaFraction:50,specificSurfaceArea:500,tanLoading:.1,ratedFlow:4}},
+ {type:'storageTank',name:'Bể chứa nước',en:'Storage Tank',icon:'◉',group:'Bể & xử lý nước',color:'#76a9c7',defaults:{diameter:1.2,height:1.2,waterLevel:.9,ratedFlow:10}},
+ {type:'sludgeTank',name:'Bể thu bùn',en:'Sludge Collection Tank',icon:'◍',group:'Bể & xử lý nước',color:'#9a806f',defaults:{diameter:.8,height:.9,waterLevel:.45}},
+ {type:'degassing',name:'Tháp khử khí',en:'Degassing Unit',icon:'≋',group:'Bể & xử lý nước',color:'#7eae9e',defaults:{diameter:.9,height:1.5,waterLevel:1.1,ratedFlow:10}},
+ {type:'pump',name:'Bơm tuần hoàn',en:'Water Pump',icon:'✥',group:'Thiết bị vận hành',color:'#6c9dbb',defaults:{width:.75,depth:.56,height:.55,ratedFlow:10,head:4,efficiency:60,motorPower:.25}},
+ {type:'blower',name:'Máy sục khí',en:'Air Blower',icon:'≋',group:'Thiết bị vận hành',color:'#a38dbb',defaults:{width:.7,depth:.45,height:.45,power:.37,airFlow:120,airPressure:20}},
+ {type:'oxygenCone',name:'Côn hòa tan oxy',en:'Oxygen Cone',icon:'▽',group:'Thiết bị vận hành',color:'#70b8c4',defaults:{diameter:.5,height:1.2,ratedFlow:10,oxygenTransferEfficiency:70}},
+ {type:'oxygenSource',name:'Nguồn oxy tinh khiết',en:'Oxygen Supply',icon:'O₂',group:'Thiết bị vận hành',color:'#67aeb9',defaults:{diameter:.38,height:1.1,waterLevel:.08,capacity:.12}},
+ {type:'uv',name:'Đèn UV',en:'UV Sterilizer',icon:'☼',group:'Thiết bị vận hành',color:'#9b91bf',defaults:{width:.9,depth:.25,height:.3,ratedFlow:10,power:.12}},
+ {type:'valve',name:'Van điều khiển',en:'Valve',icon:'⊗',group:'Đường ống & phụ kiện',color:'#c6a16f',defaults:{width:.25,depth:.25,height:.2}},
+ {type:'pipe',name:'Đoạn ống rời',en:'Pipe Segment',icon:'━',group:'Đường ống & phụ kiện',color:'#5aaeb5',defaults:{diameter:.09,length:2,roughness:.0000015}}
+];
+const byType = type => CATALOG.find(x=>x.type===type);
+const ROUND_TYPES = new Set(['fishTank','settlingTank','biofilter','storageTank','degassing','oxygenSource','sludgeTank']);
+const VOLUME_TYPES = new Set(['fishTank','rectTank','settlingTank','biofilter','storageTank','degassing']);
+const FIELDS = {
+ fishTank:[['diameter','Đường kính bể','m',.05],['height','Chiều cao thành bể','m',.05],['waterLevel','Mực nước thực tế','m',.05],['fishCount','Số lượng cá','con',1],['avgFishWeight','Khối lượng TB/con','kg',.01],['feedRate','Tỷ lệ thức ăn/ngày','%',.1],['ratedFlow','Lưu lượng giới hạn','m³/h',.5]],
+ rectTank:[['width','Chiều dài bể','m',.05],['depth','Chiều rộng bể','m',.05],['height','Chiều cao thành bể','m',.05],['waterLevel','Mực nước thực tế','m',.05],['fishCount','Số lượng cá','con',1],['avgFishWeight','Khối lượng TB/con','kg',.01],['feedRate','Tỷ lệ thức ăn/ngày','%',.1],['ratedFlow','Lưu lượng giới hạn','m³/h',.5]],
+ settlingTank:[['diameter','Đường kính bể','m',.05],['height','Chiều cao bể','m',.05],['waterLevel','Mực nước','m',.05],['designHRT','HRT mục tiêu','giờ',.05],['ratedFlow','Lưu lượng thiết kế','m³/h',.5]],
+ drumFilter:[['width','Chiều dài','m',.05],['depth','Chiều rộng','m',.05],['height','Chiều cao','m',.05],['ratedFlow','Công suất lưu lượng','m³/h',.5],['meshMicron','Kích thước lưới','µm',5]],
+ mechanicalFilter:[['width','Chiều dài','m',.05],['depth','Chiều rộng','m',.05],['height','Chiều cao','m',.05],['ratedFlow','Lưu lượng thiết kế','m³/h',.5]],
+ biofilter:[['diameter','Đường kính bể lọc','m',.05],['height','Chiều cao bể','m',.05],['waterLevel','Mực nước','m',.05],['mediaFraction','Tỷ lệ vật liệu lọc','%',1],['specificSurfaceArea','Diện tích bề mặt riêng','m²/m³',10],['tanLoading','Tải TAN thiết kế','kg TAN/m³ vật liệu/ngày',.01],['ratedFlow','Lưu lượng thiết kế','m³/h',.5]],
+ storageTank:[['diameter','Đường kính','m',.05],['height','Chiều cao','m',.05],['waterLevel','Mực nước','m',.05],['ratedFlow','Lưu lượng thiết kế','m³/h',.5]],
+ sludgeTank:[['diameter','Đường kính bể','m',.05],['height','Chiều cao bể','m',.05],['waterLevel','Mực bùn/nước tham chiếu','m',.05]],
+ degassing:[['diameter','Đường kính','m',.05],['height','Chiều cao','m',.05],['waterLevel','Mực nước','m',.05],['ratedFlow','Lưu lượng thiết kế','m³/h',.5]],
+ pump:[['width','Chiều dài','m',.05],['depth','Chiều rộng','m',.05],['height','Chiều cao','m',.05],['ratedFlow','Lưu lượng định mức','m³/h',.5],['head','Cột áp bơm công bố','m',.1],['efficiency','Hiệu suất tổng','%',1],['motorPower','Công suất động cơ','kW',.01]],
+ blower:[['width','Chiều dài','m',.05],['depth','Chiều rộng','m',.05],['height','Chiều cao','m',.05],['power','Công suất điện','kW',.05],['airFlow','Lưu lượng khí tại áp suất làm việc','L/min',1],['airPressure','Áp suất làm việc','kPa',1]],
+ oxygenCone:[['diameter','Đường kính','m',.05],['height','Chiều cao','m',.05],['ratedFlow','Lưu lượng nước','m³/h',.5],['oxygenTransferEfficiency','Hiệu suất chuyển oxy','%',1]],
+ oxygenSource:[['diameter','Đường kính bình / cụm','m',.01],['height','Chiều cao','m',.05],['capacity','Năng lực cấp O₂','kg/h',.01]],
+ uv:[['width','Chiều dài','m',.05],['depth','Chiều rộng','m',.05],['height','Chiều cao','m',.05],['ratedFlow','Lưu lượng tối đa','m³/h',.5],['power','Công suất đèn','kW',.01]],
+ valve:[['width','Chiều dài','m',.05],['depth','Chiều rộng','m',.05],['height','Chiều cao','m',.05]],
+ pipe:[['diameter','Đường kính trong','m',.005],['length','Chiều dài','m',.1],['roughness','Độ nhám tuyệt đối','m',.00001]]
+};
+const state = {projectName:'Dự án RAS mới',devices:[],connections:[],selectedId:null,selectedConnectionId:null,pipeEditMode:false,viewMode:'2d',gridOn:true,labelsOn:true,flowOn:true,planZoom:1,connectMode:false,pendingConnect:null,activeTab:'device',dirty:false,settings:{turnoverHours:.5,staticHead:2.5,pipeDiameter:.09,pipeLength:30,minorK:8,pumpEfficiency:60,feedRate:1.5,tanPerKgFeed:.03,oxygenConsumption:.35,oxygenEfficiency:70,doCurrent:5.5,doTarget:6,frictionFactor:.025,maxVelocity:2,maxHeadLoss:5}};
+let toastTimer=null;
+function toast(message){const node=$('toast');node.textContent=message;node.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>node.classList.remove('show'),2200)}
+function markDirty(){state.dirty=true}
+function escNum(v, fallback=0){const n=Number(v);return Number.isFinite(n)?n:fallback}
+function volumeOf(d){const p=d.params||{},water=Math.max(0,escNum(p.waterLevel,escNum(p.height,0)));if(d.type==='rectTank')return Math.max(0,escNum(p.width))*Math.max(0,escNum(p.depth))*water;if(ROUND_TYPES.has(d.type))return Math.PI*Math.pow(Math.max(0,escNum(p.diameter))/2,2)*water;return 0}
+function calc(){
+ const dev=state.devices,s=state.settings;
+ const tanks=dev.filter(d=>d.type==='fishTank'||d.type==='rectTank');
+ const tankVolume=tanks.reduce((a,d)=>a+volumeOf(d),0);
+ const otherVolumes=dev.filter(d=>['settlingTank','biofilter','storageTank','degassing'].includes(d.type)).reduce((a,d)=>a+volumeOf(d),0);
+ const totalVolume=tankVolume+otherVolumes;
+ const biomass=tanks.reduce((a,d)=>a+escNum(d.params.fishCount)*escNum(d.params.avgFishWeight),0);
+ const feed=tanks.reduce((a,d)=>a+escNum(d.params.fishCount)*escNum(d.params.avgFishWeight)*escNum(d.params.feedRate,s.feedRate)/100,0);
+ const turnover=Math.max(.05,escNum(s.turnoverHours,.5));
+ // Turnover target applies to culture-tank working volume, not every vessel in the treatment loop.
+ const flow=tankVolume/turnover;
+ const settler=dev.find(d=>d.type==='settlingTank');
+ const settlingVolume=settler?volumeOf(settler):0;
+ const hrt=flow>0?settlingVolume/flow:0;
+ const tan=feed*Math.max(0,escNum(s.tanPerKgFeed));
+ const biofilters=dev.filter(d=>d.type==='biofilter');
+ const bioVolume=biofilters.reduce((sum,b)=>sum+volumeOf(b),0);
+ const mediaVol=biofilters.reduce((sum,b)=>sum+volumeOf(b)*Math.max(0,escNum(b.params.mediaFraction))/100,0);
+ const tanCapacity=biofilters.reduce((sum,b)=>sum+volumeOf(b)*Math.max(0,escNum(b.params.mediaFraction))/100*Math.max(0,escNum(b.params.tanLoading)),0);
+ const avgTanLoading=mediaVol>0?tanCapacity/mediaVol:0;
+ const mediaRequired=avgTanLoading>0?tan/avgTanLoading:0;
+ const avgMediaFraction=bioVolume>0?mediaVol/bioVolume:0;
+ const bioTankRequired=avgMediaFraction>0?mediaRequired/avgMediaFraction:0;
+ const bioSurface=biofilters.reduce((sum,b)=>sum+volumeOf(b)*Math.max(0,escNum(b.params.mediaFraction))/100*Math.max(0,escNum(b.params.specificSurfaceArea)),0);
+ const avgSurface=mediaVol>0?bioSurface/mediaVol:0;
+ const bioSurfaceRequired=mediaRequired*avgSurface;
+ const pump=dev.find(d=>d.type==='pump');
+ const qPump=pump?escNum(pump.params.ratedFlow):flow;
+ const qM3s=flow/3600;
+ const D=Math.max(.01,escNum(s.pipeDiameter,.09));
+ const area=Math.PI*D*D/4;
+ const velocity=qM3s/area;
+ const f=Math.max(.0001,escNum(s.frictionFactor,.025));
+ const L=Math.max(0,escNum(s.pipeLength));
+ const K=Math.max(0,escNum(s.minorK));
+ const dynamic=velocity*velocity/(2*9.81);
+ const frictionHead=f*(L/D)*dynamic;
+ const minorHead=K*dynamic;
+ const staticHead=Math.max(0,escNum(s.staticHead));
+ const tdh=staticHead+frictionHead+minorHead;
+ const efficiency=(pump?escNum(pump.params.efficiency,60):escNum(s.pumpEfficiency,60))/100;
+ const hydraulic=1000*9.81*qM3s*tdh;
+ const electrical=efficiency>0?hydraulic/efficiency/1000:0;
+ const motorPower=pump?Math.max(0,escNum(pump.params.motorPower,0)):0;
+ const oxygen=biomass*Math.max(0,escNum(s.oxygenConsumption,.35))*24/1000;
+ const oxygenGap=Math.max(0,escNum(s.doTarget,6)-escNum(s.doCurrent,5.5));
+ const oxygenDeficitKg=oxygenGap*totalVolume/1000;
+ const oxygenUnit=dev.find(d=>d.type==='oxygenCone');
+ const oxygenSourceUnit=dev.find(d=>d.type==='oxygenSource');
+ const oxygenEta=Math.max(.01,escNum(oxygenUnit?.params.oxygenTransferEfficiency,s.oxygenEfficiency)/100);
+ const oxygenSource=oxygen/oxygenEta;
+ const oxygenRequiredPerHour=oxygenSource/24;
+ const oxygenSourceCapacity=oxygenSourceUnit?Math.max(0,escNum(oxygenSourceUnit.params.capacity)):0;
+ const uv=dev.some(d=>d.type==='uv');
+ const blower=dev.find(d=>d.type==='blower');
+ const degasser=dev.find(d=>d.type==='degassing');
+ const sludgeTank=dev.find(d=>d.type==='sludgeTank');
+ const warnings=[];
+ if(!tanks.length)warnings.push({type:'error',text:'Chưa có bể nuôi cá để xác định thể tích và sinh khối.'});
+ if(!pump)warnings.push({type:'warn',text:'Chưa bố trí máy bơm tuần hoàn.'});
+ if(!settler)warnings.push({type:'warn',text:'Chưa có bể lắng/tách cặn thô; cần xác định giải pháp loại bỏ chất rắn.'});
+ if((settler||dev.some(d=>d.type==='drumFilter'))&&!sludgeTank)warnings.push({type:'warn',text:'Chưa có bể thu bùn/nước rửa từ bể lắng và Drum Filter.'});
+ if(!biofilters.length)warnings.push({type:'error',text:'Chưa có biofilter; chưa thể đánh giá tải TAN xử lý.'});
+ if(!degasser)warnings.push({type:'warn',text:'Chưa có bộ khử khí CO₂ sau biofilter.'});
+ if(!blower)warnings.push({type:'warn',text:'Chưa bố trí máy thổi khí cho bể vi sinh/bể nuôi.'});
+ if(!oxygenUnit)warnings.push({type:'warn',text:'Chưa có côn hòa tan oxy; cần xác nhận phương án cấp oxy thay thế.'});
+ if(oxygenUnit&&!oxygenSourceUnit)warnings.push({type:'error',text:'Côn hòa tan oxy chưa có nguồn O₂ tinh khiết được khai báo.'});
+ if(oxygenSourceUnit&&oxygenSourceCapacity<oxygenRequiredPerHour)warnings.push({type:'error',text:`Nguồn O₂ khai báo ${fmt(oxygenSourceCapacity,3)} kg/h thấp hơn nhu cầu sơ bộ ${fmt(oxygenRequiredPerHour,3)} kg/h.`});
+ if(state.connections.length===0&&dev.length>1)warnings.push({type:'warn',text:'Chưa có tuyến ống kết nối giữa các thiết bị.'});
+ if(settler&&flow>0&&hrt<escNum(settler.params.designHRT))warnings.push({type:'error',text:`HRT bể lắng ${fmt(hrt*60,1)} phút thấp hơn mục tiêu ${fmt(escNum(settler.params.designHRT)*60,1)} phút.`});
+ if(biofilters.length&&tan>tanCapacity)warnings.push({type:'error',text:`Tải TAN dự kiến ${fmt(tan,3)} kg/ngày vượt khả năng tổng của ${biofilters.length} biofilter (${fmt(tanCapacity,3)} kg/ngày).`});
+ if(pump&&flow>qPump)warnings.push({type:'error',text:`Lưu lượng yêu cầu ${fmt(flow)} m³/h vượt lưu lượng định mức bơm ${fmt(qPump)} m³/h.`});
+ if(pump&&motorPower>0&&motorPower<electrical*1.15)warnings.push({type:'error',text:`Công suất động cơ khai báo ${fmt(motorPower)} kW thấp hơn mức kiểm tra sơ bộ ${fmt(electrical*1.15)} kW.`});
+ if(pump&&escNum(pump.params.head)>0&&tdh>escNum(pump.params.head))warnings.push({type:'warn',text:`TDH yêu cầu sơ bộ ${fmt(tdh)} m lớn hơn cột áp công bố của bơm ${fmt(pump.params.head)} m; cần đối chiếu đường đặc tính.`});
+ if(velocity>escNum(s.maxVelocity,2))warnings.push({type:'warn',text:`Vận tốc ống chính ${fmt(velocity)} m/s vượt ngưỡng cấu hình ${fmt(s.maxVelocity)} m/s.`});
+ if(frictionHead+minorHead>escNum(s.maxHeadLoss,5))warnings.push({type:'warn',text:`Tổn thất dọc + cục bộ sơ bộ ${fmt(frictionHead+minorHead)} m vượt ngưỡng cấu hình.`});
+ const bioBranchFlow=biofilters.length?flow/biofilters.length:flow;
+ for(const d of dev){
+  if(d.params?.ratedFlow){const qDesign=d.type==='biofilter'?bioBranchFlow:flow;if(qDesign>escNum(d.params.ratedFlow))warnings.push({type:'warn',text:`${d.name}: lưu lượng kiểm tra ${fmt(qDesign)} m³/h lớn hơn năng lực tham khảo ${fmt(d.params.ratedFlow)} m³/h.`})}
+ }
+ const connected=new Set();for(const c of state.connections){connected.add(c.from);connected.add(c.to)}
+ for(const d of dev){if(!connected.has(d.id))warnings.push({type:'warn',text:`${d.name} chưa được nối vào sơ đồ đường ống.`})}
+ const errors=warnings.filter(w=>w.type==='error').length;
+ return {tankVolume,otherVolumes,totalVolume,biomass,feed,flow,settlingVolume,hrt,tan,motorPower,oxygenSourceCapacity,oxygenRequiredPerHour,bioVolume,bioCount:biofilters.length,mediaVol,tanCapacity,mediaRequired,bioTankRequired,bioSurface,bioSurfaceRequired,qPump,velocity,frictionHead,minorHead,staticHead,tdh,hydraulic,electrical,oxygen,oxygenGap,oxygenDeficitKg,oxygenSource,oxygenEta,warnings,status:errors?'Không phù hợp':warnings.length?'Cần kiểm tra':'Bình thường',tanks:tanks.length,deviceCount:dev.length,uv}
+}
+function refreshDashboard(){const c=calc();$('mVolume').innerHTML=`${fmt(c.totalVolume)} <span class="unit">m³</span>`;$('mTanks').innerHTML=`${c.tanks} <span class="unit">bể</span>`;$('mDevices').innerHTML=`${c.deviceCount} <span class="unit">thiết bị</span>`;$('mFlow').innerHTML=`${fmt(c.flow)} <span class="unit">m³/h</span>`;$('mPower').innerHTML=`${fmt(c.electrical)} <span class="unit">kW</span>`;const cls=c.status==='Bình thường'?'':c.status==='Cần kiểm tra'?'warn':'bad';$('mStatus').innerHTML=`<i class="dot ${cls}"></i>${escapeHTML(c.status)}`;$('systemStatus').textContent='● '+c.status;$('systemStatus').style.color=c.status==='Bình thường'?'#58876b':c.status==='Cần kiểm tra'?'#9b7438':'#a95459';$('warningCount').textContent=c.warnings.length+' mục';$('warningList').innerHTML=c.warnings.length?c.warnings.map(w=>`<div class="warning ${w.type==='error'?'error':''}">${escapeHTML(w.text)}</div>`).join(''):'<div class="warning ok">Không có cảnh báo theo ngưỡng hiện tại. Vẫn cần kỹ sư kiểm tra trước khi thi công.</div>';return c}
+function refreshFlow(){const host=$('flowSteps');if(!state.connections.length){host.innerHTML='<span class="muted">Chưa có tuyến ống. Chọn “Nối ống” hoặc “Tạo tuyến mẫu”.</span>';return}const byId=new Map(state.devices.map(d=>[d.id,d]));const start=state.connections[0]?.from;const ordered=[],seen=new Set();let cur=start;for(let i=0;i<state.connections.length+1&&cur&&!seen.has(cur);i++){seen.add(cur);const d=byId.get(cur);if(d)ordered.push(d);cur=state.connections.find(x=>x.from===cur)?.to}for(const d of state.devices)if(!seen.has(d.id)&&state.connections.some(c=>c.from===d.id||c.to===d.id))ordered.push(d);host.innerHTML=ordered.map((d,i)=>`${i?'<span class="flow-arrow">→</span>':''}<div class="flow-node">${escapeHTML(d.name)}<small>${escapeHTML(d.type)}</small></div>`).join('')}
+function refreshAll(){refreshDashboard();refreshFlow();renderPlan2D();draw3D();if(state.activeTab==='calc')renderCalculationTab();if(state.activeTab==='settings')renderSettingsTab()}
+function renderLibrary(filter=''){const q=filter.trim().toLocaleLowerCase('vi');const groups=[...new Set(CATALOG.map(x=>x.group))];$('libraryGrid').innerHTML=groups.map(group=>{const items=CATALOG.filter(x=>x.group===group&&(x.name+' '+x.en).toLocaleLowerCase('vi').includes(q));return items.length?`<div class="lib-group-title">${escapeHTML(group)}</div>`+items.map(x=>`<button class="lib-item" data-add="${x.type}" title="Thêm ${escapeHTML(x.name)}"><span class="lib-icon" style="color:${x.color}">${x.icon}</span><b>${escapeHTML(x.name)}</b><small>＋ Thêm</small></button>`).join(''):''}).join('');$('libraryGrid').querySelectorAll('[data-add]').forEach(btn=>btn.addEventListener('click',()=>{const d=addDevice(btn.dataset.add);toast('Đã thêm '+d.name)}))}
+const PLAN={cx:600,cy:265,scale:45};
+const BOARD={x:240,y:62.5,w:720,h:405};
+function planXY(d){return {x:PLAN.cx+d.x*PLAN.scale,y:PLAN.cy+d.z*PLAN.scale}}
+function selectedConnection(){return state.connections.find(c=>c.id===state.selectedConnectionId)||null}
+// Return the exact point where a pipe should meet the device footprint.
+// Circular tanks/pumps use a radial port; rectangular equipment respects rotation.
+function devicePipePort(device,toward){
+ const dx=Number(toward?.[0])-device.x,dz=Number(toward?.[1])-device.z;
+ if(!Number.isFinite(dx)||!Number.isFinite(dz)||Math.hypot(dx,dz)<1e-7)return [device.x,device.z];
+ const p=device.params||{};
+ if(ROUND_TYPES.has(device.type)||device.type==='pump'){
+  const r=device.type==='pump'?Math.max(.3,escNum(p.width,.75),escNum(p.depth,.55))/2:Math.max(.22,escNum(p.diameter,1)/2);
+  const len=Math.hypot(dx,dz);return [device.x+dx/len*r,device.z+dz/len*r];
+ }
+ const hw=Math.max(.2,escNum(p.width,.8)/2),hh=Math.max(.175,escNum(p.depth,.55)/2),angle=escNum(device.rotation);
+ const ca=Math.cos(angle),sa=Math.sin(angle);
+ // Transform direction into the device's unrotated local coordinates.
+ const lx=ca*dx+sa*dz,lz=-sa*dx+ca*dz;
+ const tx=Math.abs(lx)>1e-9?hw/Math.abs(lx):Infinity;
+ const tz=Math.abs(lz)>1e-9?hh/Math.abs(lz):Infinity;
+ const scale=Math.min(tx,tz);
+ const bx=lx*scale,bz=lz*scale;
+ // Transform the boundary point back to world coordinates.
+ return [device.x+ca*bx-sa*bz,device.z+sa*bx+ca*bz];
+}
+function pipeRoute(c){
+ const a=state.devices.find(x=>x.id===c.from),b=state.devices.find(x=>x.id===c.to);if(!a||!b)return [];
+ let pts;
+ if(Array.isArray(c.route)&&c.route.length>=2){pts=c.route.map(p=>[Number(p[0]),Number(p[1])]);}
+ else {
+  const dx=b.x-a.x,dz=b.z-a.z;
+  const pa=devicePipePort(a,[b.x,b.z]),pb=devicePipePort(b,[a.x,a.z]);
+  // Orthogonal auto-route between the actual device ports.
+  if(Math.abs(dx)>=Math.abs(dz)){const mid=(pa[0]+pb[0])/2;pts=[pa,[mid,pa[1]],[mid,pb[1]],pb];}
+  else {const mid=(pa[1]+pb[1])/2;pts=[pa,[pa[0],mid],[pb[0],mid],pb];}
+ }
+ if(pts.length<2)return [];
+ // Recalculate both ends every render. Moving either device therefore keeps
+ // the pipe connected while preserving user-created bends in the middle.
+ const firstInner=pts.length>2?pts[1]:[b.x,b.z];
+ const lastInner=pts.length>2?pts[pts.length-2]:[a.x,a.z];
+ pts[0]=devicePipePort(a,firstInner);
+ pts[pts.length-1]=devicePipePort(b,lastInner);
+ return pts;
+}
+function pipeLengthM(c){if(Number.isFinite(Number(c.lengthM))&&Number(c.lengthM)>0)return Number(c.lengthM);const pts=pipeRoute(c);let total=0;for(let i=1;i<pts.length;i++)total+=Math.hypot(pts[i][0]-pts[i-1][0],pts[i][1]-pts[i-1][1]);return total}
+function selectConnection(id){const c=state.connections.find(x=>x.id===id);if(!c)return;state.selectedConnectionId=id;state.selectedId=null;state.activeTab='device';state.pipeEditMode=true;$('btnPipeEdit')?.classList.add('active');$('canvasStatus').textContent='CHỈNH SỬA ĐƯỜNG ỐNG';$('viewportHint').textContent='Đường ống đã chọn · Hai đầu tự bám vào thiết bị · Kéo nút xanh để đổi tuyến · Bảng bên phải để chỉnh thông số và điểm nối';renderPlan2D();draw3D();renderInspector()}
+function clearPipeSelection(){state.selectedConnectionId=null;state.pipeEditMode=false;$('btnPipeEdit')?.classList.remove('active')}
+
+function planDims(d){const p=d.params||{};if(ROUND_TYPES.has(d.type)||d.type==='pump'){const dia=d.type==='pump'?Math.max(escNum(p.width,.7),escNum(p.depth,.5)):escNum(p.diameter,1);const r=Math.max(.22,dia/2)*PLAN.scale/2*2;return {round:true,r,w:r*2,h:r*2}}return {round:false,r:0,w:Math.max(.4,escNum(p.width,.8))*PLAN.scale,h:Math.max(.35,escNum(p.depth,.55))*PLAN.scale}}
+function planDeviceMarkup(d,index){
+ const meta=byType(d.type),pt=planXY(d),dim=planDims(d),p=d.params||{},color=meta?.color||'#7aa18c';let sh='';
+ if(dim.round){
+  sh+=`<ellipse class="tank-shadow" cx="0" cy="${dim.r*.78}" rx="${dim.r*.94}" ry="${dim.r*.28}"/>`;
+  const shellFill=d.type==='fishTank'?'#d8efed':d.type==='settlingTank'?'#f4ead8':d.type==='biofilter'?'#e5f1df':d.type==='pump'?'#e8f0f7':d.type==='sludgeTank'?'#efe4dc':'#e0eef4';
+  sh+=`<circle class="tank-shell" cx="0" cy="0" r="${dim.r}" style="fill:${shellFill};stroke:${color};stroke-width:${d.type==='fishTank'?3:2.5}"/>`;
+  sh+=`<circle class="tank-water" cx="0" cy="0" r="${dim.r*.82}" style="fill:${d.type==='settlingTank'?'#f3dcae':d.type==='pump'?'#cfe1f1':d.type==='sludgeTank'?'#c9a991':'#8bd5d0'}"/>`;
+  sh+=`<circle class="tank-rim" cx="0" cy="0" r="${dim.r*.91}"/>`;
+  if(d.type==='fishTank'){
+   sh+=`<path d="M ${-dim.r*.54} ${-dim.r*.10} Q ${-dim.r*.22} ${-dim.r*.29} 0 ${-dim.r*.10} T ${dim.r*.54} ${-dim.r*.10}" fill="none" stroke="#259d9d" stroke-width="2.4" opacity=".9"/>`;
+   sh+=`<path d="M ${-dim.r*.42} ${dim.r*.18} Q ${-dim.r*.12} ${dim.r*.02} ${dim.r*.17} ${dim.r*.18}" fill="none" stroke="#fff" stroke-width="1.8" opacity=".9"/>`;
+  }
+  if(d.type==='biofilter'){
+   for(let i=-1;i<=1;i++)for(let j=-1;j<=1;j++)sh+=`<circle cx="${i*dim.r*.32}" cy="${j*dim.r*.32}" r="${Math.max(2,dim.r*.055)}" fill="#77a56e" opacity=".85"/>`;
+   sh+=`<circle cx="0" cy="0" r="${dim.r*.53}" fill="none" stroke="#9bc18c" stroke-width="1.2" stroke-dasharray="3 3"/>`;
+  }
+  if(d.type==='settlingTank'){
+   sh+=`<path d="M ${-dim.r*.42} ${dim.r*.15} Q 0 ${-dim.r*.18} ${dim.r*.42} ${dim.r*.15}" fill="none" stroke="#c0914d" stroke-width="2"/>`;
+   sh+=`<circle cx="0" cy="${dim.r*.22}" r="${dim.r*.12}" fill="#c0914d" opacity=".7"/>`;
+  }
+  if(d.type==='storageTank')sh+=`<path d="M ${-dim.r*.48} 0 H ${dim.r*.48}" stroke="#fff" stroke-width="2.5" opacity=".9"/>`;
+  if(d.type==='oxygenSource')sh+=`<rect x="${-dim.r*.28}" y="${-dim.r*.42}" width="${dim.r*.56}" height="${dim.r*.84}" rx="5" fill="#f6fbfc" stroke="#4f9aa7" stroke-width="1.8"/><text x="0" y="4" font-size="10" font-weight="800" text-anchor="middle" fill="#397e8c">O₂</text>`;
+  if(d.type==='sludgeTank')sh+=`<path d="M ${-dim.r*.42} ${dim.r*.12} Q 0 ${dim.r*.42} ${dim.r*.42} ${dim.r*.12}" fill="none" stroke="#9a806f" stroke-width="2.2"/><text x="0" y="-${dim.r*.22}" font-size="8" font-weight="800" text-anchor="middle" fill="#80614e">BÙN</text>`;
+  if(d.type==='pump'){
+   sh+=`<circle cx="0" cy="0" r="${dim.r*.43}" fill="#fff" stroke="#6f99bd" stroke-width="1.6"/>`;
+   for(let k=0;k<4;k++)sh+=`<path d="M 0 -${dim.r*.08} Q ${dim.r*.34} -${dim.r*.31} ${dim.r*.16} 0" transform="rotate(${k*90})" fill="none" stroke="#5e91b7" stroke-width="2.1" stroke-linecap="round"/>`;
+   sh+=`<circle cx="0" cy="0" r="${dim.r*.09}" fill="#6d9fc0"/>`;
+  }
+ }else{
+  sh+=`<rect class="equipment-shadow" x="${-dim.w/2+3}" y="${-dim.h/2+5}" width="${dim.w}" height="${dim.h}" rx="9"/>`;
+  sh+=`<rect class="equipment-shell" x="${-dim.w/2}" y="${-dim.h/2}" width="${dim.w}" height="${dim.h}" rx="9" style="stroke:${color};fill:#e7efeb"/>`;
+  sh+=`<rect class="equipment-face" x="${-dim.w/2+5}" y="${-dim.h/2+5}" width="${Math.max(8,dim.w-10)}" height="${Math.max(8,dim.h-10)}" rx="6"/>`;
+  if(d.type==='drumFilter'||d.type==='mechanicalFilter'){
+   for(let i=-1;i<=1;i++)sh+=`<path d="M ${i*dim.w*.19} ${-dim.h*.24} V ${dim.h*.24}" stroke="${color}" stroke-width="2.2" stroke-linecap="round"/>`;
+   sh+=`<path d="M ${-dim.w*.30} 0 H ${dim.w*.30}" stroke="${color}" stroke-width="2" opacity=".7"/>`;
+  }else if(d.type==='blower'){
+   sh+=`<circle cx="0" cy="0" r="${Math.min(dim.w,dim.h)*.24}" fill="#eee8f5" stroke="#a58bc0" stroke-width="2"/>`;
+   for(let k=0;k<4;k++)sh+=`<path d="M 0 0 Q 5 -${Math.min(dim.w,dim.h)*.22} ${Math.min(dim.w,dim.h)*.13} -${Math.min(dim.w,dim.h)*.16}" transform="rotate(${k*90})" fill="none" stroke="#987eb7" stroke-width="2.4" stroke-linecap="round"/>`;
+  }else if(d.type==='oxygenCone'){
+   sh+=`<path d="M ${-dim.w*.24} ${-dim.h*.23} L 0 ${dim.h*.25} L ${dim.w*.24} ${-dim.h*.23}" fill="#cde9e0" stroke="#5f9f8e" stroke-width="2.1" stroke-linejoin="round"/>`;
+  }else if(d.type==='uv'){
+   sh+=`<path d="M ${-dim.w*.29} 0 H ${dim.w*.29}" stroke="#8e84bb" stroke-width="4" stroke-linecap="round"/><circle cx="0" cy="0" r="3" fill="#fff4b8"/>`;
+  }else if(d.type==='valve'){
+   sh+=`<path d="M -10 -9 L 10 9 M 10 -9 L -10 9" stroke="#c58b4d" stroke-width="3" stroke-linecap="round"/>`;
+  }else{
+   sh+=`<path d="M ${-dim.w*.25} 0 H ${dim.w*.25}" stroke="${color}" stroke-width="2.5" stroke-linecap="round"/>`;
+  }
+ }
+ const rawLabel=String(d.name||meta?.name||d.type),label=rawLabel.length>22?rawLabel.slice(0,21)+'…':rawLabel;
+ const labelW=Math.max(68,Math.min(148,label.length*5.8+24));
+ const labelBase=d.type==='fishTank'?4:(dim.round?dim.r+17:dim.h/2+17);const labelY=d.type==='fishTank'?4:(d.labelSide==='above'?-labelBase:labelBase);
+ const insideTank=d.type==='fishTank';
+ const secondary=insideTank?`${fmt(volumeOf(d),2)} m³ · Ø${fmt(p.diameter,1)} m`:'';
+ const showPlate=!insideTank;
+ return `<g class="device-node" data-id="${escapeHTML(d.id)}" tabindex="0" role="button" aria-label="${escapeHTML(rawLabel)}" transform="translate(${pt.x} ${pt.y}) rotate(${(d.rotation||0)*180/Math.PI})">
+  <circle class="device-hit-area" cx="0" cy="0" r="${Math.max(dim.r,dim.w/2,dim.h/2)+9}"/>
+  ${state.selectedId===d.id?`<rect class="node-select" x="${-Math.max(dim.r,dim.w/2)-10}" y="${-Math.max(dim.r,dim.h/2)-10}" width="${Math.max(dim.r*2,dim.w)+20}" height="${Math.max(dim.r*2,dim.h)+20}" rx="9"/>`:''}
+  ${sh}
+  ${state.labelsOn?(insideTank?`<g class="device-nameplate"><rect class="label-plate" x="${-labelW/2}" y="-13" width="${labelW}" height="24" rx="7"/><text class="device-label" x="0" y="3">${escapeHTML(label)}</text><text class="device-sub-label" x="0" y="${dim.r*.48}">${escapeHTML(secondary)}</text></g>`:`<g class="device-nameplate"><rect class="label-plate" x="${-labelW/2}" y="${labelY-10}" width="${labelW}" height="20" rx="7"/><circle class="label-dot" cx="${-labelW/2+8}" cy="${labelY}" r="3" fill="${color}"/><text class="device-label" x="4" y="${labelY+3.5}">${escapeHTML(label)}</text></g>`):''}
+  <title>${escapeHTML(rawLabel)} · ${escapeHTML(d.id)}</title>
+ </g>`;
+}
+function connectionClass(a,b,c=null){
+ if(c?.kind){const k=String(c.kind);return k.startsWith('pipe-')?k:`pipe-${k}`}
+ if(a.type==='blower'||b.type==='blower')return 'pipe-air';
+ if(['pump','oxygenCone'].includes(a.type)||['pump','oxygenCone'].includes(b.type))return 'pipe-press';
+ return 'pipe-water';
+}
+function planConnectionMarkup(c,index=0){
+ const a=state.devices.find(x=>x.id===c.from),b=state.devices.find(x=>x.id===c.to);if(!a||!b)return '';
+ const route=pipeRoute(c),pts=route.map(([x,z])=>planXY({x,z}));if(pts.length<2)return '';
+ const d=pts.map((p,i)=>(i?'L':'M')+` ${p.x} ${p.y}`).join(' ');
+ const cls=connectionClass(a,b,c),marker=cls==='pipe-air'?'arrowAir':cls==='pipe-press'?'arrowPress':cls==='pipe-waste'?'arrowWaste':'arrowWater';
+ const color=cls==='pipe-air'?'#a58bc0':cls==='pipe-press'?'#d69a43':cls==='pipe-waste'?'#9a806f':'#299c9b';
+ let label='';
+ if(c.flowLabel||Number.isFinite(Number(c.flowM3h))){const q=Number.isFinite(Number(c.flowM3h))?Number(c.flowM3h):calc().flow;label=`${fmt(q,2)} m³/h`;}
+ if(c.label)label=label?`${label} · ${c.label}`:c.label;
+ const dia=c.showDiameterLabel===false?'':(c.diameterMm?`Ø${fmt(c.diameterMm,0)}`:(c.diameterLabel||''));
+ if(dia)label=label?`${label} · ${dia}`:dia;
+ if(Number.isFinite(Number(c.lengthM))&&Number(c.lengthM)>0)label=label?`${label} · ${fmt(c.lengthM,1)} m`:`${fmt(c.lengthM,1)} m`;
+ let labelMarkup='';
+ if(label){const at=c.labelAt?planXY({x:c.labelAt[0],z:c.labelAt[1]}):pts[Math.floor((pts.length-1)/2)];const w=Math.max(38,Math.min(190,label.length*5.1+14));labelMarkup=`<g class="pipe-label" transform="translate(${at.x} ${at.y})"><rect x="${-w/2}" y="-9" width="${w}" height="18" rx="5"/><text x="0" y="1">${escapeHTML(label)}</text></g>`;}
+ const selected=state.selectedConnectionId===c.id;
+ const controls=selected?`<path class="pipe-control-line" d="${d}"/>${pts.slice(1,-1).map((p,i)=>`<circle class="pipe-point-handle" data-pipe-point="${i+1}" data-connection-id="${escapeHTML(c.id)}" cx="${p.x}" cy="${p.y}" r="7"><title>Kéo để chỉnh tuyến ống</title></circle>`).join('')}${pts.length>1?`<circle class="pipe-start-end" cx="${pts[0].x}" cy="${pts[0].y}" r="5"/><circle class="pipe-start-end" cx="${pts.at(-1).x}" cy="${pts.at(-1).y}" r="5"/>`:''}`:'';
+ return `<g class="pipe-group${selected?' selected':''}" data-connection-id="${escapeHTML(c.id)}">
+  ${selected?`<path class="pipe-selected" d="${d}"/>`:''}
+  <path class="pipe-halo" d="${d}"/>
+  <path class="${cls}" d="${d}" marker-end="url(#${marker})"/>
+  <path class="pipe-hit" data-connection-id="${escapeHTML(c.id)}" d="${d}" aria-label="Chọn đường ống"/>
+  <circle cx="${pts[0].x}" cy="${pts[0].y}" r="3.4" fill="#fff" stroke="${color}" stroke-width="1.5"/>
+  ${labelMarkup}${controls}<title>${escapeHTML(a.name)} → ${escapeHTML(b.name)} · ${dia||'Đường ống'}</title>
+ </g>`;
+}
+function renderPlan2D(){
+ const svg=$('planSvg');if(!svg)return;
+ const v=1200/state.planZoom,h=530/state.planZoom;svg.setAttribute('viewBox',`${600-v/2} ${265-h/2} ${v} ${h}`);
+ const pipes=state.connections.map(planConnectionMarkup).join('');
+ const devices=state.devices.map((d,i)=>planDeviceMarkup(d,i)).join('');
+ let ticksX='',ticksY='';
+ for(let m=0;m<=16;m+=1){const x=BOARD.x+m*PLAN.scale;ticksX+=`<text class="ruler-label" x="${x}" y="${BOARD.y+BOARD.h+15}" text-anchor="middle">${m}</text>`;}
+ for(let m=0;m<=9;m+=1){const y=BOARD.y+m*PLAN.scale;ticksY+=`<text class="ruler-label" x="${BOARD.x-9}" y="${y+3}" text-anchor="end">${m}</text>`;}
+ svg.innerHTML=`
+ <defs>
+  <filter id="boardShadow" x="-10%" y="-10%" width="120%" height="125%"><feDropShadow dx="0" dy="5" stdDeviation="7" flood-color="#46664f" flood-opacity=".09"/></filter>
+  <filter id="labelShadow" x="-20%" y="-30%" width="140%" height="170%"><feDropShadow dx="0" dy="1.5" stdDeviation="1.8" flood-color="#3e5b46" flood-opacity=".10"/></filter>
+  <pattern id="gridMinor" width="${PLAN.scale/2}" height="${PLAN.scale/2}" patternUnits="userSpaceOnUse"><path d="M${PLAN.scale/2} 0H0V${PLAN.scale/2}" fill="none" stroke="#e9f0e8" stroke-width="1"/></pattern>
+  <pattern id="gridMajor" width="${PLAN.scale}" height="${PLAN.scale}" patternUnits="userSpaceOnUse"><path d="M${PLAN.scale} 0H0V${PLAN.scale}" fill="none" stroke="#d9e5d8" stroke-width="1.25"/></pattern>
+  <marker id="arrowWater" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#299c9b"/></marker>
+  <marker id="arrowPress" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#d69a43"/></marker>
+  <marker id="arrowAir" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#a58bc0"/></marker>
+  <marker id="arrowWaste" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto"><path d="M0 0L8 4L0 8Z" fill="#9a806f"/></marker>
+ </defs>
+ <rect class="plan-bg" x="0" y="0" width="1200" height="530"/>
+ <text class="plot-title" x="${BOARD.x}" y="26">MẶT BẰNG BỐ TRÍ THIẾT BỊ RAS</text>
+ <text class="plot-subtitle" x="${BOARD.x}" y="38">Sơ đồ công nghệ · Lưới 0,5 m · Kích thước khu vực 16 × 9 m</text>
+ <rect class="plan-frame" x="${BOARD.x}" y="${BOARD.y}" width="${BOARD.w}" height="${BOARD.h}" rx="8" filter="url(#boardShadow)"/>
+ <rect class="plan-board-inner" x="${BOARD.x}" y="${BOARD.y}" width="${BOARD.w}" height="${BOARD.h}" rx="8"/>
+ ${state.gridOn?`<rect class="grid-minor" x="${BOARD.x}" y="${BOARD.y}" width="${BOARD.w}" height="${BOARD.h}"/><rect class="grid-major" x="${BOARD.x}" y="${BOARD.y}" width="${BOARD.w}" height="${BOARD.h}"/>`:''}
+ <rect class="board-edge" x="${BOARD.x}" y="${BOARD.y}" width="${BOARD.w}" height="${BOARD.h}" rx="8"/>
+ ${ticksX}${ticksY}
+ <g class="pipe-layer">${pipes}</g>
+ <g id="planDevices">${devices}</g>
+ <g class="board-dimensions"><text class="dimension" x="600" y="${BOARD.y+BOARD.h+35}" text-anchor="middle">MẶT BẰNG 16 × 9 m</text><text class="board-caption" x="${BOARD.x+BOARD.w}" y="${BOARD.y+BOARD.h+35}" text-anchor="end">Đơn vị: mét</text></g>
+ `;
+ $('planZoomValue').textContent=Math.round(state.planZoom*100)+'%';
+ $('viewportMeta').textContent=state.devices.length+' thiết bị · '+state.connections.length+' đường ống';
+}
+function addDevice(type,overrides={},position=null){clearPipeSelection();const meta=byType(type);if(!meta)throw new Error('Loại thiết bị không hợp lệ');const n=state.devices.length;const d={id:uid(),type,name:meta.name,params:{...meta.defaults,...overrides},x:position?.x??((n%4-1.5)*3),z:position?.z??(Math.floor(n/4)-1)*2.8,rotation:0,labelSide:'below'};state.devices.push(d);state.selectedId=d.id;markDirty();refreshAll();renderInspector();return d}
+function selectedDevice(){return state.devices.find(d=>d.id===state.selectedId)||null}
+function renderInspector(){const host=$('inspectorBody'),d=selectedDevice();$('inspectorTitle').textContent=state.activeTab==='device'?(selectedConnection()?'Thông số đường ống':'Thông số thiết bị'):state.activeTab==='calc'?'Tính toán hệ thống':'Cấu hình hệ thống';document.querySelectorAll('[data-tab]').forEach(b=>b.classList.toggle('active',b.dataset.tab===state.activeTab));if(state.activeTab==='device'){const pipe=selectedConnection();if(pipe){renderPipeInspector(host,pipe);return}if(!d){host.innerHTML='<div class="empty"><span class="big">⌖</span>Chọn một thiết bị hoặc đường ống trên mô hình để xem và chỉnh sửa thông số.</div>';return}const fields=FIELDS[d.type]||[];host.innerHTML=`<div class="subcard"><h4>Thông tin thiết bị</h4><div class="field"><label>Tên hiển thị</label><input id="deviceName" type="text" maxlength="60" value="${escapeHTML(d.name)}"></div><div class="field-grid">${fields.map(([key,label,unit,step])=>`<div class="field"><label>${escapeHTML(label)} <em>${escapeHTML(unit)}</em></label><input type="number" step="${step}" data-param="${key}" value="${escNum(d.params[key])}"></div>`).join('')}</div><div class="muted">ID: ${escapeHTML(d.id)} · Loại: ${escapeHTML(byType(d.type)?.en||d.type)}</div></div><div class="subcard"><h4>Vị trí mặt bằng</h4><div class="field-grid"><div class="field"><label>Tọa độ X (m)</label><input type="number" step=".1" data-pos="x" value="${Number(d.x).toFixed(2)}"></div><div class="field"><label>Tọa độ Y/Z (m)</label><input type="number" step=".1" data-pos="z" value="${Number(d.z).toFixed(2)}"></div><div class="field"><label>Góc xoay (°)</label><input type="number" step="15" data-pos="rotation" value="${fmt(d.rotation*180/Math.PI,0)}"></div></div></div><div class="button-row"><button id="duplicateDevice">Nhân bản</button><button id="rotateDevice">Xoay 90°</button><button id="deleteDevice" class="danger">Xóa thiết bị</button></div>`;host.querySelector('#deviceName').addEventListener('change',e=>{d.name=e.target.value.trim()||byType(d.type).name;refreshAll();renderInspector();markDirty()});host.querySelectorAll('[data-param]').forEach(inp=>inp.addEventListener('change',()=>{const value=Number(inp.value);if(Number.isFinite(value)){d.params[inp.dataset.param]=value;refreshAll();renderInspector();markDirty()}}));host.querySelectorAll('[data-pos]').forEach(inp=>inp.addEventListener('change',()=>{const k=inp.dataset.pos,v=Number(inp.value);if(Number.isFinite(v)){if(k==='rotation')d.rotation=v*Math.PI/180;else d[k]=k==='x'?Math.max(-7.7,Math.min(7.7,v)):Math.max(-4.2,Math.min(4.2,v));refreshAll();renderInspector();markDirty()}}));host.querySelector('#duplicateDevice').onclick=duplicateSelected;host.querySelector('#rotateDevice').onclick=rotateSelected;host.querySelector('#deleteDevice').onclick=deleteSelected;return}if(state.activeTab==='calc'){renderCalculationTab();return}renderSettingsTab()}
+function renderPipeInspector(host,c){
+ const route=pipeRoute(c),deviceOptions=state.devices.map(d=>`<option value="${escapeHTML(d.id)}">${escapeHTML(d.name)}</option>`).join('');
+ const from=state.devices.find(d=>d.id===c.from),to=state.devices.find(d=>d.id===c.to);
+ const kind=String(c.kind||'water').replace(/^pipe-/,'');
+ host.innerHTML=`
+  <div class="subcard"><h4>Đường ống đang chọn</h4>
+   <div class="pipe-type-pill"><span style="display:inline-block;width:18px;height:4px;border-radius:4px;background:${kind==='air'?'#a58bc0':kind==='press'?'#d69a43':kind==='waste'?'#9a806f':'#299c9b'}"></span>${kind==='air'?'Đường khí':kind==='press'?'Nước có áp':kind==='waste'?'Đường xả cặn / bùn':'Nước tự chảy'}</div>
+   <div class="field" style="margin-top:10px"><label>Tên / ghi chú tuyến ống</label><input id="pipeName" type="text" maxlength="60" value="${escapeHTML(c.label||'') }" placeholder="Ví dụ: Ống hồi Ø90"></div>
+   <div class="field-grid">
+    <div class="field"><label>Thiết bị đầu</label><select id="pipeFrom">${deviceOptions}</select></div>
+    <div class="field"><label>Thiết bị cuối</label><select id="pipeTo">${deviceOptions}</select></div>
+    <div class="field"><label>Loại đường ống</label><select id="pipeKind"><option value="water">Nước tự chảy</option><option value="press">Nước có áp</option><option value="air">Khí</option><option value="waste">Xả cặn / bùn</option></select></div>
+    <div class="field"><label>Đường kính trong (mm)</label><input id="pipeDiameter" type="number" min="1" step="1" value="${Number(c.diameterMm)||parseFloat(String(c.diameterLabel||'').replace(/[^0-9.]/g,''))||90}"></div>
+    <div class="field"><label>Lưu lượng (m³/h)</label><input id="pipeFlow" type="number" min="0" step="0.1" value="${Number.isFinite(Number(c.flowM3h))?Number(c.flowM3h):''}" placeholder="Dùng lưu lượng hệ thống"></div>
+    <div class="field"><label>Chiều dài (m)</label><input id="pipeLength" type="number" min="0.1" step="0.1" value="${fmt(pipeLengthM(c),2).replace(/\./g,'').replace(',','.')}"></div>
+   </div>
+   <div class="muted">${escapeHTML(from?.name||'Chưa chọn')} → ${escapeHTML(to?.name||'Chưa chọn')} · ID: ${escapeHTML(c.id)}</div>
+  </div>
+  <div class="subcard"><h4>Chỉnh tuyến trên mặt bằng 2D</h4>
+   <div class="pipe-editor-note">Chọn đường ống trên bản vẽ. Kéo các nút tròn màu xanh để đổi hướng tuyến. Hai đầu ống tự bám vào mép thiết bị. Khi di chuyển thiết bị, đầu ống tự chạy theo; các nút xanh ở giữa dùng để chỉnh điểm gấp khúc.</div>
+   <div class="muted">Số điểm tuyến: ${route.length} · Chiều dài hình học: ${fmt(pipeLengthM({...c,lengthM:null}),2)} m</div>
+   <div class="pipe-editor-actions"><button id="pipeAddBend">＋ Thêm điểm gấp</button><button id="pipeStraight">Tuyến tự động</button><button id="pipeReverse">Đảo chiều</button></div>
+   <div class="pipe-editor-actions"><button id="pipeDelete" class="danger">Xóa đường ống</button></div>
+  </div>
+  <div class="subcard"><h4>Gợi ý thao tác</h4><p class="muted">• Đổi thiết bị đầu/cuối để chuyển kết nối sang thiết bị khác.<br>• Đổi loại ống để thay màu và chú giải.<br>• Đường kính, lưu lượng và chiều dài được lưu trong file JSON của dự án.<br>• Thông số từng tuyến đang phục vụ bản vẽ; phần tính tổn thất thủy lực tổng thể vẫn dùng thông số ống chính ở tab Cấu hình.</p></div>`;
+ host.querySelector('#pipeFrom').value=c.from;host.querySelector('#pipeTo').value=c.to;host.querySelector('#pipeKind').value=kind;
+ const update=()=>{refreshAll();renderInspector();markDirty()};
+ host.querySelector('#pipeName').addEventListener('change',e=>{c.label=e.target.value.trim();update()});
+ host.querySelector('#pipeKind').addEventListener('change',e=>{c.kind=e.target.value;update()});
+ host.querySelector('#pipeDiameter').addEventListener('change',e=>{const v=Number(e.target.value);if(Number.isFinite(v)&&v>0){c.diameterMm=v;c.diameterLabel=`Ø${fmt(v,0)}`;update()}});
+ host.querySelector('#pipeLength').addEventListener('change',e=>{const v=Number(e.target.value);if(Number.isFinite(v)&&v>0){c.lengthM=v;update()}});
+ host.querySelector('#pipeFlow').addEventListener('change',e=>{const v=e.target.value.trim()===''?null:Number(e.target.value);if(v===null){delete c.flowM3h;c.flowLabel=false}else if(Number.isFinite(v)&&v>=0){c.flowM3h=v;c.flowLabel=true}update()});
+ host.querySelector('#pipeFrom').addEventListener('change',e=>{if(e.target.value===c.to){toast('Đầu nguồn và đầu cuối phải là hai thiết bị khác nhau');e.target.value=c.from;return}c.from=e.target.value;c.route=null;c.lengthM=null;update()});
+ host.querySelector('#pipeTo').addEventListener('change',e=>{if(e.target.value===c.from){toast('Đầu nguồn và đầu cuối phải là hai thiết bị khác nhau');e.target.value=c.to;return}c.to=e.target.value;c.route=null;c.lengthM=null;update()});
+ host.querySelector('#pipeAddBend').onclick=()=>{const pts=pipeRoute(c).map(p=>[...p]);let best=0,bestLen=-1;for(let i=1;i<pts.length;i++){const len=Math.hypot(pts[i][0]-pts[i-1][0],pts[i][1]-pts[i-1][1]);if(len>bestLen){bestLen=len;best=i}}const a=pts[best-1],b=pts[best],mid=[(a[0]+b[0])/2,(a[1]+b[1])/2];pts.splice(best,0,mid);c.route=pts;c.lengthM=null;update();toast('Đã thêm điểm gấp khúc – kéo nút xanh trên bản vẽ để chỉnh')};
+ host.querySelector('#pipeStraight').onclick=()=>{c.route=null;c.lengthM=null;update();toast('Đã tạo lại tuyến tự động giữa hai thiết bị')};
+ host.querySelector('#pipeReverse').onclick=()=>{const oldFrom=c.from;c.from=c.to;c.to=oldFrom;if(Array.isArray(c.route))c.route=c.route.slice().reverse();update();toast('Đã đảo chiều đường ống')};
+ host.querySelector('#pipeDelete').onclick=deleteSelected;
+}
+function fieldHTML(key,label,unit,step,value){return `<div class="field"><label>${escapeHTML(label)} <em>${escapeHTML(unit)}</em></label><input type="number" step="${step}" data-global="${key}" value="${escNum(value)}"></div>`}
+function renderCalculationTab(){const host=$('inspectorBody'),c=calc();host.innerHTML=`<div class="subcard"><h4>Kết quả tính nhanh</h4><div class="stat-line"><span>Thể tích bể nuôi</span><strong>${fmt(c.tankVolume)} m³</strong></div><div class="stat-line"><span>Tổng thể tích</span><strong>${fmt(c.totalVolume)} m³</strong></div><div class="stat-line"><span>Sinh khối cá</span><strong>${fmt(c.biomass)} kg</strong></div><div class="stat-line"><span>Thức ăn/ngày</span><strong>${fmt(c.feed)} kg</strong></div><div class="stat-line"><span>Lưu lượng tuần hoàn</span><strong>${fmt(c.flow)} m³/h</strong></div><div class="stat-line"><span>HRT bể lắng</span><strong>${fmt(c.hrt)} giờ</strong></div><div class="stat-line"><span>Tải TAN dự kiến</span><strong>${fmt(c.tan,3)} kg/ngày</strong></div><div class="stat-line"><span>Số biofilter song song</span><strong>${c.bioCount}</strong></div><div class="stat-line"><span>Vật liệu lọc đang có</span><strong>${fmt(c.mediaVol)} m³</strong></div><div class="stat-line"><span>Vật liệu biofilter cần</span><strong>${fmt(c.mediaRequired)} m³</strong></div><div class="stat-line"><span>TDH</span><strong>${fmt(c.tdh)} m</strong></div><div class="stat-line"><span>Công suất điện bơm</span><strong>${fmt(c.electrical)} kW</strong></div><div class="stat-line"><span>Vận tốc đường ống</span><strong>${fmt(c.velocity)} m/s</strong></div><div class="stat-line"><span>Nhu cầu oxy</span><strong>${fmt(c.oxygen,3)} kg/ngày</strong></div></div><div class="muted">Mở “Cấu hình” để chỉnh hệ số đầu vào. Các kết quả chỉ mang tính ước tính theo dữ liệu đã nhập.</div><button id="btnCalcReport" class="primary" style="width:100%;margin-top:10px">Xem báo cáo đầy đủ</button>`;$('btnCalcReport').onclick=showReport}
+function renderSettingsTab(){const s=state.settings,host=$('inspectorBody');host.innerHTML=`<div class="subcard"><h4>Thủy lực & đường ống</h4><div class="field-grid">${fieldHTML('turnoverHours','Thời gian tuần hoàn','giờ',.1,s.turnoverHours)}${fieldHTML('staticHead','Cột áp tĩnh','m',.1,s.staticHead)}${fieldHTML('pipeDiameter','Đường kính ống chính','m',.005,s.pipeDiameter)}${fieldHTML('pipeLength','Tổng chiều dài ống','m',.5,s.pipeLength)}${fieldHTML('minorK','Tổng hệ số tổn thất cục bộ K','—',.5,s.minorK)}${fieldHTML('frictionFactor','Hệ số ma sát Darcy f','—',.001,s.frictionFactor)}${fieldHTML('pumpEfficiency','Hiệu suất bơm mặc định','%',1,s.pumpEfficiency)}</div></div><div class="subcard"><h4>Sinh học & oxy</h4><div class="field-grid">${fieldHTML('feedRate','Tỷ lệ thức ăn mặc định','%',.1,s.feedRate)}${fieldHTML('tanPerKgFeed','TAN phát sinh','kg TAN/kg thức ăn',.001,s.tanPerKgFeed)}${fieldHTML('oxygenConsumption','Tiêu thụ oxy','g O₂/kg cá/giờ',.01,s.oxygenConsumption)}${fieldHTML('oxygenEfficiency','Hiệu suất chuyển oxy mặc định','%',1,s.oxygenEfficiency)}${fieldHTML('doCurrent','DO hiện tại','mg/L',.1,s.doCurrent)}${fieldHTML('doTarget','DO mục tiêu','mg/L',.1,s.doTarget)}</div><p class="muted">Các hệ số TAN và tiêu thụ oxy là dữ liệu đầu vào giả định để khảo sát. Hãy thay bằng số liệu phù hợp với loài nuôi, thức ăn, nhiệt độ và thiết bị thực tế.</p></div><div class="subcard"><h4>Ngưỡng cảnh báo</h4><div class="field-grid">${fieldHTML('maxVelocity','Vận tốc tối đa','m/s',.1,s.maxVelocity)}${fieldHTML('maxHeadLoss','Tổn thất cho phép','m',.1,s.maxHeadLoss)}</div></div>`;host.querySelectorAll('[data-global]').forEach(inp=>inp.addEventListener('change',()=>{const v=Number(inp.value);if(Number.isFinite(v)&&v>=0){s[inp.dataset.global]=v;refreshDashboard();refreshFlow();renderPlan2D();draw3D();renderSettingsTab();markDirty()}}))}
+function setTab(tab){state.activeTab=tab;renderInspector()}
+function selectDevice(id){clearPipeSelection();state.selectedId=id;renderPlan2D();draw3D();renderInspector()}
+function deselect(){state.selectedId=null;clearPipeSelection();renderPlan2D();renderInspector();draw3D()}
+function duplicateSelected(){const d=selectedDevice();if(!d){toast('Chưa chọn thiết bị');return}const copy=JSON.parse(JSON.stringify(d));copy.id=uid();copy.name=d.name+' (bản sao)';copy.x=Math.min(11.5,d.x+1.5);copy.z=Math.min(8.5,d.z+1.2);state.devices.push(copy);state.selectedId=copy.id;refreshAll();renderInspector();markDirty();toast('Đã nhân bản thiết bị')}
+function deleteSelected(){const pipe=selectedConnection();if(pipe){state.connections=state.connections.filter(c=>c.id!==pipe.id);clearPipeSelection();refreshAll();renderInspector();markDirty();toast('Đã xóa đường ống');return}const d=selectedDevice();if(!d){toast('Chưa chọn thiết bị hoặc đường ống');return}state.devices=state.devices.filter(x=>x.id!==d.id);state.connections=state.connections.filter(c=>c.from!==d.id&&c.to!==d.id);state.selectedId=null;clearPipeSelection();refreshAll();renderInspector();markDirty();toast('Đã xóa thiết bị và các kết nối liên quan')}
+function rotateSelected(){const d=selectedDevice();if(!d){toast('Chưa chọn thiết bị');return}d.rotation=(d.rotation+Math.PI/2)%(Math.PI*2);refreshAll();renderInspector();markDirty()}
+function autoConnect(){const order=['fishTank','rectTank','settlingTank','drumFilter','mechanicalFilter','biofilter','degassing','oxygenCone','storageTank','pump','uv'];const ordered=[];for(const t of order){const d=state.devices.find(x=>x.type===t&&!ordered.includes(x));if(d)ordered.push(d)}if(ordered.length<2){toast('Cần ít nhất 2 thiết bị để tạo tuyến mẫu');return}state.connections=[];for(let i=0;i<ordered.length-1;i++)state.connections.push({id:uid(),from:ordered[i].id,to:ordered[i+1].id});if(ordered.some(d=>d.type==='uv'))state.connections.push({id:uid(),from:ordered[ordered.length-1].id,to:ordered[0].id});refreshAll();markDirty();toast('Đã tạo tuyến mẫu; hãy kiểm tra lại theo sơ đồ công nghệ thực tế')}
+function startConnect(){state.connectMode=true;state.pendingConnect=null;$('btnConnect').classList.add('active');$('viewportHint').textContent='Chế độ nối ống: nhấp thiết bị nguồn, sau đó nhấp thiết bị đích. Nhấn ESC để thoát.';toast('Chọn thiết bị nguồn rồi chọn thiết bị đích')}
+function finishConnect(id){clearPipeSelection();if(!state.pendingConnect){state.pendingConnect=id;selectDevice(id);toast('Đã chọn đầu nguồn. Chọn thiết bị đích.');return}if(state.pendingConnect===id){toast('Hãy chọn thiết bị khác');return}if(state.connections.some(c=>c.from===state.pendingConnect&&c.to===id)){toast('Kết nối này đã tồn tại');return}state.connections.push({id:uid(),from:state.pendingConnect,to:id});state.pendingConnect=null;state.connectMode=false;$('btnConnect').classList.remove('active');$('viewportHint').textContent='Nhấp thiết bị hoặc đường ống để chỉnh sửa · Kéo thiết bị để bố trí · Cuộn để phóng to/thu nhỏ';refreshAll();markDirty();toast('Đã nối ống')}
+function cancelConnect(){state.connectMode=false;state.pendingConnect=null;$('btnConnect').classList.remove('active');$('viewportHint').textContent='Kéo thiết bị để di chuyển · Nhấp thiết bị hoặc đường ống để chỉnh sửa · Chọn “Xem 3D” để quan sát không gian'}
+// 2D interaction
+let planDrag=null;
+function planPoint(e){const svg=$('planSvg'),pt=svg.createSVGPoint();pt.x=e.clientX;pt.y=e.clientY;const m=pt.matrixTransform(svg.getScreenCTM().inverse());return {x:(m.x-PLAN.cx)/PLAN.scale,z:(m.y-PLAN.cy)/PLAN.scale}}
+let pipeDrag=null;
+function nearestPipeAt(p){
+ let best=null,bestDistance=Infinity;
+ for(const c of state.connections){const route=pipeRoute(c);for(let i=1;i<route.length;i++){const [ax,ay]=route[i-1],[bx,by]=route[i],dx=bx-ax,dy=by-ay,len2=dx*dx+dy*dy;const t=len2?Math.max(0,Math.min(1,((p.x-ax)*dx+(p.z-ay)*dy)/len2)):0;const qx=ax+t*dx,qy=ay+t*dy,dist=Math.hypot(p.x-qx,p.z-qy);if(dist<bestDistance){bestDistance=dist;best={connection:c,segment:i,point:[qx,qy]}}}
+ }
+ return bestDistance<=Math.max(.12,.28/state.planZoom)?best:null;
+}
+$('planSvg').addEventListener('pointerdown',e=>{
+ const p=planPoint(e),tol=Math.max(.12,.25/state.planZoom);
+ // Handles have priority so they can be dragged even where a pipe crosses another element.
+ if(state.selectedConnectionId){const c=selectedConnection(),route=c?pipeRoute(c):[];let handleIndex=-1,handleDist=Infinity;for(let i=1;i<route.length-1;i++){const d=Math.hypot(p.x-route[i][0],p.z-route[i][1]);if(d<handleDist){handleDist=d;handleIndex=i}}if(handleIndex>0&&handleDist<tol){pipeDrag={id:c.id,index:handleIndex,moved:false};$('planSvg').setPointerCapture(e.pointerId);e.preventDefault();return}}
+ // Device shapes take priority over nearby pipes.
+ const node=e.target.closest?.('[data-id]');
+ if(node){const id=node.dataset.id;if(state.connectMode){finishConnect(id);e.preventDefault();return}const d=state.devices.find(x=>x.id===id);if(!d)return;selectDevice(id);planDrag={id,moved:false,pointerId:e.pointerId};$('planSvg').setPointerCapture(e.pointerId);e.preventDefault();return}
+ const pipeNode=e.target.closest?.('[data-connection-id]');
+ if(pipeNode&&!state.connectMode){selectConnection(pipeNode.dataset.connectionId);e.preventDefault();return}
+ // Geometric hit-testing fallback: selecting pipe remains reliable even on SVG transparent strokes.
+ if(!state.connectMode){const hit=nearestPipeAt(p);if(hit){selectConnection(hit.connection.id);e.preventDefault();return}}
+});
+$('planSvg').addEventListener('pointermove',e=>{
+ if(pipeDrag){const c=state.connections.find(x=>x.id===pipeDrag.id);if(!c)return;const p=planPoint(e),route=pipeRoute(c).map(q=>[...q]);if(pipeDrag.index>0&&pipeDrag.index<route.length-1){route[pipeDrag.index]=[Math.max(-7.7,Math.min(7.7,p.x)),Math.max(-4.2,Math.min(4.2,p.z))];c.route=route;c.lengthM=null;pipeDrag.moved=true;renderPlan2D();draw3D()}return}
+ if(!planDrag)return;const p=planPoint(e),d=state.devices.find(x=>x.id===planDrag.id);if(!d)return;d.x=Math.max(-7.7,Math.min(7.7,p.x));d.z=Math.max(-4.2,Math.min(4.2,p.z));planDrag.moved=true;renderPlan2D()
+});
+function endPipeDrag(){if(!pipeDrag)return;const moved=pipeDrag.moved;pipeDrag=null;if(moved){refreshDashboard();refreshFlow();renderPlan2D();draw3D();renderInspector();markDirty()}}
+function endPlanDrag(){if(!planDrag)return;const moved=planDrag.moved;planDrag=null;if(moved){refreshAll();renderInspector();markDirty()}}
+$('planSvg').addEventListener('pointerup',()=>{endPipeDrag();endPlanDrag()});$('planSvg').addEventListener('pointercancel',()=>{endPipeDrag();endPlanDrag()});$('planSvg').addEventListener('wheel',e=>{if(state.viewMode!=='2d')return;e.preventDefault();state.planZoom=Math.max(.65,Math.min(1.8,state.planZoom*(e.deltaY<0?1.08:.92)));renderPlan2D()},{passive:false});
+// Lightweight 3D projection engine, works offline: perspective/isometric drawing on Canvas.
+const view3d=$('view3d'),ctx=view3d.getContext('2d');const camera3={yaw:-.68,zoom:1,pitch:.52,panX:0,panY:0};let drag3=null,renderFrame=0;
+function resizeCanvas(){const r=view3d.getBoundingClientRect();const dpr=Math.min(window.devicePixelRatio||1,2);const w=Math.max(1,Math.round(r.width*dpr)),h=Math.max(1,Math.round(r.height*dpr));if(view3d.width!==w||view3d.height!==h){view3d.width=w;view3d.height=h}draw3D()}
+function project3(x,y,z){const co=Math.cos(camera3.yaw),si=Math.sin(camera3.yaw),xr=x*co-z*si,zr=x*si+z*co;const scale=45*camera3.zoom;const cx=view3d.width/(window.devicePixelRatio||1)/2+camera3.panX,cy=view3d.height/(window.devicePixelRatio||1)/2+camera3.panY;return {x:cx+xr*scale,y:cy+zr*scale*Math.sin(camera3.pitch)-y*scale*Math.cos(camera3.pitch),depth:zr}}
+function path3(points,stroke,width=2,fill=null){if(!points.length)return;ctx.beginPath();points.forEach((p,i)=>{const q=project3(p[0],p[1],p[2]);if(!i)ctx.moveTo(q.x,q.y);else ctx.lineTo(q.x,q.y)});if(fill){ctx.closePath();ctx.fillStyle=fill;ctx.fill()}if(stroke){ctx.strokeStyle=stroke;ctx.lineWidth=width;ctx.lineJoin='round';ctx.lineCap='round';ctx.stroke()}}
+function drawGround(){const W=view3d.width/(window.devicePixelRatio||1),H=view3d.height/(window.devicePixelRatio||1);ctx.fillStyle='#edf3e8';ctx.fillRect(0,0,W,H);const floor=[[-8,0,-4.5],[8,0,-4.5],[8,0,4.5],[-8,0,4.5]];path3(floor,'#c9d9c4',1,'#f5f7ef');if(state.gridOn){for(let x=-8;x<=8;x+=.5)path3([[x,0,-4.5],[x,0,4.5]],Math.abs(x-Math.round(x))<.01?'#c2d5be':'#d9e4d5',Math.abs(x-Math.round(x))<.01?.8:.45);for(let z=-4.5;z<=4.5;z+=.5)path3([[-8,0,z],[8,0,z]],Math.abs(z-Math.round(z))<.01?'#c2d5be':'#d9e4d5',Math.abs(z-Math.round(z))<.01?.8:.45)}path3([[-8,.02,-4.5],[8,.02,-4.5],[8,.02,4.5],[-8,.02,4.5],[-8,.02,-4.5]],'#67aaa0',2)}
+function boxFaces(x,z,w,d,h,color){const pts=[[x-w/2,0,z-d/2],[x+w/2,0,z-d/2],[x+w/2,0,z+d/2],[x-w/2,0,z+d/2]];const top=pts.map(p=>[p[0],h,p[2]]);path3([pts[0],pts[1],top[1],top[0]],null,1,'#bfd0c1');path3([pts[1],pts[2],top[2],top[1]],null,1,'#9fbba8');path3(top.concat([top[0]]),color,1.4, color);path3([top[0],top[1],top[2],top[3],top[0]],'#779e8b',1.3)}
+function cylinderDevice(d){const p=d.params,x=d.x,z=d.z,r=Math.max(.2,escNum(p.diameter,1)/2),h=Math.max(.25,escNum(p.height,1)),water=Math.min(h,Math.max(0,escNum(p.waterLevel,h*.7)));const N=32,bottom=[],top=[],waterTop=[];for(let i=0;i<=N;i++){const a=i/N*Math.PI*2,xx=x+Math.cos(a)*r,zz=z+Math.sin(a)*r;bottom.push([xx,.02,zz]);top.push([xx,h,zz]);waterTop.push([xx,water,zz])}const side=[...bottom,...top.slice().reverse()];path3(side,null,1,'#d9e8df');for(let i=0;i<N;i+=4)path3([bottom[i],top[i]],'#8ba99b',1);path3(top,'#609d91',2);path3(waterTop,'#54b8b3',1.2);const waterCenter=project3(x,water,z);ctx.beginPath();ctx.ellipse(waterCenter.x,waterCenter.y,r*29*camera3.zoom,r*29*camera3.zoom*Math.sin(camera3.pitch)*.68,0,0,Math.PI*2);ctx.fillStyle='rgba(87,199,195,.24)';ctx.fill();if(d.type==='biofilter'){for(let i=0;i<14;i++){const a=i*2.4,r2=r*.72,pt=project3(x+Math.cos(a)*r2,water*.7,z+Math.sin(a)*r2);ctx.beginPath();ctx.arc(pt.x,pt.y,2.1,0,Math.PI*2);ctx.fillStyle='#89aa72';ctx.fill()}}}
+function drawDevice3(d){const p=d.params,round=ROUND_TYPES.has(d.type);if(round){cylinderDevice(d);return}const w=Math.max(.3,escNum(p.width,.8)),dep=Math.max(.3,escNum(p.depth,.55)),h=Math.max(.25,escNum(p.height,.5));boxFaces(d.x,d.z,w,dep,h,'#c9d9ce');if(d.type==='pump'||d.type==='blower'||d.type==='uv'){const pt=project3(d.x,h*.55,d.z);ctx.beginPath();ctx.arc(pt.x,pt.y,Math.max(5,Math.min(w,dep)*10*camera3.zoom),0,Math.PI*2);ctx.fillStyle=d.type==='pump'?'#80afd0':d.type==='blower'?'#bca8cb':'#92a1c7';ctx.fill();ctx.strokeStyle='#688d9b';ctx.stroke()}if(d.type==='oxygenCone'){path3([[d.x-w*.24,h*.85,d.z],[d.x,h*.25,d.z],[d.x+w*.24,h*.85,d.z]],'#579e92',2)}}
+function pipePoints(a,b){const pa=a.params||{},pb=b.params||{},halfA=Math.max(.3,escNum(pa.diameter,Math.max(pa.width||1,pa.depth||.7))*.5),halfB=Math.max(.3,escNum(pb.diameter,Math.max(pb.width||1,pb.depth||.7))*.5);const sy=.35,ey=.35,elev=1.25;return [[a.x+halfA,sy,a.z],[a.x+halfA,elev,a.z],[b.x-halfB,elev,b.z],[b.x-halfB,ey,b.z]]}
+function drawPipe3(c){const a=state.devices.find(x=>x.id===c.from),b=state.devices.find(x=>x.id===c.to);if(!a||!b)return;const cls=connectionClass(a,b,c),color=cls==='pipe-air'?'#a58bc0':cls==='pipe-press'?'#d49b47':cls==='pipe-waste'?'#9a806f':'#299c9b';const pts=pipeRoute(c).map(([x,z])=>[x,cls==='pipe-air'?.55:1.0,z]);path3(pts,color,2.8*camera3.zoom);if(state.flowOn){const mid=pts[Math.floor((pts.length-1)/2)];const p=project3(mid[0],mid[1],mid[2]);ctx.beginPath();ctx.arc(p.x,p.y,3.3,0,Math.PI*2);ctx.fillStyle='#fff';ctx.strokeStyle=color;ctx.lineWidth=1.5;ctx.fill();ctx.stroke()}}
+function draw3D(){if(!view3d||!ctx||state.viewMode!=='3d')return;const dpr=Math.min(window.devicePixelRatio||1,2);const W=view3d.width/dpr,H=view3d.height/dpr;if(!W||!H)return;ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,W,H);drawGround();state.connections.forEach(drawPipe3);const sorted=[...state.devices].sort((a,b)=>project3(a.x,0,a.z).depth-project3(b.x,0,b.z).depth);sorted.forEach(d=>drawDevice3(d));for(const d of state.devices){if(state.selectedId===d.id){const p=project3(d.x,1.4,d.z);ctx.beginPath();ctx.ellipse(p.x,p.y,Math.max(18,(d.params.diameter||d.params.width||1)*19*camera3.zoom),10*camera3.zoom,0,0,Math.PI*2);ctx.strokeStyle='#239b82';ctx.lineWidth=2;ctx.setLineDash([5,4]);ctx.stroke();ctx.setLineDash([])}if(state.labelsOn){const h=escNum(d.params.height,1);const pt=project3(d.x,h+0.25,d.z);const text=d.name.length>20?d.name.slice(0,19)+'…':d.name;ctx.font='10px Segoe UI,Arial';const tw=ctx.measureText(text).width+12;ctx.fillStyle='rgba(255,255,255,.9)';ctx.strokeStyle='#dce7dc';ctx.lineWidth=1;ctx.beginPath();ctx.roundRect(pt.x-tw/2,pt.y-9,tw,18,5);ctx.fill();ctx.stroke();ctx.fillStyle='#526e5d';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(text,pt.x,pt.y)}}}
+function hitTest3(x,y){let best=null,dist=30;for(const d of state.devices){const p=project3(d.x,Math.max(.4,escNum(d.params.height,1)*.45),d.z);const dd=Math.hypot(p.x-x,p.y-y);const size=Math.max(20,(d.params.diameter||d.params.width||1)*14*camera3.zoom);if(dd<Math.max(dist,size*.65)){best=d;dist=dd}}return best}
+function resizeCanvasIfVisible(){if(state.viewMode==='3d')resizeCanvas()}
+view3d.addEventListener('pointerdown',e=>{const rect=view3d.getBoundingClientRect(),x=e.clientX-rect.left,y=e.clientY-rect.top,hit=hitTest3(x,y);drag3={x:e.clientX,y:e.clientY,lastX:e.clientX,lastY:e.clientY,hitId:hit?.id||null,moved:false,mode:hit?'device':'camera'};view3d.setPointerCapture(e.pointerId);if(hit){if(state.connectMode){finishConnect(hit.id);drag3=null;return}selectDevice(hit.id)}});
+view3d.addEventListener('pointermove',e=>{if(!drag3)return;const dx=e.clientX-drag3.lastX,dy=e.clientY-drag3.lastY;if(Math.hypot(e.clientX-drag3.x,e.clientY-drag3.y)>3)drag3.moved=true;if(drag3.moved){if(drag3.mode==='camera'&&!drag3.hitId){camera3.yaw+=dx*.008;camera3.panY+=dy*.4;camera3.panX+=dx*.35}else if(drag3.hitId){const d=state.devices.find(x=>x.id===drag3.hitId);if(d){d.x=Math.max(-7.7,Math.min(7.7,d.x+dx/(45*camera3.zoom)));d.z=Math.max(-4.2,Math.min(4.2,d.z+dy/(45*camera3.zoom*Math.max(.25,Math.sin(camera3.pitch)))))}}}drag3.lastX=e.clientX;drag3.lastY=e.clientY;if(drag3.moved)draw3D()});
+view3d.addEventListener('pointerup',()=>{if(!drag3)return;if(drag3.moved&&drag3.hitId){refreshAll();renderInspector();markDirty()}drag3=null});view3d.addEventListener('pointercancel',()=>{drag3=null});view3d.addEventListener('wheel',e=>{e.preventDefault();camera3.zoom=Math.max(.55,Math.min(2.2,camera3.zoom*(e.deltaY<0?1.08:.92)));draw3D()},{passive:false});
+function setViewMode(mode){state.viewMode=mode==='3d'?'3d':'2d';$('planSvg').style.display=state.viewMode==='2d'?'block':'none';view3d.style.display=state.viewMode==='3d'?'block':'none';$('btnTopView').classList.toggle('active',state.viewMode==='2d');$('btnIso').classList.toggle('active',state.viewMode==='3d');$('canvasStatus').textContent=state.viewMode==='2d'?'KIỂM TRA BỐ TRÍ 2D':'MÔ HÌNH KHÔNG GIAN 3D';$('viewportHint').textContent=state.viewMode==='2d'?'Kéo thiết bị để di chuyển · Nhấp để chỉnh thông số · Cuộn để phóng to':'Kéo nền để xoay/góc nhìn · Kéo thiết bị để di chuyển · Cuộn để phóng to';if(state.viewMode==='3d'){resizeCanvas();draw3D()}else renderPlan2D()}
+function projectData(){return {format:'FarmRAS3D',version:2,projectName:$('projectName').value,devices:state.devices,connections:state.connections,settings:state.settings,view:{mode:state.viewMode,planZoom:state.planZoom,camera3},savedAt:new Date().toISOString()}}
+function downloadBlob(content,name,type){const blob=new Blob([content],{type}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1200)}
+function saveLocal(showToast=true){try{localStorage.setItem('farmRAS3D_project_v72',JSON.stringify(projectData()));state.dirty=false;if(showToast)toast('Đã lưu dự án trên trình duyệt này')}catch(err){if(showToast)toast('Không lưu được trong trình duyệt. Hãy xuất JSON để sao lưu.')}}
+function loadProject(data){if(!data||!Array.isArray(data.devices))throw new Error('File dự án không có danh sách thiết bị hợp lệ.');const clean=[];for(const src of data.devices){if(!src||!byType(src.type))continue;const meta=byType(src.type);clean.push({id:String(src.id||uid()),type:src.type,name:String(src.name||meta.name),params:{...meta.defaults,...(src.params&&typeof src.params==='object'?src.params:{})},x:escNum(src.x),z:escNum(src.z),rotation:escNum(src.rotation),labelSide:src.labelSide==='above'?'above':'below'})}state.devices=clean;const ids=new Set(clean.map(d=>d.id));state.connections=(Array.isArray(data.connections)?data.connections:[]).filter(c=>c&&ids.has(c.from)&&ids.has(c.to)).map(c=>({id:String(c.id||uid()),from:c.from,to:c.to,...(c.kind?{kind:c.kind}:{}),...(Array.isArray(c.route)?{route:c.route}:{}),...(c.label?{label:c.label}:{}),...(c.flowLabel?{flowLabel:true}:{}),...(c.flowM3h!==undefined?{flowM3h:escNum(c.flowM3h)}:{}),...(c.diameterLabel?{diameterLabel:c.diameterLabel}:{}),...(c.diameterMm!==undefined?{diameterMm:escNum(c.diameterMm)}:{}),...(c.showDiameterLabel===false?{showDiameterLabel:false}:{}),...(c.lengthM!==undefined?{lengthM:escNum(c.lengthM)}:{}),...(Array.isArray(c.labelAt)?{labelAt:c.labelAt}:{})}));state.settings={...state.settings,...(data.settings||{})};state.projectName=String(data.projectName||'Dự án RAS');$('projectName').value=state.projectName;state.selectedId=null;state.selectedConnectionId=null;state.pipeEditMode=false;state.planZoom=Math.max(.65,Math.min(1.8,escNum(data.view?.planZoom,1)));Object.assign(camera3,data.view?.camera3||{});state.activeTab='device';refreshAll();renderInspector();setViewMode(data.view?.mode||'2d');state.dirty=false}
+function importJSON(file){const reader=new FileReader();reader.onload=()=>{try{loadProject(JSON.parse(reader.result));saveLocal();toast('Đã mở dự án JSON')}catch(err){alert('Không thể mở dự án: '+err.message)}};reader.readAsText(file)}
+function reportRows(){const c=calc();return [['Bể nuôi','Tổng thể tích bể nuôi',fmt(c.tankVolume)+' m³','π × (D/2)² × H nước; bể chữ nhật: L × W × H nước'],['Sinh khối','Tổng trọng lượng cá',fmt(c.biomass)+' kg','Số cá × khối lượng trung bình/con'],['Thức ăn','Lượng thức ăn/ngày',fmt(c.feed)+' kg/ngày','Sinh khối × tỷ lệ thức ăn (%)'],['Lưu lượng','Lưu lượng tuần hoàn yêu cầu',fmt(c.flow)+' m³/h','Q = tổng thể tích làm việc của bể nuôi / thời gian tuần hoàn mục tiêu'],['Bể lắng','Thể tích hữu ích',fmt(c.settlingVolume)+' m³','V = π × (D/2)² × H nước'],['Bể lắng','Thời gian lưu nước HRT',fmt(c.hrt)+' giờ','HRT = V bể lắng / Q'],['Biofilter','Thể tích vật liệu lọc hiện có',fmt(c.mediaVol)+' m³','V bể lọc × tỷ lệ vật liệu'],['Biofilter','Thể tích vật liệu cần theo tải TAN',fmt(c.mediaRequired)+' m³','Tải TAN dự kiến / tải TAN thiết kế trên mỗi m³ vật liệu'],['Biofilter','Thể tích bể lọc gộp cần thiết',fmt(c.bioTankRequired)+' m³','V vật liệu yêu cầu / tỷ lệ vật liệu'],['Biofilter','Diện tích bề mặt vật liệu hiện có',fmt(c.bioSurface)+' m²','V vật liệu hiện có × diện tích bề mặt riêng'],['Biofilter','Tải TAN dự kiến',fmt(c.tan,3)+' kg/ngày','Thức ăn/ngày × hệ số TAN đầu vào'],['Biofilter','Khả năng tải TAN theo hệ số',fmt(c.tanCapacity,3)+' kg/ngày','V vật liệu × tải TAN thiết kế'],['Bơm','Tổng cột áp TDH',fmt(c.tdh)+' m','Cột áp tĩnh + tổn thất dọc + tổn thất cục bộ'],['Bơm','Công suất thủy lực',fmt(c.hydraulic/1000)+' kW','P = ρ × g × Q × H'],['Bơm','Công suất điện ước tính tại điểm làm việc',fmt(c.electrical)+' kW','P điện = P thủy lực / hiệu suất'],['Bơm','Công suất động cơ khai báo',fmt(c.motorPower)+' kW','Giá trị minh họa; cần kiểm tra theo đường đặc tính bơm và dự phòng của nhà sản xuất'],['Đường ống','Vận tốc dòng chảy',fmt(c.velocity)+' m/s','v = Q / A'],['Đường ống','Tổn thất dọc đường',fmt(c.frictionHead)+' m','Darcy–Weisbach: f × (L/D) × v²/(2g)'],['Đường ống','Tổn thất cục bộ',fmt(c.minorHead)+' m','K tổng × v²/(2g)'],['Oxy','Nhu cầu oxy sinh học',fmt(c.oxygen,3)+' kg O₂/ngày','Sinh khối × tiêu thụ oxy × 24 giờ'],['Oxy','Oxy nguồn cần cấp (ước tính)',fmt(c.oxygenSource,3)+' kg O₂/ngày','Nhu cầu oxy / hiệu suất chuyển oxy'],['Oxy','Năng lực nguồn O₂ khai báo',fmt(c.oxygenSourceCapacity,3)+' kg/h','Đối chiếu với nhu cầu nguồn oxy theo giờ; xác nhận theo thiết bị thật'],['Oxy','Oxy bù DO tức thời',fmt(c.oxygenDeficitKg,4)+' kg O₂','(DO mục tiêu − DO hiện tại) × thể tích nước / 1000']]}
+function showReport(){const c=calc(),rows=reportRows(),warnings=c.warnings.map(w=>`<li>${escapeHTML(w.text)}</li>`).join('')||'<li>Không có cảnh báo hiện tại.</li>';const table=`<table class="report-table"><thead><tr><th>Nhóm</th><th>Thông số</th><th>Kết quả</th><th>Công thức / cơ sở</th></tr></thead><tbody>${rows.map(r=>'<tr>'+r.map(v=>'<td>'+escapeHTML(v)+'</td>').join('')+'</tr>').join('')}</tbody></table>`;const note=`<p class="report-note"><b>Cơ sở lưu lượng:</b> Q được tính từ tổng thể tích làm việc của các bể nuôi chia cho thời gian tuần hoàn mục tiêu (không cộng thể tích bể lọc vào lưu lượng yêu cầu qua bể nuôi).</p><p class="report-note"><b>Giả định đầu vào:</b> Thời gian tuần hoàn ${fmt(state.settings.turnoverHours)} giờ; cột áp tĩnh ${fmt(state.settings.staticHead)} m; ống chính Ø${fmt(state.settings.pipeDiameter*1000,0)} mm; chiều dài ống ${fmt(state.settings.pipeLength)} m; hệ số ma sát Darcy f=${fmt(state.settings.frictionFactor,4)}; hệ số K=${fmt(state.settings.minorK)}; TAN=${fmt(state.settings.tanPerKgFeed,3)} kg TAN/kg thức ăn; tiêu thụ oxy=${fmt(state.settings.oxygenConsumption,2)} g O₂/kg cá/giờ.</p><p class="report-note"><b>Lưu ý kỹ thuật:</b> Nguồn oxy tinh khiết đã được khai báo riêng cho côn oxy; máy thổi khí chỉ cấp khí cho các MBBR trong sơ đồ mẫu. Nhu cầu oxy hiện chỉ là ước tính theo sinh khối và hệ số người dùng nhập, chưa cộng đầy đủ nhu cầu oxy của vi khuẩn, chất hữu cơ và tải BOD. Kết quả phụ thuộc hoàn toàn vào dữ liệu và hệ số người dùng nhập. Công suất bơm dùng cột áp tĩnh cộng tổn thất ước tính theo Darcy–Weisbach và K tổng; chưa thay thế việc tính từng nhánh, phụ kiện, NPSH và đối chiếu đường đặc tính Q-H của bơm tại điểm làm việc. Cần thẩm tra bởi người có chuyên môn trước khi thi công.</p>`;$('modalTitle').textContent='Báo cáo tính toán RAS';$('modalContent').innerHTML=`<h3>${escapeHTML($('projectName').value)}</h3><p>Ngày lập: ${new Date().toLocaleString('vi-VN')} · Đánh giá sơ bộ: <b>${escapeHTML(c.status)}</b></p>${table}<h4>Cảnh báo & kiểm tra</h4><ul>${warnings}</ul>${note}<div class="button-row"><button class="primary" id="reportPrint">In / Xuất PDF</button><button id="reportCSV">Xuất Excel (CSV)</button><button id="reportJSON">Xuất dự án JSON</button></div>`;$('modalBackdrop').classList.add('show');$('reportPrint').onclick=()=>{$('printArea').innerHTML=`<h2>${escapeHTML($('projectName').value)}</h2>${table}${note}`;window.print()};$('reportCSV').onclick=exportCSV;$('reportJSON').onclick=()=>downloadBlob(JSON.stringify(projectData(),null,2),'Farm_RAS_Project.json','application/json')}
+function exportCSV(){const rows=[['Nhóm','Thông số','Kết quả','Công thức / cơ sở'],...reportRows()];const csv='\ufeff'+rows.map(r=>r.map(v=>'"'+String(v).replace(/"/g,'""')+'"').join(',')).join('\r\n');downloadBlob(csv,'Farm_RAS_Calculation_Report.csv','text/csv;charset=utf-8');toast('Đã xuất bảng CSV có thể mở bằng Excel')}
+function showMore(){ $('modalTitle').textContent='Quản lý dự án';$('modalContent').innerHTML='<div class="subcard"><h4>Lưu và trao đổi dự án</h4><p class="muted">Lưu tại trình duyệt này hoặc xuất JSON để sao lưu/chuyển sang máy khác.</p><div class="button-row"><button class="primary" id="moreExport">Xuất JSON</button><button id="moreImport">Mở JSON</button><button id="moreSave">Lưu trên máy này</button></div></div><div class="subcard"><h4>Công cụ</h4><div class="button-row"><button id="moreCSV">Xuất Excel (CSV)</button><button id="moreClear" class="danger">Tạo dự án trống</button></div></div>';$('modalBackdrop').classList.add('show');$('moreExport').onclick=()=>downloadBlob(JSON.stringify(projectData(),null,2),'Farm_RAS_Project.json','application/json');$('moreImport').onclick=()=>{$('modalBackdrop').classList.remove('show');$('fileImport').click()};$('moreSave').onclick=()=>{saveLocal();$('modalBackdrop').classList.remove('show')};$('moreCSV').onclick=exportCSV;$('moreClear').onclick=()=>{if(confirm('Tạo dự án trống? Hãy xuất JSON trước nếu cần sao lưu.')){state.devices=[];state.connections=[];state.selectedId=null;refreshAll();renderInspector();$('modalBackdrop').classList.remove('show');markDirty()}}}
+
+// ===== Local account module =====
+const AUTH_USERS_KEY='farmRAS3D_local_users_v1';
+const AUTH_SESSION_KEY='farmRAS3D_local_session_v2'; // buộc xác thực lại khi nâng cấp từ bản cũ
+let authMode='login',volatileAuthUsers=[],volatileAuthSession=null;
+function readAuthUsers(){try{const v=JSON.parse(localStorage.getItem(AUTH_USERS_KEY)||'[]');volatileAuthUsers=Array.isArray(v)?v:[];return volatileAuthUsers}catch(e){return volatileAuthUsers}}
+function writeAuthUsers(users){volatileAuthUsers=users;try{localStorage.setItem(AUTH_USERS_KEY,JSON.stringify(users));}catch(e){/* bộ nhớ tạm trong phiên nếu trình duyệt chặn lưu trữ */}}
+function readAuthSession(){try{const s=JSON.parse(localStorage.getItem(AUTH_SESSION_KEY)||'null');volatileAuthSession=s&&s.email?s:null;return volatileAuthSession}catch(e){return volatileAuthSession}}
+function writeAuthSession(session){volatileAuthSession=session;try{localStorage.setItem(AUTH_SESSION_KEY,JSON.stringify(session));}catch(e){/* bộ nhớ tạm trong phiên nếu trình duyệt chặn lưu trữ */}}
+function authHex(bytes){return Array.from(new Uint8Array(bytes)).map(b=>b.toString(16).padStart(2,'0')).join('')}
+function authFromHex(hex){const out=new Uint8Array(hex.length/2);for(let i=0;i<out.length;i++)out[i]=parseInt(hex.slice(i*2,i*2+2),16);return out}
+function sha256Bytes(message){
+ const K=[0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2];
+ const rotr=(x,n)=>(x>>>n)|(x<<(32-n));
+ const bitLen=message.length*8,total=((message.length+9+63)>>6)<<6,data=new Uint8Array(total);data.set(message);data[message.length]=0x80;
+ const view=new DataView(data.buffer);view.setUint32(total-8,Math.floor(bitLen/0x100000000),false);view.setUint32(total-4,bitLen>>>0,false);
+ let H=[0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19];const W=new Uint32Array(64);
+ for(let offset=0;offset<total;offset+=64){
+  for(let i=0;i<16;i++)W[i]=view.getUint32(offset+i*4,false);
+  for(let i=16;i<64;i++){const x=W[i-15],y=W[i-2],s0=rotr(x,7)^rotr(x,18)^(x>>>3),s1=rotr(y,17)^rotr(y,19)^(y>>>10);W[i]=(W[i-16]+s0+W[i-7]+s1)>>>0;}
+  let [a,b,c,d,e,f,g,h]=H;
+  for(let i=0;i<64;i++){const S1=rotr(e,6)^rotr(e,11)^rotr(e,25),ch=(e&f)^(~e&g),t1=(h+S1+ch+K[i]+W[i])>>>0,S0=rotr(a,2)^rotr(a,13)^rotr(a,22),maj=(a&b)^(a&c)^(b&c),t2=(S0+maj)>>>0;h=g;g=f;f=e;e=(d+t1)>>>0;d=c;c=b;b=a;a=(t1+t2)>>>0;}
+  H=H.map((v,i)=>(v+[a,b,c,d,e,f,g,h][i])>>>0);
+ }
+ const result=new Uint8Array(32),outView=new DataView(result.buffer);H.forEach((v,i)=>outView.setUint32(i*4,v,false));return result;
+}
+function hmacSha256(key,message){
+ let k=key.length>64?sha256Bytes(key):new Uint8Array(key);const block=new Uint8Array(64);block.set(k);
+ const inner=new Uint8Array(64+message.length),outer=new Uint8Array(64+32);
+ for(let i=0;i<64;i++){inner[i]=block[i]^0x36;outer[i]=block[i]^0x5c;}
+ inner.set(message,64);outer.set(sha256Bytes(inner),64);return sha256Bytes(outer);
+}
+function pbkdf2Fallback(passwordBytes,saltBytes,iterations){
+ const first=new Uint8Array(saltBytes.length+4);first.set(saltBytes);first.set([0,0,0,1],saltBytes.length);
+ let u=hmacSha256(passwordBytes,first),t=new Uint8Array(u);
+ for(let i=1;i<iterations;i++){u=hmacSha256(passwordBytes,u);for(let j=0;j<t.length;j++)t[j]^=u[j];}
+ return t;
+}
+async function deriveAuthHash(password,saltHex){
+ const salt=authFromHex(saltHex),encoder=new TextEncoder(),pass=encoder.encode(password),iterations=150000;
+ if(window.crypto?.subtle){const key=await crypto.subtle.importKey('raw',pass,'PBKDF2',false,['deriveBits']);const bits=await crypto.subtle.deriveBits({name:'PBKDF2',salt,iterations,hash:'SHA-256'},key,256);return authHex(bits);}
+ // Fallback chuẩn PBKDF2-HMAC-SHA256 để vẫn đăng ký được khi mở file HTML cục bộ.
+ return authHex(pbkdf2Fallback(pass,salt,iterations));
+}
+function authMessage(message,success=false){const node=$('authMessage');if(!node)return;node.textContent=message;node.className='auth-message'+(success?' success':'');node.hidden=false}
+function updateAuthArea(){
+ const area=$('authArea'),session=readAuthSession();if(!area)return;
+ if(session){const display=(session.name||session.email.split('@')[0]).slice(0,18);area.innerHTML=`<button class="auth-user" id="btnAuthProfile">♙ ${escapeHTML(display)}</button><button id="btnAuthLogout">Đăng xuất</button>`;$('btnAuthProfile').onclick=()=>openAuthModal('profile');$('btnAuthLogout').onclick=logoutLocal;}
+ else{area.innerHTML='<button id="btnOpenAuth" class="account-button">♙ Đăng nhập / Đăng ký</button>';$('btnOpenAuth').onclick=()=>openAuthModal('login');}
+}
+function setAuthMode(mode){
+ authMode=mode==='register'?'register':'login';
+ $('authTabLogin').classList.toggle('active',authMode==='login');
+ $('authTabRegister').classList.toggle('active',authMode==='register');
+ $('authTabLogin').setAttribute('aria-selected',String(authMode==='login'));
+ $('authTabRegister').setAttribute('aria-selected',String(authMode==='register'));
+ $('authHeading').textContent=authMode==='login'?'Chào mừng bạn trở lại':'Tạo tài khoản Farm RAS';
+ $('authSubtitle').textContent=authMode==='login'?'Đăng nhập để tiếp tục thiết kế và quản lý hệ thống RAS.':'Tạo tài khoản để lưu và quản lý dự án trên trình duyệt này.';
+ const mailIcon='<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5" width="17" height="14" rx="2.5"/><path d="m4.5 7 7.5 6 7.5-6"/></svg>';
+ const userIcon='<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="3.5"/><path d="M4.5 20a7.5 7.5 0 0 1 15 0"/></svg>';
+ const lockIcon='<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4.5" y="10" width="15" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>';
+ const eyeIcon='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.5 12s3.4-6 9.5-6 9.5 6 9.5 6-3.4 6-9.5 6-9.5-6-9.5-6Z"/><circle cx="12" cy="12" r="2.5"/></svg>';
+ const eyeOffIcon='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 3 18 18M10.6 6.2A10.8 10.8 0 0 1 12 6c6.1 0 9.5 6 9.5 6a15 15 0 0 1-3 3.5M6.2 6.3C3.8 8 2.5 12 2.5 12s3.4 6 9.5 6c1.1 0 2.1-.2 3-.5"/><path d="M9.9 9.9a3 3 0 0 0 4.2 4.2"/></svg>';
+ const field=(id,label,type,placeholder,autocomplete,icon,extra='')=>`<div class="auth-field"><label for="${id}">${label}</label><div class="auth-input-wrap"><span class="auth-field-icon">${icon}</span><input id="${id}" name="${id==='authName'?'name':id==='authEmail'?'email':id==='authConfirm'?'confirm':'password'}" type="${type}" autocomplete="${autocomplete}" placeholder="${placeholder}" ${extra} required>${type==='password'?`<button class="auth-password-toggle" type="button" data-toggle-password="${id}" aria-label="Hiện mật khẩu">${eyeIcon}</button>`:''}</div></div>`;
+ if(authMode==='login'){
+  $('authFormArea').innerHTML=`<form id="authForm" class="auth-form auth-form-login" novalidate>
+   ${field('authEmail','ĐỊA CHỈ EMAIL','email','name@example.com','username',mailIcon,'inputmode="email"')}
+   ${field('authPassword','MẬT KHẨU','password','Nhập mật khẩu của bạn','current-password',lockIcon)}
+   <div class="auth-form-meta"><span><i class="auth-meta-dot"></i> Truy cập an toàn trên thiết bị này</span><span>LOCAL ACCOUNT</span></div>
+   <div id="authMessage" class="auth-message" role="alert" hidden></div>
+   <button class="auth-submit" id="authSubmit" type="submit"><span>Đăng nhập hệ thống</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></button>
+   <p class="auth-switch">Bạn chưa có tài khoản? <button type="button" id="authSwitch">Đăng ký ngay <span>→</span></button></p>
+  </form>`;
+  $('authSwitch').onclick=()=>setAuthMode('register');
+ }else{
+  $('authFormArea').innerHTML=`<form id="authForm" class="auth-form auth-form-register" novalidate>
+   ${field('authName','HỌ VÀ TÊN','text','Tên hiển thị của bạn','name',userIcon,'minlength="2" maxlength="60"')}
+   ${field('authEmail','ĐỊA CHỈ EMAIL','email','name@example.com','email',mailIcon,'inputmode="email"')}
+   ${field('authPassword','MẬT KHẨU','password','Tối thiểu 8 ký tự','new-password',lockIcon,'minlength="8"')}
+   ${field('authConfirm','XÁC NHẬN MẬT KHẨU','password','Nhập lại mật khẩu','new-password',lockIcon,'minlength="8"')}
+   <div class="auth-register-hint"><span>✓</span> Mật khẩu cần có ít nhất 8 ký tự.</div>
+   <div id="authMessage" class="auth-message" role="alert" hidden></div>
+   <button class="auth-submit" id="authSubmit" type="submit"><span>Tạo tài khoản</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg></button>
+   <p class="auth-switch">Bạn đã có tài khoản? <button type="button" id="authSwitch">Đăng nhập <span>→</span></button></p>
+  </form>`;
+  $('authSwitch').onclick=()=>setAuthMode('login');
+ }
+ document.querySelectorAll('[data-toggle-password]').forEach(button=>button.addEventListener('click',()=>{
+  const input=$(button.dataset.togglePassword);if(!input)return;
+  const show=input.type==='password';input.type=show?'text':'password';
+  button.innerHTML=show?eyeOffIcon:eyeIcon;button.setAttribute('aria-label',show?'Ẩn mật khẩu':'Hiện mật khẩu');
+ }));
+ $('authForm').addEventListener('submit',handleAuthSubmit);
+}
+function setAuthGate(required){
+ const backdrop=$('authBackdrop');
+ document.body.classList.toggle('auth-locked',!!required);
+ backdrop.classList.toggle('auth-gate',!!required);
+ if(required){
+  backdrop.classList.add('show');backdrop.setAttribute('aria-hidden','false');
+  if($('authClose'))$('authClose').hidden=true;
+ }else{
+  backdrop.classList.remove('auth-gate');backdrop.setAttribute('aria-hidden','true');
+  if($('authClose'))$('authClose').hidden=false;
+ }
+}
+function openAuthModal(mode='login'){
+ const session=readAuthSession();
+ if(!session){setAuthGate(true);setAuthMode(mode==='register'?'register':'login');return;}
+ if(mode==='profile'&&session){
+  authMode='profile';$('authTabLogin').classList.remove('active');$('authTabRegister').classList.remove('active');$('authHeading').textContent='Tài khoản của bạn';$('authSubtitle').textContent='Thông tin đăng nhập được lưu trên thiết bị này.';
+  $('authFormArea').innerHTML=`<div class="subcard"><div class="stat-line"><span>Họ và tên</span><strong>${escapeHTML(session.name||'—')}</strong></div><div class="stat-line"><span>Email</span><strong>${escapeHTML(session.email)}</strong></div><div class="stat-line"><span>Phạm vi</span><strong>Trình duyệt hiện tại</strong></div><button class="auth-submit" id="profileLogout" type="button">Đăng xuất</button></div>`;
+  $('profileLogout').onclick=logoutLocal;
+ }else{setAuthMode(mode)}
+ $('authBackdrop').classList.add('show');$('authBackdrop').setAttribute('aria-hidden','false');
+}
+function closeAuthModal(){
+ // Không cho đóng màn hình xác thực nếu chưa đăng nhập.
+ if(!readAuthSession()){setAuthGate(true);return;}
+ $('authBackdrop').classList.remove('show');$('authBackdrop').setAttribute('aria-hidden','true');
+}
+async function handleAuthSubmit(event){
+ event.preventDefault();const submit=$('authSubmit');if(!submit)return;submit.disabled=true;submit.textContent=authMode==='register'?'Đang tạo tài khoản…':'Đang đăng nhập…';
+ try{
+  const email=$('authEmail').value.trim().toLowerCase(),password=$('authPassword').value;
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))throw new Error('Vui lòng nhập địa chỉ email hợp lệ.');
+  const users=readAuthUsers();
+  if(authMode==='register'){
+   const name=$('authName').value.trim(),confirmPass=$('authConfirm').value;
+   if(name.length<2)throw new Error('Họ tên cần có ít nhất 2 ký tự.');
+   if(password.length<8)throw new Error('Mật khẩu cần có ít nhất 8 ký tự.');
+   if(password!==confirmPass)throw new Error('Mật khẩu nhập lại chưa khớp.');
+   if(users.some(u=>u.email===email))throw new Error('Email này đã được đăng ký trên trình duyệt. Hãy đăng nhập.');
+   const salt=new Uint8Array(16);if(window.crypto?.getRandomValues)crypto.getRandomValues(salt);else for(let i=0;i<salt.length;i++)salt[i]=Math.floor(Math.random()*256);const saltHex=authHex(salt),hash=await deriveAuthHash(password,saltHex);
+   const user={id:uid(),name,email,salt:saltHex,hash,createdAt:new Date().toISOString()};users.push(user);writeAuthUsers(users);
+   writeAuthSession({id:user.id,name:user.name,email:user.email,loginAt:new Date().toISOString()});
+   setAuthGate(false);closeAuthModal();updateAuthArea();toast('Đăng ký thành công. Bạn đã đăng nhập.');return;
+  }
+  const user=users.find(u=>u.email===email);if(!user)throw new Error('Không tìm thấy tài khoản này trên trình duyệt. Bạn hãy đăng ký trước.');
+  const hash=await deriveAuthHash(password,user.salt);if(hash!==user.hash)throw new Error('Email hoặc mật khẩu không chính xác.');
+  writeAuthSession({id:user.id,name:user.name,email:user.email,loginAt:new Date().toISOString()});
+  setAuthGate(false);closeAuthModal();updateAuthArea();toast('Đăng nhập thành công.');
+ }catch(error){authMessage(error?.message||'Không thể xử lý yêu cầu.');}
+ finally{if($('authSubmit')){$('authSubmit').disabled=false;$('authSubmit').innerHTML=`<span>${authMode==='register'?'Tạo tài khoản':'Đăng nhập hệ thống'}</span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-6-6 6 6-6 6"/></svg>`;}}
+}
+function logoutLocal(){
+ volatileAuthSession=null;try{localStorage.removeItem(AUTH_SESSION_KEY)}catch(e){}
+ updateAuthArea();setAuthGate(true);setAuthMode('login');
+ toast('Đã đăng xuất. Vui lòng đăng nhập để tiếp tục sử dụng Farm RAS.');
+}
+function initAuth(){
+ updateAuthArea();$('authTabLogin').onclick=()=>setAuthMode('login');$('authTabRegister').onclick=()=>setAuthMode('register');if($('authClose'))$('authClose').onclick=closeAuthModal;
+ $('authBackdrop').addEventListener('click',e=>{if(e.target===$('authBackdrop')){if(!readAuthSession())setAuthGate(true);else closeAuthModal()}});
+ $('btnOpenAuth')?.addEventListener('click',()=>openAuthModal('login'));
+ // First visit or signed-out state: lock the whole workspace and require login/register.
+ if(readAuthSession())setAuthGate(false);
+ else{setAuthGate(true);setAuthMode('login');}
+}
+
+
+function exportPlanSVG(){
+ const svg=$('planSvg').cloneNode(true);svg.setAttribute('xmlns','http://www.w3.org/2000/svg');svg.setAttribute('width','1200');svg.setAttribute('height','700');
+ const style=document.createElementNS('http://www.w3.org/2000/svg','style');
+ style.textContent=`.plan-bg{fill:#f3f7f1}.plan-frame{fill:#fff;stroke:#cbd9cb;stroke-width:1.8}.plan-board-inner{fill:#fff;stroke:#d6e2d4;stroke-width:1.2}.grid-minor{fill:url(#gridMinor)}.grid-major{fill:url(#gridMajor)}.board-edge{fill:none;stroke:#8eaa91;stroke-width:2.3}.plot-title{font:700 13px Arial,sans-serif;fill:#496c57;letter-spacing:1.1px}.plot-subtitle{font:10px Arial,sans-serif;fill:#91a193}.dimension{font:700 11px Arial,sans-serif;fill:#6e8c76}.ruler-label{font:9px Arial,sans-serif;fill:#8b9e8d}.ruler-tick{stroke:#a5b9a3;stroke-width:1}.tank-shadow,.equipment-shadow{fill:#8da99a;opacity:.16}.tank-shell{fill:#e8f4f1;stroke:#51aaa1;stroke-width:2.6}.tank-water{fill:#8bd5d0;fill-opacity:.52;stroke:#6ec4bd;stroke-width:1.2}.tank-rim{fill:none;stroke:#fff;stroke-width:2}.equipment-shell{fill:#fff;stroke:#a4b9a7;stroke-width:2.1}.equipment-face{fill:#edf4ed;stroke:#d4e1d5}.device-label{font:650 11px Arial,sans-serif;fill:#3d5b49;text-anchor:middle}.label-plate{fill:#fff;stroke:#dce7dc}.label-dot{stroke:#fff;stroke-width:1.5}.pipe-halo{fill:none;stroke:#fff;stroke-width:9;stroke-linecap:round;stroke-linejoin:round}.pipe-water{fill:none;stroke:#299c9b;stroke-width:4.2}.pipe-press{fill:none;stroke:#d69a43;stroke-width:4}.pipe-air{fill:none;stroke:#a58bc0;stroke-width:3.2;stroke-dasharray:7 6}.pipe-waste{fill:none;stroke:#9a806f;stroke-width:3;stroke-dasharray:3 5}.node-select{fill:#39a58d;fill-opacity:.07;stroke:#239b82;stroke-width:2.8;stroke-dasharray:7 5}.selection-tag{fill:#e8f5ed;stroke:#b8dac4}.selection-text{font:700 9px Arial,sans-serif;fill:#34775f}.port-dot{fill:#fff;stroke:#6daaa0;stroke-width:1.5}.board-caption{font:10px Arial,sans-serif;fill:#91a393}.pipe-label rect{fill:#fff;stroke:#deeadf;stroke-width:1}.pipe-label text{font:600 9px Arial,sans-serif;fill:#5e7d70;text-anchor:middle}`;
+ svg.insertBefore(style,svg.firstChild);const xml=new XMLSerializer().serializeToString(svg);downloadBlob(xml,'Farm_RAS_2D_Plan.svg','image/svg+xml;charset=utf-8');toast('Đã xuất sơ đồ 2D SVG');
+}
+
+// Main UI events
+$('libSearch').addEventListener('input',e=>renderLibrary(e.target.value));$('projectName').addEventListener('change',markDirty);$('btnTopView').onclick=()=>setViewMode('2d');$('btnIso').onclick=()=>setViewMode('3d');$('btnHome').onclick=()=>{camera3.yaw=-.68;camera3.zoom=1;camera3.panX=0;camera3.panY=0;state.planZoom=1;draw3D();renderPlan2D()};$('btnGrid').onclick=()=>{state.gridOn=!state.gridOn;$('btnGrid').classList.toggle('active',state.gridOn);$('btnGrid').textContent=state.gridOn?'Lưới 0,5 m':'Lưới: Tắt';renderPlan2D();draw3D()};$('btnLabels').onclick=()=>{state.labelsOn=!state.labelsOn;$('btnLabels').classList.toggle('active',state.labelsOn);$('btnLabels').textContent='Nhãn: '+(state.labelsOn?'Bật':'Tắt');renderPlan2D();draw3D()};$('btnFit').onclick=()=>{state.planZoom=1;camera3.zoom=1;camera3.panX=0;camera3.panY=0;renderPlan2D();draw3D()};$('btnScreenshot').onclick=()=>{if(state.viewMode==='2d'){exportPlanSVG()}else{draw3D();view3d.toBlob(blob=>{if(blob)downloadBlob(blob,'Farm_RAS_3D_View.png','image/png')})}};$('btnPlanZoomIn').onclick=()=>{state.planZoom=Math.min(1.8,state.planZoom*1.12);renderPlan2D()};$('btnPlanZoomOut').onclick=()=>{state.planZoom=Math.max(.65,state.planZoom/1.12);renderPlan2D()};$('btnDuplicate').onclick=duplicateSelected;$('btnRotate').onclick=rotateSelected;$('btnDelete').onclick=deleteSelected;$('btnDeselect').onclick=()=>{state.selectedId=null;clearPipeSelection();renderInspector();refreshAll()};$('btnPipeEdit').onclick=()=>{state.pipeEditMode=!state.pipeEditMode;$('btnPipeEdit').classList.toggle('active',state.pipeEditMode);$('viewportHint').textContent=state.pipeEditMode?'Chế độ chỉnh ống: nhấp đường ống để chọn · kéo các nút xanh để đổi tuyến':'Nhấp vào đường ống để mở bảng chỉnh sửa';toast(state.pipeEditMode?'Đã bật chọn và chỉnh sửa đường ống':'Đã tắt chế độ chỉnh ống')};$('btnResetLayout').onclick=loadReferenceLayout;$('btnConnect').onclick=startConnect;$('btnAutoFlow').onclick=autoConnect;$('btnReferenceLayout').onclick=loadReferenceLayout;$('btnFlowToggle').onclick=()=>{state.flowOn=!state.flowOn;$('btnFlowToggle').textContent='Dòng chảy: '+(state.flowOn?'Bật':'Tắt');$('btnFlowToggle').classList.toggle('primary',state.flowOn);draw3D()};$('btnFlowDiagram').onclick=refreshFlow;$('btnSave').onclick=saveLocal;$('btnReport').onclick=showReport;$('btnMore').onclick=showMore;$('modalClose').onclick=()=>$('modalBackdrop').classList.remove('show');$('modalBackdrop').addEventListener('click',e=>{if(e.target===$('modalBackdrop'))$('modalBackdrop').classList.remove('show')});$('fileImport').addEventListener('change',e=>{if(e.target.files[0])importJSON(e.target.files[0]);e.target.value=''});document.querySelectorAll('[data-tab]').forEach(btn=>btn.addEventListener('click',()=>setTab(btn.dataset.tab)));window.addEventListener('keydown',e=>{if(e.key==='Escape'&&!readAuthSession()){setAuthGate(true);return;}if(e.key==='Escape'&&state.connectMode)cancelConnect();else if(e.key==='Escape'&&state.selectedConnectionId){clearPipeSelection();renderPlan2D();renderInspector();draw3D()}if((e.key==='Delete'||e.key==='Backspace')&&!['INPUT','TEXTAREA'].includes(document.activeElement.tagName))deleteSelected()});window.addEventListener('resize',resizeCanvasIfVisible);
+$('modalBackdrop').addEventListener('keydown',e=>{if(e.key==='Escape')$('modalBackdrop').classList.remove('show')});
+// Reference 2D layout: recreated from the user's supplied engineering drawing.
+function loadReferenceLayout(){
+ const make=(type,name,params,x,z,labelSide='below')=>{const m=byType(type);return {id:uid(),type,name,params:{...m.defaults,...params},x,z,rotation:0,labelSide}};
+ // Demo basis: one tank D=2.5m, working depth 0.8m, 500 fish x 0.30kg, feed 1.5%/day.
+ const tank=make('fishTank','Bể nuôi 01',{diameter:2.5,height:1.2,waterLevel:.8,fishCount:500,avgFishWeight:.3,feedRate:1.5,ratedFlow:10},-6,-1.5);
+ const settler=make('settlingTank','Bể lắng',{diameter:1.25,height:1.5,waterLevel:1.4,designHRT:.2,ratedFlow:10},-3.7,-1.5,'above');
+ const drum=make('drumFilter','Drum 60 µm',{width:1.2,depth:.8,height:.95,ratedFlow:12,meshMicron:60},-1.65,-1.5);
+ const valve1=make('valve','Van VS01',{width:.28,depth:.28,height:.2},0,-3,'below');
+ const valve2=make('valve','Van VS02',{width:.28,depth:.28,height:.2},0,-1.5,'above');
+ const valve3=make('valve','Van VS03',{width:.28,depth:.28,height:.2},0,0,'above');
+ const bio1=make('biofilter','MBBR 01',{diameter:1,height:1.3,waterLevel:1.1,mediaFraction:50,specificSurfaceArea:500,tanLoading:.1,ratedFlow:4},1.8,-3,'above');
+ const bio2=make('biofilter','MBBR 02',{diameter:1,height:1.3,waterLevel:1.1,mediaFraction:50,specificSurfaceArea:500,tanLoading:.1,ratedFlow:4},1.8,-1.5,'below');
+ const bio3=make('biofilter','MBBR 03',{diameter:1,height:1.3,waterLevel:1.1,mediaFraction:50,specificSurfaceArea:500,tanLoading:.1,ratedFlow:4},1.8,0,'below');
+ const degas=make('degassing','Khử khí CO₂',{diameter:.9,height:1.5,waterLevel:1.1,ratedFlow:10},3.8,-1.5,'above');
+ const sump=make('storageTank','Sump nước sạch',{diameter:1.5,height:1.2,waterLevel:1,ratedFlow:10},5.35,-1.5,'below');
+ const pump=make('pump','Bơm chính',{width:.75,depth:.56,height:.55,ratedFlow:10,head:4,efficiency:60,motorPower:.25},6.8,-1.5,'above');
+ const uv=make('uv','UV (tùy chọn)',{width:.9,depth:.25,height:.3,ratedFlow:10,power:.12},7.05,.15,'below');
+ const oxygen=make('oxygenCone','Côn O₂',{diameter:.5,height:1.2,ratedFlow:10,oxygenTransferEfficiency:70},6.25,2,'above');
+ const oxygenSource=make('oxygenSource','Nguồn O₂',{diameter:.38,height:1.1,waterLevel:.08,capacity:.12},4.25,3.2,'below');
+ const blower=make('blower','Máy thổi khí',{width:.7,depth:.45,height:.45,power:.37,airFlow:120,airPressure:20},-1.4,3,'below');
+ const airManifold=make('valve','Chia khí 3 nhánh',{width:.5,depth:.25,height:.2},.25,3,'above');
+ const sludge=make('sludgeTank','Bể thu bùn',{diameter:.8,height:.9,waterLevel:.45},-3.7,3.2,'below');
+ state.devices=[tank,settler,drum,valve1,valve2,valve3,bio1,bio2,bio3,degas,sump,pump,uv,oxygen,oxygenSource,blower,airManifold,sludge];
+ const link=(from,to,kind,extra={})=>({id:uid(),from:from.id,to:to.id,kind,...extra});
+ const main=(from,to,kind,diameterMm,flowM3h=null)=>link(from,to,kind,{diameterMm,diameterLabel:`Ø${diameterMm}`,...(flowM3h!==null?{flowM3h,flowLabel:true}:{})});
+ const route=(from,to,kind,diameterMm,points,label='')=>link(from,to,kind,{diameterMm,diameterLabel:`Ø${diameterMm}`,route:points,...(label?{label}:{})});
+ state.connections=[
+  main(tank,settler,'water',110,7.85), main(settler,drum,'water',110),
+  route(drum,valve1,'water',63,[[-1.05,-1.5],[-.55,-1.5],[-.55,-3],[-.14,-3]]), main(valve1,bio1,'water',63),
+  main(drum,valve2,'water',63), main(valve2,bio2,'water',63),
+  route(drum,valve3,'water',63,[[-1.05,-1.5],[-.55,-1.5],[-.55,0],[-.14,0]]), main(valve3,bio3,'water',63),
+  route(bio1,degas,'water',75,[[2.3,-3],[2.9,-3],[2.9,-1.5],[3.35,-1.5]]), main(bio2,degas,'water',75),
+  route(bio3,degas,'water',75,[[2.3,0],[2.9,0],[2.9,-1.5],[3.35,-1.5]]), main(degas,sump,'water',90),
+  main(sump,pump,'water',90), route(pump,uv,'press',90,[[7.2,-1.5],[7.65,-1.5],[7.65,.15],[7.5,.15]]),
+  main(uv,oxygen,'press',90), route(oxygen,tank,'press',90,[[6.25,2],[6.25,-4.05],[-7.35,-4.05],[-7.35,-1.5]]),
+  link(blower,airManifold,'air',{diameterMm:32,diameterLabel:'Ø32',label:'120 L/min'}),
+  route(airManifold,bio1,'air',20,[[.5,3],[1,3],[1,-3],[1.55,-3]]),
+  route(airManifold,bio2,'air',20,[[.5,3],[1.2,3],[1.2,-1.5],[1.55,-1.5]]),
+  route(airManifold,bio3,'air',20,[[.5,3],[1.4,3],[1.4,0],[1.55,0]]),
+  route(oxygenSource,oxygen,'air',10,[[4.55,3.2],[5.3,3.2],[5.3,2],[5.85,2]],'O₂ 0,075 kg/h'),
+  route(settler,sludge,'waste',50,[[-3.7,-1.5],[-3.7,2.6],[-3.7,2.85]],'Xả cặn bể lắng'),
+  route(drum,sludge,'waste',50,[[-1.65,-1.5],[-2.35,-1.5],[-2.35,3.2],[-3.3,3.2]],'Nước rửa Drum')
+ ];
+ state.connections.forEach((c,i)=>{if(i>=2&&i<=10)c.showDiameterLabel=false});
+ const o2line=state.connections.find(c=>c.from===oxygenSource.id&&c.to===oxygen.id);if(o2line)o2line.labelAt=[5.3,2.55];
+ state.settings={...state.settings,turnoverHours:.5,staticHead:2.5,pipeDiameter:.09,pipeLength:30,minorK:8,pumpEfficiency:60,feedRate:1.5,tanPerKgFeed:.03,oxygenConsumption:.35,oxygenEfficiency:70,doCurrent:5.5,doTarget:6,frictionFactor:.025,maxVelocity:2,maxHeadLoss:5};
+ state.projectName='Farm RAS – 150 kg cá · 3 MBBR · thu bùn + khử khí + UV + O₂';$('projectName').value=state.projectName;
+ state.selectedId=tank.id;state.planZoom=1;camera3.yaw=-.68;camera3.zoom=.82;camera3.panX=0;camera3.panY=0;
+ refreshAll();renderInspector();state.dirty=true;saveLocal(false);toast('Đã nạp cấu hình RAS V7.2 · 18 thiết bị · 23 tuyến ống');
+}
+function init(){
+ renderLibrary();
+ const saved=(()=>{try{return localStorage.getItem('farmRAS3D_project_v72')}catch(e){return null}})();
+ if(saved){try{loadProject(JSON.parse(saved));state.dirty=false;return}catch(err){console.warn('Không thể đọc dự án V4 đã lưu:',err)}}
+ loadReferenceLayout();state.dirty=false;
+}
+initAuth();
+init();
+
+</script>
+</body>
+</html>

@@ -1,0 +1,754 @@
+{
+  "format": "FarmRAS3D",
+  "version": 3,
+  "projectName": "Farm RAS – 150 kg cá · 3 MBBR · thu bùn + khử khí + UV + O₂",
+  "devices": [
+    {
+      "id": "demo-tank",
+      "type": "fishTank",
+      "name": "Bể nuôi 01",
+      "params": {
+        "diameter": 2.5,
+        "height": 1.2,
+        "waterLevel": 0.8,
+        "fishCount": 500,
+        "avgFishWeight": 0.3,
+        "feedRate": 1.5,
+        "ratedFlow": 10
+      },
+      "x": -6,
+      "z": -1.5,
+      "rotation": 0,
+      "labelSide": "below"
+    },
+    {
+      "id": "demo-settler",
+      "type": "settlingTank",
+      "name": "Bể lắng",
+      "params": {
+        "diameter": 1.25,
+        "height": 1.5,
+        "waterLevel": 1.4,
+        "designHRT": 0.2,
+        "ratedFlow": 10
+      },
+      "x": -3.7,
+      "z": -1.5,
+      "rotation": 0,
+      "labelSide": "above"
+    },
+    {
+      "id": "demo-drum",
+      "type": "drumFilter",
+      "name": "Drum 60 µm",
+      "params": {
+        "width": 1.2,
+        "depth": 0.8,
+        "height": 0.95,
+        "ratedFlow": 12,
+        "meshMicron": 60
+      },
+      "x": -1.65,
+      "z": -1.5,
+      "rotation": 0,
+      "labelSide": "below"
+    },
+    {
+      "id": "demo-valve-1",
+      "type": "valve",
+      "name": "Van VS01",
+      "params": {
+        "width": 0.28,
+        "depth": 0.28,
+        "height": 0.2
+      },
+      "x": 0,
+      "z": -3,
+      "rotation": 0,
+      "labelSide": "below"
+    },
+    {
+      "id": "demo-valve-2",
+      "type": "valve",
+      "name": "Van VS02",
+      "params": {
+        "width": 0.28,
+        "depth": 0.28,
+        "height": 0.2
+      },
+      "x": 0,
+      "z": -1.5,
+      "rotation": 0,
+      "labelSide": "above"
+    },
+    {
+      "id": "demo-valve-3",
+      "type": "valve",
+      "name": "Van VS03",
+      "params": {
+        "width": 0.28,
+        "depth": 0.28,
+        "height": 0.2
+      },
+      "x": 0,
+      "z": 0,
+      "rotation": 0,
+      "labelSide": "below"
+    },
+    {
+      "id": "demo-mbbr-1",
+      "type": "biofilter",
+      "name": "MBBR 01",
+      "params": {
+        "diameter": 1,
+        "height": 1.3,
+        "waterLevel": 1.1,
+        "mediaFraction": 50,
+        "specificSurfaceArea": 500,
+        "tanLoading": 0.1,
+        "ratedFlow": 4
+      },
+      "x": 1.8,
+      "z": -3,
+      "rotation": 0,
+      "labelSide": "above"
+    },
+    {
+      "id": "demo-mbbr-2",
+      "type": "biofilter",
+      "name": "MBBR 02",
+      "params": {
+        "diameter": 1,
+        "height": 1.3,
+        "waterLevel": 1.1,
+        "mediaFraction": 50,
+        "specificSurfaceArea": 500,
+        "tanLoading": 0.1,
+        "ratedFlow": 4
+      },
+      "x": 1.8,
+      "z": -1.5,
+      "rotation": 0,
+      "labelSide": "below"
+    },
+    {
+      "id": "demo-mbbr-3",
+      "type": "biofilter",
+      "name": "MBBR 03",
+      "params": {
+        "diameter": 1,
+        "height": 1.3,
+        "waterLevel": 1.1,
+        "mediaFraction": 50,
+        "specificSurfaceArea": 500,
+        "tanLoading": 0.1,
+        "ratedFlow": 4
+      },
+      "x": 1.8,
+      "z": 0,
+      "rotation": 0,
+      "labelSide": "below"
+    },
+    {
+      "id": "demo-degas",
+      "type": "degassing",
+      "name": "Khử khí CO₂",
+      "params": {
+        "diameter": 0.9,
+        "height": 1.5,
+        "waterLevel": 1.1,
+        "ratedFlow": 10
+      },
+      "x": 3.8,
+      "z": -1.5,
+      "rotation": 0,
+      "labelSide": "above"
+    },
+    {
+      "id": "demo-sump",
+      "type": "storageTank",
+      "name": "Sump nước sạch",
+      "params": {
+        "diameter": 1.5,
+        "height": 1.2,
+        "waterLevel": 1,
+        "ratedFlow": 10
+      },
+      "x": 5.35,
+      "z": -1.5,
+      "rotation": 0,
+      "labelSide": "below"
+    },
+    {
+      "id": "demo-pump",
+      "type": "pump",
+      "name": "Bơm chính",
+      "params": {
+        "width": 0.75,
+        "depth": 0.56,
+        "height": 0.55,
+        "ratedFlow": 10,
+        "head": 4,
+        "efficiency": 60,
+        "motorPower": 0.25
+      },
+      "x": 6.8,
+      "z": -1.5,
+      "rotation": 0,
+      "labelSide": "above"
+    },
+    {
+      "id": "demo-uv",
+      "type": "uv",
+      "name": "UV (tùy chọn)",
+      "params": {
+        "width": 0.9,
+        "depth": 0.25,
+        "height": 0.3,
+        "ratedFlow": 10,
+        "power": 0.12
+      },
+      "x": 7.05,
+      "z": 0.15,
+      "rotation": 0,
+      "labelSide": "below"
+    },
+    {
+      "id": "demo-oxygen-cone",
+      "type": "oxygenCone",
+      "name": "Côn O₂",
+      "params": {
+        "diameter": 0.5,
+        "height": 1.2,
+        "ratedFlow": 10,
+        "oxygenTransferEfficiency": 70
+      },
+      "x": 6.25,
+      "z": 2,
+      "rotation": 0,
+      "labelSide": "above"
+    },
+    {
+      "id": "demo-oxygen-source",
+      "type": "oxygenSource",
+      "name": "Nguồn O₂",
+      "params": {
+        "diameter": 0.38,
+        "height": 1.1,
+        "waterLevel": 0.08,
+        "capacity": 0.12
+      },
+      "x": 4.25,
+      "z": 3.2,
+      "rotation": 0,
+      "labelSide": "below"
+    },
+    {
+      "id": "demo-blower",
+      "type": "blower",
+      "name": "Máy thổi khí",
+      "params": {
+        "width": 0.7,
+        "depth": 0.45,
+        "height": 0.45,
+        "power": 0.37,
+        "airFlow": 120,
+        "airPressure": 20
+      },
+      "x": -1.4,
+      "z": 3,
+      "rotation": 0,
+      "labelSide": "below"
+    },
+    {
+      "id": "demo-air-manifold",
+      "type": "valve",
+      "name": "Chia khí 3 nhánh",
+      "params": {
+        "width": 0.5,
+        "depth": 0.25,
+        "height": 0.2
+      },
+      "x": 0.25,
+      "z": 3,
+      "rotation": 0,
+      "labelSide": "above"
+    },
+    {
+      "id": "demo-sludge-tank",
+      "type": "sludgeTank",
+      "name": "Bể thu bùn",
+      "params": {
+        "diameter": 0.8,
+        "height": 0.9,
+        "waterLevel": 0.45
+      },
+      "x": -3.7,
+      "z": 3.2,
+      "rotation": 0,
+      "labelSide": "below"
+    }
+  ],
+  "connections": [
+    {
+      "id": "demo-pipe-01",
+      "from": "demo-tank",
+      "to": "demo-settler",
+      "kind": "water",
+      "diameterMm": 110,
+      "diameterLabel": "Ø110",
+      "flowM3h": 7.85,
+      "flowLabel": true
+    },
+    {
+      "id": "demo-pipe-02",
+      "from": "demo-settler",
+      "to": "demo-drum",
+      "kind": "water",
+      "diameterMm": 110,
+      "diameterLabel": "Ø110"
+    },
+    {
+      "id": "demo-pipe-03",
+      "from": "demo-drum",
+      "to": "demo-valve-1",
+      "kind": "water",
+      "diameterMm": 63,
+      "diameterLabel": "Ø63",
+      "route": [
+        [
+          -1.05,
+          -1.5
+        ],
+        [
+          -0.55,
+          -1.5
+        ],
+        [
+          -0.55,
+          -3
+        ],
+        [
+          -0.14,
+          -3
+        ]
+      ],
+      "showDiameterLabel": false
+    },
+    {
+      "id": "demo-pipe-04",
+      "from": "demo-valve-1",
+      "to": "demo-mbbr-1",
+      "kind": "water",
+      "diameterMm": 63,
+      "diameterLabel": "Ø63",
+      "showDiameterLabel": false
+    },
+    {
+      "id": "demo-pipe-05",
+      "from": "demo-drum",
+      "to": "demo-valve-2",
+      "kind": "water",
+      "diameterMm": 63,
+      "diameterLabel": "Ø63",
+      "showDiameterLabel": false
+    },
+    {
+      "id": "demo-pipe-06",
+      "from": "demo-valve-2",
+      "to": "demo-mbbr-2",
+      "kind": "water",
+      "diameterMm": 63,
+      "diameterLabel": "Ø63",
+      "showDiameterLabel": false
+    },
+    {
+      "id": "demo-pipe-07",
+      "from": "demo-drum",
+      "to": "demo-valve-3",
+      "kind": "water",
+      "diameterMm": 63,
+      "diameterLabel": "Ø63",
+      "route": [
+        [
+          -1.05,
+          -1.5
+        ],
+        [
+          -0.55,
+          -1.5
+        ],
+        [
+          -0.55,
+          0
+        ],
+        [
+          -0.14,
+          0
+        ]
+      ],
+      "showDiameterLabel": false
+    },
+    {
+      "id": "demo-pipe-08",
+      "from": "demo-valve-3",
+      "to": "demo-mbbr-3",
+      "kind": "water",
+      "diameterMm": 63,
+      "diameterLabel": "Ø63",
+      "showDiameterLabel": false
+    },
+    {
+      "id": "demo-pipe-09",
+      "from": "demo-mbbr-1",
+      "to": "demo-degas",
+      "kind": "water",
+      "diameterMm": 75,
+      "diameterLabel": "Ø75",
+      "route": [
+        [
+          2.3,
+          -3
+        ],
+        [
+          2.9,
+          -3
+        ],
+        [
+          2.9,
+          -1.5
+        ],
+        [
+          3.35,
+          -1.5
+        ]
+      ],
+      "showDiameterLabel": false
+    },
+    {
+      "id": "demo-pipe-10",
+      "from": "demo-mbbr-2",
+      "to": "demo-degas",
+      "kind": "water",
+      "diameterMm": 75,
+      "diameterLabel": "Ø75",
+      "showDiameterLabel": false
+    },
+    {
+      "id": "demo-pipe-11",
+      "from": "demo-mbbr-3",
+      "to": "demo-degas",
+      "kind": "water",
+      "diameterMm": 75,
+      "diameterLabel": "Ø75",
+      "route": [
+        [
+          2.3,
+          0
+        ],
+        [
+          2.9,
+          0
+        ],
+        [
+          2.9,
+          -1.5
+        ],
+        [
+          3.35,
+          -1.5
+        ]
+      ],
+      "showDiameterLabel": false
+    },
+    {
+      "id": "demo-pipe-12",
+      "from": "demo-degas",
+      "to": "demo-sump",
+      "kind": "water",
+      "diameterMm": 90,
+      "diameterLabel": "Ø90"
+    },
+    {
+      "id": "demo-pipe-13",
+      "from": "demo-sump",
+      "to": "demo-pump",
+      "kind": "water",
+      "diameterMm": 90,
+      "diameterLabel": "Ø90"
+    },
+    {
+      "id": "demo-pipe-14",
+      "from": "demo-pump",
+      "to": "demo-uv",
+      "kind": "press",
+      "diameterMm": 90,
+      "diameterLabel": "Ø90",
+      "route": [
+        [
+          7.2,
+          -1.5
+        ],
+        [
+          7.65,
+          -1.5
+        ],
+        [
+          7.65,
+          0.15
+        ],
+        [
+          7.5,
+          0.15
+        ]
+      ]
+    },
+    {
+      "id": "demo-pipe-15",
+      "from": "demo-uv",
+      "to": "demo-oxygen-cone",
+      "kind": "press",
+      "diameterMm": 90,
+      "diameterLabel": "Ø90"
+    },
+    {
+      "id": "demo-pipe-16",
+      "from": "demo-oxygen-cone",
+      "to": "demo-tank",
+      "kind": "press",
+      "diameterMm": 90,
+      "diameterLabel": "Ø90",
+      "route": [
+        [
+          6.25,
+          2
+        ],
+        [
+          6.25,
+          -4.05
+        ],
+        [
+          -7.35,
+          -4.05
+        ],
+        [
+          -7.35,
+          -1.5
+        ]
+      ]
+    },
+    {
+      "id": "demo-pipe-17",
+      "from": "demo-blower",
+      "to": "demo-air-manifold",
+      "kind": "air",
+      "diameterMm": 32,
+      "diameterLabel": "Ø32",
+      "label": "120 L/min"
+    },
+    {
+      "id": "demo-pipe-18",
+      "from": "demo-air-manifold",
+      "to": "demo-mbbr-1",
+      "kind": "air",
+      "diameterMm": 20,
+      "diameterLabel": "Ø20",
+      "route": [
+        [
+          0.5,
+          3
+        ],
+        [
+          1,
+          3
+        ],
+        [
+          1,
+          -3
+        ],
+        [
+          1.55,
+          -3
+        ]
+      ],
+      "label": "40 L/min"
+    },
+    {
+      "id": "demo-pipe-19",
+      "from": "demo-air-manifold",
+      "to": "demo-mbbr-2",
+      "kind": "air",
+      "diameterMm": 20,
+      "diameterLabel": "Ø20",
+      "route": [
+        [
+          0.5,
+          3
+        ],
+        [
+          1.2,
+          3
+        ],
+        [
+          1.2,
+          -1.5
+        ],
+        [
+          1.55,
+          -1.5
+        ]
+      ],
+      "label": "40 L/min"
+    },
+    {
+      "id": "demo-pipe-20",
+      "from": "demo-air-manifold",
+      "to": "demo-mbbr-3",
+      "kind": "air",
+      "diameterMm": 20,
+      "diameterLabel": "Ø20",
+      "route": [
+        [
+          0.5,
+          3
+        ],
+        [
+          1.4,
+          3
+        ],
+        [
+          1.4,
+          0
+        ],
+        [
+          1.55,
+          0
+        ]
+      ],
+      "label": "40 L/min"
+    },
+    {
+      "id": "demo-pipe-21",
+      "from": "demo-oxygen-source",
+      "to": "demo-oxygen-cone",
+      "kind": "air",
+      "diameterMm": 10,
+      "diameterLabel": "Ø10",
+      "route": [
+        [
+          4.55,
+          3.2
+        ],
+        [
+          5.3,
+          3.2
+        ],
+        [
+          5.3,
+          2
+        ],
+        [
+          5.85,
+          2
+        ]
+      ],
+      "label": "O₂ 0,075 kg/h",
+      "labelAt": [
+        5.3,
+        2.55
+      ]
+    },
+    {
+      "id": "demo-pipe-22",
+      "from": "demo-settler",
+      "to": "demo-sludge-tank",
+      "kind": "waste",
+      "diameterMm": 50,
+      "diameterLabel": "Ø50",
+      "route": [
+        [
+          -3.7,
+          -1.5
+        ],
+        [
+          -3.7,
+          2.6
+        ],
+        [
+          -3.7,
+          2.85
+        ]
+      ],
+      "label": "Xả cặn bể lắng"
+    },
+    {
+      "id": "demo-pipe-23",
+      "from": "demo-drum",
+      "to": "demo-sludge-tank",
+      "kind": "waste",
+      "diameterMm": 50,
+      "diameterLabel": "Ø50",
+      "route": [
+        [
+          -1.65,
+          -1.5
+        ],
+        [
+          -2.35,
+          -1.5
+        ],
+        [
+          -2.35,
+          3.2
+        ],
+        [
+          -3.3,
+          3.2
+        ]
+      ],
+      "label": "Nước rửa Drum"
+    }
+  ],
+  "settings": {
+    "turnoverHours": 0.5,
+    "staticHead": 2.5,
+    "pipeDiameter": 0.09,
+    "pipeLength": 30,
+    "minorK": 8,
+    "pumpEfficiency": 60,
+    "feedRate": 1.5,
+    "tanPerKgFeed": 0.03,
+    "oxygenConsumption": 0.35,
+    "oxygenEfficiency": 70,
+    "doCurrent": 5.5,
+    "doTarget": 6,
+    "frictionFactor": 0.025,
+    "maxVelocity": 2,
+    "maxHeadLoss": 5
+  },
+  "view": {
+    "mode": "2d",
+    "planZoom": 1,
+    "camera3": {
+      "yaw": -0.68,
+      "zoom": 0.82,
+      "pitch": 0.52,
+      "panX": 0,
+      "panY": 0
+    }
+  },
+  "notes": {
+    "design_basis": "Mô hình trình diễn: 1 bể D2.5m, mực nước 0.8m, 500 cá x 0.30kg, feed 1.5%/ngày.",
+    "process": "Nước: Bể nuôi → bể lắng → Drum Filter → 3 MBBR song song (van cân bằng từng nhánh) → khử khí CO₂ → sump → một bơm chính → UV tùy chọn → côn oxy → hồi bể nuôi. Cặn: bể lắng và Drum → bể thu bùn. Khí: blower → chia ba nhánh → 3 MBBR. Oxy tinh khiết: nguồn O₂ → côn oxy.",
+    "air": "Máy thổi khí 120 L/phút tại áp suất làm việc giả định cấp qua bộ chia 3 nhánh, khoảng 40 L/phút/nhánh cho 3 MBBR.",
+    "oxygen": "Nguồn O2 tinh khiết là thiết bị riêng cấp cho côn oxy; nhu cầu ước tính 0.075kg/h trên hệ số tiêu thụ oxy theo sinh khối và hiệu suất chuyển 70%. Năng lực nguồn khai báo 0.12kg/h là giả định demo.",
+    "mechanical_filter": "Drum Filter là lọc cơ học chính; không lắp thêm lọc cơ học nối tiếp mặc định để tránh trùng chức năng. Có thể thêm lọc tinh nếu cần.",
+    "biofilter": "Tải TAN 0.10kg TAN/m3 vật liệu/ngày, SSA 500m2/m3 và fill 50% chỉ là hệ số giả định. Phải lấy thông số media và dữ liệu vận hành thực tế.",
+    "hydraulic": "TDH chỉ là ước tính trên ống chính; chưa giải mạng thủy lực từng nhánh, phụ kiện, NPSH và đường đặc tính Q-H của bơm.",
+    "uv": "UV là công đoạn bổ sung/tùy chọn. Không tính liều xác thực nếu chưa có UVT, cường độ, lưu lượng qua buồng và dữ liệu của nhà sản xuất.",
+    "settler": "HRT là chỉ số tham khảo; cần kiểm tra thêm tải bề mặt, hình học dòng vào/ra và đặc tính hạt lắng.",
+    "safety": "Chưa có bơm/blower dự phòng, UPS/máy phát, cảnh báo DO thấp, cảm biến pH/nhiệt độ/lưu lượng/mực nước. Đây là hạng mục nâng cấp cần thiết trước khi vận hành thực tế.",
+    "solids_management": "Có bể thu bùn riêng nhận cặn xả từ bể lắng và nước rửa Drum. Dung tích bể thu bùn và lịch xả phải được tính theo tải chất rắn thực tế; bể thu bùn không thuộc thể tích nước tuần hoàn."
+  },
+  "savedAt": "2026-11-04T00:00:00.000Z"
+}

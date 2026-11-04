@@ -1,0 +1,76 @@
+FARM RAS – THÔNG SỐ CẤU HÌNH DEMO V7.2
+
+CƠ SỞ DEMO (KHÔNG PHẢI BẢN VẼ THI CÔNG)
+- 1 bể nuôi tròn D=2,5 m; thành bể 1,2 m; mực nước 0,8 m.
+- 500 cá × 0,30 kg/con = 150 kg sinh khối.
+- Thức ăn 1,5% sinh khối/ngày = 2,25 kg/ngày.
+- Thời gian tuần hoàn mục tiêu 0,5 giờ; Q tính trên thể tích làm việc bể nuôi.
+
+THIẾT BỊ MẪU (18 THIẾT BỊ)
+1. Bể nuôi: D2,5m; H1,2m; mực nước 0,8m; 500 cá; 0,30kg/con; feed 1,5%.
+2. Bể lắng hướng tâm: D1,25m; H1,5m; mực nước 1,4m; V làm việc ≈1,718m³; HRT ≈13,1 phút tại Q7,85m³/h. HRT không đủ để chứng nhận hiệu quả lắng.
+3. Drum Filter: 1,2×0,8×0,95m; lưới 60µm; công suất lưu lượng tham chiếu 12m³/h.
+4–6. Van cân bằng VS01–VS03: 0,28×0,28×0,20m, một van mỗi nhánh MBBR.
+7–9. Ba MBBR song song: mỗi bể D1m; H1,3m; mực nước1,1m; media fill50%; SSA500m²/m³; tải TAN0,10kg/m³ media/ngày (giả định); rated flow4m³/h/bể.
+10. Tháp khử khí CO₂: D0,9m; H1,5m; mực nước1,1m; rated flow10m³/h.
+11. Sump: D1,5m; H1,2m; mực nước1m; rated flow10m³/h.
+12. Một bơm tuần hoàn chính: 0,75×0,56×0,55m; rated flow10m³/h; head4m; hiệu suất60%; motor0,25kW (đều là giá trị giả định; cần Q-H curve/NPSH).
+13. UV (tùy chọn): 0,9×0,25×0,3m; rated flow10m³/h; điện0,12kW; chưa tính liều xác thực theo UVT/cường độ.
+14. Côn hòa tan oxy: D0,5m; H1,2m; rated flow10m³/h; hiệu suất chuyển oxy70% (giả định).
+15. Nguồn oxy tinh khiết riêng: D hiển thị0,38m; H1,1m; năng lực cấp0,12kg O₂/h (giả định minh họa). Phải chọn nguồn, bộ điều áp và thiết bị thật đúng định mức.
+16. Máy thổi khí: 0,70×0,45×0,45m; 0,37kW; 120L/phút ở20kPa (giả định, phải đối chiếu đường đặc tính).
+17. Bộ chia khí 3 nhánh: 0,50×0,25×0,20m; chia khoảng40L/phút/nhánh.
+18. Bể thu bùn: D0,8m; H0,9m; mực bùn/nước tham chiếu0,45m; nhận cặn xả bể lắng và nước rửa Drum. Dung tích/lịch xả cần xác định theo tải chất rắn thật. Không tính vào thể tích nước tuần hoàn.
+
+SƠ ĐỒ NƯỚC TUẦN HOÀN
+Bể nuôi → bể lắng → Drum Filter → 3 nhánh MBBR song song (mỗi nhánh có van cân bằng) → tháp khử khí CO₂ → sump → một bơm chính → UV tùy chọn → côn hòa tan oxy → hồi bể nuôi.
+SƠ ĐỒ KHÍ
+Máy thổi khí 120L/phút → bộ chia → 3 MBBR, chia sơ bộ 40L/phút/nhánh. Lưu lượng phải hiệu chỉnh theo diffuser, chiều sâu nước và áp suất làm việc.
+SƠ ĐỒ OXY TINH KHIẾT
+Nguồn O₂ riêng → côn hòa tan oxy. Máy thổi khí không thay thế nguồn O₂ tinh khiết cho côn.
+SƠ ĐỒ CẶN
+Bể lắng và Drum Filter → bể thu bùn qua các tuyến xả riêng.
+
+ĐƯỜNG ỐNG HIỂN THỊ DEMO
+- Bể nuôi → lắng → Drum: DN110, Q tổng≈7,85m³/h.
+- Drum → từng nhánh MBBR: DN63, Q≈2,62m³/h/nhánh.
+- MBBR → khử khí: DN75, Q≈2,62m³/h/nhánh.
+- Khử khí → sump → bơm → UV → côn oxy → bể nuôi: DN90, Q≈7,85m³/h.
+- Blower → chia khí: DN32, 120L/phút.
+- Chia khí → MBBR: DN20, khoảng40L/phút/nhánh.
+- Nguồn O₂ → côn oxy: DN10 chỉ là ký hiệu minh họa, phải kiểm tra theo lưu lượng/áp suất/chuẩn đầu nối của thiết bị.
+- Xả bùn/nước rửa: DN50 là ký hiệu sơ bộ, cần chọn theo lưu lượng xả cặn và khả năng chống tắc.
+
+CẤU HÌNH TÍNH
+Turnover0,5h; cột áp tĩnh2,5m; ống chính trong mô hình DN90, L30m; f Darcy0,025; tổng K8; hiệu suất bơm60%; TAN/feed0,03kg TAN/kg thức ăn; tiêu thụ oxy0,35g O₂/kg cá/h; DO hiện tại5,5mg/L; DO mục tiêu6mg/L.
+
+KẾT QUẢ MẪU
+- Thể tích bể nuôi=3,927m³.
+- Tổng thể tích nước được mô hình hóa (không gồm bể thu bùn và thể tích trong ống)≈10,704m³; thể tích thực tế cần kiểm kê từng khoang và phần chiếm chỗ của media.
+- Sinh khối150kg; thức ăn2,25kg/ngày.
+- Q=3,927/0,5=7,854m³/h.
+- HRT bể lắng≈13,1phút, mục tiêu demo12phút.
+- TAN dự kiến=0,0675kg/ngày (hệ số 3% feed là giả định đầu vào).
+- Media MBBR tổng≈1,296m³; khả năng xử lý TAN theo giả định0,10≈0,1296kg/ngày.
+- Q mỗi nhánh MBBR≈2,618m³/h, thấp hơn rated flow giả định4m³/h mỗi bể.
+- Vận tốc ống chính DN90≈0,343m/s.
+- TDH sơ bộ≈2,60m; công suất điện theo Q/TDH/hiệu suất≈0,093kW; motor khai báo0,25kW. Không thay thế kiểm tra đường đặc tính bơm.
+- Nhu cầu oxy fish-only theo hệ số minh họa≈1,26kg O₂/ngày; quy đổi qua hiệu suất70% thành nguồn≈0,075kg/h. Không bao gồm đầy đủ nhu cầu O₂ của vi khuẩn nitrification và BOD từ chất hữu cơ.
+
+ĐÃ BỎ / THÊM
+- Bỏ bơm thứ hai trùng chức năng; giữ một bơm chính sau sump.
+- Không lắp mechanical filter nối tiếp mặc định vì Drum Filter giữ vai trò lọc cơ học chính; có thể bổ sung lọc tinh khi cần.
+- Thêm tháp khử khí CO₂, sump, UV tùy chọn, côn oxy và nguồn O₂ riêng.
+- Thêm ba van cân bằng cho ba nhánh MBBR, bộ chia khí ba nhánh.
+- Thêm bể thu bùn và hai tuyến xả riêng từ bể lắng/Drum.
+
+HẠNG MỤC NÊN BỔ SUNG TRƯỚC KHI VẬN HÀNH THỰC
+- Bơm và blower dự phòng; UPS/máy phát; cảnh báo DO thấp/mất điện.
+- Cảm biến DO, pH, nhiệt độ, lưu lượng, mực nước; kế hoạch kiểm tra TAN/nitrite.
+- Bypass và van cách ly quanh thiết bị cần bảo trì; đường xả đáy và quy trình backwash.
+- Kiểm tra tải bề mặt bể lắng, lưu lượng xả cặn, khả năng chống tắc.
+- Kiểm tra hiệu suất media MBBR theo nhà sản xuất, nhiệt độ, DO, pH, kiềm và thời gian trưởng thành biofilm.
+- Đối chiếu điểm Q-H, NPSH, tổn thất từng nhánh và áp suất tại diffuser.
+- Xác nhận UVT, cường độ và liều UV; xác nhận chuyển oxy tại flow/pressure thực.
+
+Đây là mô hình trình diễn phần mềm. Các hệ số tải TAN, oxy, UV, blower, bơm và kích thước đường ống là giả định đầu vào, không phải thông số đã được thẩm định. Cần chuyên gia thủy sản/thủy lực kiểm tra trước khi thi công hoặc thả cá.

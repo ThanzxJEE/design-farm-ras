@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Farm RAS 3D Studio V7.6</title>
+<link rel="stylesheet" href="./src/styles.css">
+</head>
+<body>
+<div id="app">
+ <header class="topbar">
+  <div class="brand"><div class="brand-mark">≈</div><div><small>FARM RAS / DESIGN STUDIO</small><strong>Thiết kế & Tính toán hệ thống RAS · V7.6</strong></div></div>
+  <input id="projectName" class="project-name" value="Dự án RAS mới" aria-label="Tên dự án">
+  <div class="top-actions"><button id="btnConnect">＋ Nối ống</button><button id="btnAutoFlow">Tạo tuyến mẫu</button><button id="btnReferenceLayout" title="Khôi phục sơ đồ giống hình mẫu">Sơ đồ mẫu 2D</button><button id="btnFlowToggle" class="primary">Dòng chảy: Bật</button></div>
+  <div class="top-right"><span id="systemStatus" class="status-pill">● Đang kiểm tra</span><button id="btnSave" class="primary">Lưu</button><button id="btnReport">Báo cáo</button><button id="btnMore">⋯ Quản lý</button><div id="authArea" class="auth-area"><button id="btnOpenAuth" class="account-button">♙ Đăng nhập / Đăng ký</button></div></div>
+ </header>
+ <section class="dashboard">
+  <div class="metric"><div class="label">Tổng thể tích nước</div><div class="value" id="mVolume">0,00 <span class="unit">m³</span></div></div>
+  <div class="metric"><div class="label">Bể nuôi</div><div class="value" id="mTanks">0 <span class="unit">bể</span></div></div>
+  <div class="metric"><div class="label">Thiết bị</div><div class="value" id="mDevices">0 <span class="unit">thiết bị</span></div></div>
+  <div class="metric"><div class="label">Lưu lượng tuần hoàn</div><div class="value" id="mFlow">0,00 <span class="unit">m³/h</span></div></div>
+  <div class="metric"><div class="label">Công suất điện bơm</div><div class="value" id="mPower">0,00 <span class="unit">kW</span></div></div>
+  <div class="metric status"><div class="label">Đánh giá sơ bộ</div><div class="value" id="mStatus"><i class="dot warn"></i> Chưa đủ dữ liệu</div></div>
+ </section>
+ <main class="workspace">
+  <aside class="panel">
+   <div class="panel-head"><h3>Thư viện thiết bị</h3><small id="libraryCount">14 loại</small></div>
+   <div class="panel-body"><input id="libSearch" class="lib-search" placeholder="⌕ Tìm thiết bị..." autocomplete="off"><div id="libraryGrid" class="lib-grid"></div>
+    <div class="library-foot"><span>↖</span><div><strong>Thiết kế theo cách của bạn</strong><br>Nối các cổng để tạo đường ống. Thông số và kết quả được cập nhật theo mô hình.</div></div>
+   </div>
+  </aside>
+  <section class="viewport" id="viewport">
+   <div class="view-tools"><div class="view-switch"><button id="btnTopView" class="active">▦ &nbsp;Mặt bằng 2D</button><button id="btnIso">⬡ &nbsp;Xem 3D</button></div><span class="tool-sep"></span><button id="btnHome" title="Góc nhìn mặc định">⌖</button><button id="btnPipeEdit" title="Chọn đường ống để chỉnh sửa">Sửa đường ống</button><button id="btnGrid" class="active">Lưới 0,5 m</button><button id="btnLabels" class="active">Nhãn: Bật</button><button id="btnFit">Vừa khung</button><button id="btnScreenshot">Xuất sơ đồ</button></div>
+   <div class="canvas-status"><span class="led"></span><span id="canvasStatus">KIỂM TRA BỐ TRÍ 2D</span></div>
+   <svg id="planSvg" class="plan-svg" viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Mặt bằng bố trí thiết bị RAS 2D"></svg>
+   <canvas id="view3d" aria-label="Mô hình không gian RAS 3D"></canvas>
+   <div class="legend"><b>CHÚ GIẢI ĐƯỜNG ỐNG</b><div><span class="legend-line"></span>Nước tự chảy</div><div><span class="legend-line press"></span>Nước có áp</div><div><span class="legend-line air"></span>Khí</div><div><span class="legend-line waste"></span>Xả cặn / bùn</div></div>
+   <div class="viewport-hint" id="viewportHint">Kéo thiết bị để di chuyển · Nhấp thiết bị hoặc đường ống để chỉnh sửa · Chọn “Xem 3D” để quan sát không gian</div>
+   <div class="scene-bottom"><span id="viewportMeta">9 thiết bị · 9 đường ống</span><button id="btnDuplicate">Nhân bản</button><button id="btnRotate">Xoay 90°</button><button id="btnDelete" class="danger">Xóa</button><button id="btnDeselect">Bỏ chọn</button><button id="btnPlanZoomOut">−</button><span id="planZoomValue">100%</span><button id="btnPlanZoomIn">＋</button><button id="btnResetLayout">Về cấu hình RAS mẫu</button></div>
+  </section>
+  <aside class="panel"><div class="panel-head"><h3 id="inspectorTitle">Thông số thiết bị</h3><div class="right-tabs"><button class="active" data-tab="device">Thiết bị</button><button data-tab="calc">Tính toán</button><button data-tab="settings">Cấu hình</button></div></div><div class="panel-body" id="inspectorBody"><div class="empty"><span class="big">⌖</span>Chọn một thiết bị hoặc đường ống trên mô hình để xem và chỉnh sửa thông số.</div></div></aside>
+ </main>
+ <section class="bottom-area">
+  <div class="bottom-panel"><div class="bottom-head"><span>SƠ ĐỒ QUY TRÌNH / ĐƯỜNG ĐI NƯỚC</span><button id="btnFlowDiagram">Làm mới sơ đồ</button></div><div id="flowSteps" class="flow-steps"></div></div>
+  <div class="bottom-panel"><div class="bottom-head"><span>KIỂM TRA & CẢNH BÁO KỸ THUẬT</span><span id="warningCount" class="tag">0 mục</span></div><div id="warningList" class="warning-list"></div></div>
+ </section>
+</div>
+<div id="modalBackdrop" class="modal-backdrop"><div class="modal"><div class="modal-head"><h2 id="modalTitle">Báo cáo tính toán RAS</h2><button class="close" id="modalClose">Đóng ×</button></div><div class="modal-content" id="modalContent"></div></div></div>
+
+<div id="authBackdrop" class="auth-backdrop auth-gate auth-gate-v75 auth-gate-v76" aria-hidden="false">
+ <section class="auth-card auth-card-v74" role="dialog" aria-modal="true" aria-labelledby="authHeading">
+  <aside class="auth-visual auth-visual-v75">
+   <div class="auth-tech-grid" aria-hidden="true"></div>
+   <div class="auth-tech-orbit auth-orbit-a" aria-hidden="true"></div>
+   <div class="auth-tech-orbit auth-orbit-b" aria-hidden="true"></div>
+   <div class="auth-tech-glow auth-tech-glow-a" aria-hidden="true"></div>
+   <div class="auth-tech-glow auth-tech-glow-b" aria-hidden="true"></div>
+   <div class="auth-brand-row auth-brand-row-v75">
+    <div class="auth-logo" aria-hidden="true"><svg viewBox="0 0 40 40"><path d="M5 14c5-6 10-6 15 0s10 6 15 0M5 23c5-6 10-6 15 0s10 6 15 0M5 32c5-6 10-6 15 0s10 6 15 0" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg></div>
+    <div class="auth-brand-word"><strong>FARM RAS</strong><span>DESIGN STUDIO</span></div>
+    <span class="auth-version">V7.6 / INDUSTRIAL</span>
+   </div>
+   <div class="auth-hero-copy auth-hero-copy-v75">
+    <div class="auth-kicker"><i></i> RAS ENGINEERING / SYSTEM DESIGN / CONTROL</div>
+    <h1>Thiết kế có<br><em>cơ sở kỹ thuật.</em></h1>
+    <p>Từ bố trí thiết bị đến mạng đường ống. Xây dựng, kiểm tra và tinh chỉnh hệ thống nuôi tuần hoàn trong một không gian làm việc.</p>
+   </div>
+   <div class="auth-diagram-card auth-diagram-card-v75">
+    <div class="auth-diagram-head auth-diagram-head-v75">
+     <div><span class="auth-diagram-dot"></span><b>ENGINEERING / FLOW SCHEMATIC</b></div>
+     <small><span class="auth-live-pulse"></span> LIVE DESIGN PREVIEW</small>
+    </div>
+    <svg class="auth-ras-diagram auth-ras-diagram-v75" viewBox="0 0 920 340" role="img" aria-label="Sơ đồ công nghệ hệ thống RAS gồm bể nuôi, lọc trống, lọc vi sinh, khử khí, bơm và đèn UV">
+     <defs>
+      <pattern id="authV75Grid" width="26" height="26" patternUnits="userSpaceOnUse"><path d="M26 0H0V26" fill="none" stroke="#8bd9d0" stroke-opacity=".11" stroke-width="1"/></pattern>
+      <linearGradient id="authV75Tank" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#5de6d2" stop-opacity=".4"/><stop offset="1" stop-color="#168c91" stop-opacity=".12"/></linearGradient>
+      <linearGradient id="authV75Metal" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#d8fff4" stop-opacity=".2"/><stop offset="1" stop-color="#83cfc0" stop-opacity=".07"/></linearGradient>
+      <filter id="authV75Glow" x="-80%" y="-80%" width="260%" height="260%"><feGaussianBlur stdDeviation="5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      <filter id="authV75Shadow" x="-50%" y="-50%" width="200%" height="200%"><feDropShadow dx="0" dy="8" stdDeviation="9" flood-color="#00191d" flood-opacity=".35"/></filter>
+     </defs>
+     <rect width="920" height="340" rx="14" fill="url(#authV75Grid)"/>
+     <g class="auth-v75-pipes" fill="none" stroke-linecap="round" stroke-linejoin="round">
+      <path class="auth-v75-pipe-water" d="M166 168H226V118H286"/>
+      <path class="auth-v75-pipe-water" d="M356 118H412V70H460M412 118V166H460M412 166V262H460"/>
+      <path class="auth-v75-pipe-water" d="M540 70H594V166H628M540 166H628M540 262H594V166"/>
+      <path class="auth-v75-pipe-water" d="M694 166H748V118H790"/>
+      <path class="auth-v75-pipe-return" d="M824 146V300H226V190H166"/>
+      <path class="auth-v75-pipe-air" d="M390 294H432V262H460M432 166H460M432 70H460"/>
+     </g>
+     <g class="auth-v75-flow-particles" fill="#8ff9e5" filter="url(#authV75Glow)"><circle r="4"><animateMotion dur="4.5s" repeatCount="indefinite" path="M166 168H226V118H286H356H412V70H460H540H594V166H628H694H748V118H790"/></circle><circle r="3"><animateMotion dur="5.5s" begin="-2s" repeatCount="indefinite" path="M824 146V300H226V190H166"/></circle></g>
+     <g filter="url(#authV75Shadow)">
+      <g class="auth-v75-tank"><ellipse cx="112" cy="106" rx="57" ry="18" fill="#9af4e7" fill-opacity=".13" stroke="#9ef4e4" stroke-width="2"/><path d="M55 106V208C55 223 80 235 112 235S169 223 169 208V106" fill="url(#authV75Tank)" stroke="#7be5d6" stroke-width="2"/><ellipse cx="112" cy="208" rx="57" ry="18" fill="#38b9b2" fill-opacity=".12" stroke="#7be5d6" stroke-width="2"/><ellipse cx="112" cy="106" rx="57" ry="18" fill="#7cebdd" fill-opacity=".18" stroke="#a7fff0" stroke-width="2.4"/><path d="M66 107q23-12 46 0t46 0M66 124q23-12 46 0t46 0" fill="none" stroke="#a8fff2" stroke-opacity=".7" stroke-width="1.7"/><path d="M82 154q9-10 18 0t18 0t18 0" fill="none" stroke="#d6fff8" stroke-width="2" opacity=".72"/><circle cx="112" cy="106" r="4" fill="#c7fff4"/></g>
+      <g class="auth-v75-drum"><rect x="286" y="83" width="70" height="70" rx="13" fill="url(#authV75Metal)" stroke="#a1eee0" stroke-width="2"/><rect x="295" y="94" width="52" height="48" rx="8" fill="#0b6c70" fill-opacity=".25" stroke="#7ed9cb" stroke-opacity=".8"/><path d="M306 100V136M321 100V136M336 100V136" stroke="#a0f8e7" stroke-width="3" stroke-linecap="round"/><path d="M302 117H340" stroke="#a0f8e7" stroke-width="1.5" opacity=".65"/></g>
+      <g class="auth-v75-bio">
+       <g><rect x="460" y="39" width="80" height="62" rx="13" fill="url(#authV75Metal)" stroke="#9de6a6" stroke-width="2"/><circle cx="500" cy="70" r="16" fill="#75c995" fill-opacity=".12" stroke="#a8f0ae" stroke-width="1.5"/><path d="M491 70h18m-9-9v18m-6-12 12 12m0-12-12 12" stroke="#b3f3b7" stroke-width="1.5" opacity=".85"/></g>
+       <g><rect x="460" y="135" width="80" height="62" rx="13" fill="url(#authV75Metal)" stroke="#9de6a6" stroke-width="2"/><circle cx="500" cy="166" r="16" fill="#75c995" fill-opacity=".12" stroke="#a8f0ae" stroke-width="1.5"/><path d="M491 166h18m-9-9v18m-6-12 12 12m0-12-12 12" stroke="#b3f3b7" stroke-width="1.5" opacity=".85"/></g>
+       <g><rect x="460" y="231" width="80" height="62" rx="13" fill="url(#authV75Metal)" stroke="#9de6a6" stroke-width="2"/><circle cx="500" cy="262" r="16" fill="#75c995" fill-opacity=".12" stroke="#a8f0ae" stroke-width="1.5"/><path d="M491 262h18m-9-9v18m-6-12 12 12m0-12-12 12" stroke="#b3f3b7" stroke-width="1.5" opacity=".85"/></g>
+      </g>
+      <g class="auth-v75-degas"><rect x="628" y="119" width="66" height="94" rx="16" fill="url(#authV75Metal)" stroke="#8ddce2" stroke-width="2"/><path d="M642 143h38M642 157h38M642 171h38M642 185h38" stroke="#a9edf0" stroke-opacity=".65" stroke-width="2"/><path d="M660 132v-13m-9 0q9-13 18 0" fill="none" stroke="#a9edf0" stroke-width="2"/></g>
+      <g class="auth-v75-pump"><circle cx="824" cy="118" r="34" fill="url(#authV75Metal)" stroke="#90dcf0" stroke-width="2.5"/><circle cx="824" cy="118" r="20" fill="#51abc4" fill-opacity=".18" stroke="#b1edff" stroke-width="1.5"/><path d="M824 100q20 18 0 36q-20-18 0-36" fill="#a7eaff" fill-opacity=".8"/><circle cx="824" cy="118" r="4" fill="#effcff"/></g>
+      <g class="auth-v75-uv"><rect x="790" y="279" width="68" height="37" rx="10" fill="url(#authV75Metal)" stroke="#d1b5ff" stroke-width="2"/><path d="M801 297H847" stroke="#d6c5ff" stroke-width="3" stroke-linecap="round"/><circle cx="807" cy="297" r="3" fill="#e8dbff"/><circle cx="841" cy="297" r="3" fill="#e8dbff"/></g>
+     </g>
+     <g class="auth-v75-labels" fill="#e5fff7" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="12" font-weight="750" letter-spacing=".5">
+      <text x="112" y="263" text-anchor="middle">FISH TANK</text><text x="321" y="171" text-anchor="middle">DRUM FILTER</text><text x="500" y="25" text-anchor="middle">MBBR 01</text><text x="500" y="121" text-anchor="middle">MBBR 02</text><text x="500" y="217" text-anchor="middle">MBBR 03</text><text x="661" y="235" text-anchor="middle">DEGASSING</text><text x="824" y="171" text-anchor="middle">PUMP</text><text x="824" y="333" text-anchor="middle">UV / RETURN</text>
+     </g>
+     <g fill="#83d8ca" font-family="Inter,Segoe UI,Arial,sans-serif" font-size="9" font-weight="700"><text x="196" y="151">WATER IN</text><text x="568" y="55">BIO LOOP</text><text x="372" y="317">AIR SUPPLY</text><text x="724" y="286">RETURN LINE</text></g>
+     <g fill="#a2fff0" filter="url(#authV75Glow)"><circle cx="226" cy="168" r="4"/><circle cx="412" cy="118" r="4"/><circle cx="594" cy="166" r="4"/><circle cx="748" cy="118" r="4"/></g>
+    </svg>
+    <div class="auth-diagram-foot auth-diagram-foot-v75"><span><i class="flow-swatch water"></i> NƯỚC TUẦN HOÀN</span><span><i class="flow-swatch air"></i> KHÍ CẤP</span><span><i class="flow-swatch bio"></i> LỌC SINH HỌC</span></div>
+   </div>
+   <div class="auth-tech-stats">
+    <div><small>DESIGN MODE</small><b>2D / 3D</b><span>Không gian thiết kế</span></div>
+    <div><small>PIPE NETWORK</small><b>SMART FLOW</b><span>Kết nối đường ống</span></div>
+    <div><small>CALCULATION</small><b>RAS ENGINE</b><span>Tính toán kỹ thuật</span></div>
+   </div>
+   <div class="auth-visual-footer auth-visual-footer-v75"><span>PLAN / CONNECT / VALIDATE</span><span><i></i> ENGINEERING WORKSPACE</span></div>
+  </aside>
+  <div class="auth-main auth-main-v75">
+   <button class="auth-close" id="authClose" type="button" aria-label="Đóng cửa sổ xác thực">×</button>
+   <div class="auth-main-topline"><span class="auth-main-brand"><span class="auth-main-brand-icon">≈</span><span><b>FARM RAS</b><small>DESIGN STUDIO</small></span></span><span class="auth-secure-badge"><i></i> LOCAL ACCESS</span></div>
+   <div class="auth-form-overline"><span class="auth-lock-icon"><svg viewBox="0 0 24 24"><rect x="4.5" y="10" width="15" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></span><span>AUTHORIZED ACCESS / FARM RAS</span><span class="auth-overline-line"></span></div>
+   <div class="auth-tabs" role="tablist" aria-label="Chọn hình thức truy cập"><button type="button" id="authTabLogin" class="active" role="tab" aria-selected="true">Đăng nhập</button><button type="button" id="authTabRegister" role="tab" aria-selected="false">Tạo tài khoản</button></div>
+   <h2 id="authHeading">Chào mừng bạn trở lại</h2>
+   <p class="auth-subtitle" id="authSubtitle">Đăng nhập để tiếp tục thiết kế và quản lý hệ thống RAS.</p>
+   <div id="authFormArea"></div>
+   <div class="auth-local-note"><span class="auth-note-icon">i</span><p><b>Tài khoản trên thiết bị này</b><br>Thông tin đăng nhập được lưu cục bộ trong trình duyệt. Chưa hỗ trợ đồng bộ tài khoản giữa nhiều thiết bị.</p></div>
+   <div class="auth-main-footer auth-main-footer-v75"><span>FARM RAS DESIGN STUDIO · 2026</span><span>BUILT FOR AQUACULTURE</span></div>
+  </div>
+ </section>
+</div>
+
+<div id="toast" class="toast" role="status" aria-live="polite"></div><div id="printArea"></div><input type="file" id="fileImport" accept=".json,application/json" class="hidden">
+<script src="./src/app.js"></script>
+</body>
+</html>

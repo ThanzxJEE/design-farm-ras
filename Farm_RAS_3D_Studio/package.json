@@ -1,0 +1,16 @@
+{
+  "name": "farm-ras-3d-studio",
+  "version": "7.6.0",
+  "private": true,
+  "description": "Farm RAS 3D Studio V7.6 - industrial editorial authentication, 2D/3D RAS layout, editable pipe network and preliminary calculations",
+  "type": "module",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "dev": "node scripts/serve.mjs",
+    "start": "node scripts/serve.mjs",
+    "check": "node --check src/app.js",
+    "test": "node --test tests/*.test.mjs"
+  }
+}
