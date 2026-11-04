@@ -7,6 +7,7 @@
 
 
 
+
 Ứng dụng web tiếng Việt hỗ trợ thiết kế hệ thống nuôi trồng thủy sản tuần hoàn (RAS). Người dùng có thể bố trí thiết bị trên mặt bằng 2D, xem mô hình 3D dạng phối cảnh, kết nối và chỉnh sửa đường ống, nhập thông số thiết bị, xem kết quả tính toán sơ bộ và xuất báo cáo. Ứng dụng yêu cầu đăng nhập hoặc đăng ký trước khi mở khu vực thiết kế.
 
 ## Bắt đầu
