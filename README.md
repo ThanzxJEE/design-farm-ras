@@ -3,7 +3,8 @@
 
 **Demo:** _Chưa triển khai GitHub Pages. Sau khi deploy, cập nhật liên kết tại đây._
 
-![Uploading image.png…]()
+<img width="1904" height="874" alt="image" src="https://github.com/user-attachments/assets/d7f501d5-e2d5-4e48-bad4-a2ee72eb947f" />
+
 
 
 
