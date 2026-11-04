@@ -1,4 +1,4 @@
-<img width="1919" height="874" alt="image" src="https://github.com/user-attachments/assets/046306a3-8f3d-4741-b15f-bb90c364dcd3" /># design-farm-ras
+
 # Farm RAS 3D Studio V7.3
 
 **Demo:** _Chưa triển khai GitHub Pages. Sau khi deploy, cập nhật liên kết tại đây._
